@@ -1,0 +1,935 @@
+\documentclass[12pt]{article}
+
+\usepackage{setspace}
+\usepackage[thmmarks]{ntheorem}
+\usepackage{amssymb, amsfonts, amsmath, mathrsfs, color, fancyhdr, tikz-cd, adjustbox, bbm, xcolor, wasysym}
+\usepackage[ntheorem,framemethod=TikZ]{mdframed}
+\usepackage{diagbox}
+%Disabling for now to speed up compilation
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks = true,
+	linkcolor = [rgb]{0,0,0.5},
+	citecolor = [rgb]{0.6,0,0},
+	urlcolor = [rgb]{0,0,0.5}
+}
+
+% Suppress mdframed telling us about "bad breaks". I can already see them.
+\usepackage{silence}
+\WarningFilter{mdframed}{You got a bad break}
+\makeatletter
+\mdf@PackageWarning{You got a bad break\MessageBreak
+  because the last split box is empty\MessageBreak
+  You have to change the settings}
+\makeatother
+
+\usepackage[style=alphabetic, bibencoding=utf8]{biblatex}
+%Set the bibliography file
+\bibliography{sources}
+
+%Document-Specific includes
+\usepackage{ytableau}
+
+%Replacement for the old geometry package
+\usepackage{fullpage}
+
+%Input my definitions
+\input{mydefs.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%% Customize Below %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%header stuff
+\setlength{\headsep}{24pt}  % space between header and text
+\pagestyle{fancy}     % set pagestyle for document
+\lhead{Research Discussion Notes} % put text in header (left side)
+\rhead{Nico Courts} % put text in header (right side)
+\cfoot{\itshape p. \thepage}
+\setlength{\headheight}{15pt}
+%\allowdisplaybreaks
+
+% Document-Specific Macros
+\DeclareMathOperator{\Spc}{Spc}
+\DeclareMathOperator{\Pol}{Pol}
+\newcommand{\vi}{\mathbf{i}}
+\newcommand{\vj}{\mathbf{j}}
+\newcommand{\vk}{\mathbf{k}}
+\newcommand{\vl}{\mathbf{l}}
+\newcommand{\vm}{\mathbf{m}}
+\DeclareMathOperator{\rad}{rad}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\add}{\mathbf{add}}
+\DeclareMathOperator{\supph}{supp^\mathit{hyp}}
+\DeclareMathOperator{\rk}{rk}
+
+\begin{document}
+%make the title page
+\title{Quantum Linear Planes}
+\author{Nico Courts}
+\date{}
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+The goal of this project is to understand the representation theory and support theory associated with a family of ``bosonized quantum complete intersections'' (note: look up Radford and bosonization), studied by Negron and Pevtsova in a series of recent preprints including \cite{negron-pevtsovaI}.
+
+Our primary tactic will be to use the language of hypersurfaces to ``slice'' our algebra and then to apply homological techniques to try to understand the representation theory of the hypersurfaces (and thereby the entire algebra). 
+
+In what follows, we will first present the algebras in question and set our notation. After that, we will talk about hypersurfaces and matrix factorizations and other techniques that will help us put things together, taking only what we need to do our computation. Finally we will try to apply these techniques to the algebras in question.
+
+\subsection{Goals}
+We will take some time here to remind ourselves of our (long- and short-term) goals for this project. The first high-level one is the following:
+\begin{qst}
+    Let $\Lambda=k_q[x_1,\dots,x_n]/(x_i^p)\#(\bbZ/p\bbZ)^n$, a bozonized quantum complete intersection. Is it true that the $\otimes$-identity holds? In other words, is it true that for every $M,N\in\lmod\Lambda$,
+    \[\supp(M\otimes N)=\supp(M)\cap\supp(N)?\]
+\end{qst}
+
+The question has begun to be considered in a couple different papers, including the preprint of Negron and Pevtsova \cite{negron-pevtsovaI}. We hope to answer this question by leveraging the following conjecture (that holds in other cases and will hopefully hold here as well):
+\begin{conj}
+    The support variety $V(M)$ corresponding to the module $M\in\lmod \Lambda$ can be computed from the support theory of $Q_{0,\alpha}=k_q[x_1,\dots,x_n]/(\alpha_1x_1^p+\cdots+\alpha_nx_n^p)$ for all $\alpha\in k^n$.
+\end{conj}
+A better statement of this would include more details of how this works. The $Q_{0,\alpha}$ described are our quantum hyperplanes ``over'' the unbosonized algebra $\Lambda_0$. The paper of Benson, Erdmann, and Holloway \cite{benson-erdmann-holloway07} gives a definition of rank variety for $\Lambda_0$.
+
+\section{Notation and Constructions}
+Throughout this section we will use the $(-)_0$ notation to denote when something is ``unbosonized''. Bosonization will be described later. 
+
+Let $Q_0=(k, n, p, q, R, \le)$ be the \textbf{quantum polynomial algebra} over $k$ given by the following data:
+\begin{itemize}
+    \item $n$ indeterminates $x_1,\dots, x_n$
+    \item a prime $p$
+    \item a primitive $p^\text{th}$ root of unity, $q$
+    \item a skew-symmetric matrix $R=(r_{ij})\in M_n(\bbZ)$ such that for all $1\le i,j\le n$,
+    \[x_ix_j=q^{r_{ij}}x_jx_i\]
+    \item an admissible order on the monomials of $Q_0$ (e.g. the graded lexicographic one).
+\end{itemize}
+
+We define the \textbf{unbosonized quantum complete intersection} to be the truncated version of the quantum polynomial algebra where we mod out by $p^{th}$ powers:
+\[R_0 = Q_0/(x_i^p)_{i=1}^n=k\langle x_1,\dots,x_n\rangle/(x_ix_j-q^{r_{ij}}x_jx_i, x_i^p, x_j^p)_{i,j}\]
+Eventually we will be interested in studying the \textbf{bosonized quantum complete intersection}, which is defined to be the smash product of $R_0$ with an elementary abelian $p$-group. This is called the \textit{bosonization} process.
+\[R = R_0 \# (\bbZ/p\bbZ)^n\]
+{\color{red}At some point I need to figure out why exactly $R_0$ isn't a Hopf algebra. Apparently the answer is that it is actually a Hopf object in another (perhaps enriched?) category. The bosonization process is one that takes any of these more general objects and creates an honest Hopf algebra.}
+
+These algebras are what we are interested in, but at the moment we are not worrying about the bosonization process. In order to study $R_0$, we use the theory of hypersurfaces to study it. Let $\vec{0}\ne\alpha=(\alpha_1,\dots,\alpha_n)\in k^n$ be the tuple defining a regular element
+\[f = \alpha_1x_1^p+\cdots+\alpha_nx_n^p\]
+and define the \textbf{quantum hypersurface corresponding to $\alpha$} to be the quotient
+\[Q_{0,\alpha}=Q_0/(f).\]
+This fits into an exact sequence
+\[
+    Q_0\twoheadrightarrow Q_{0,\alpha} \twoheadrightarrow R_0\label{eq:hypersurface} \tag{HS}
+\]
+and in this way can be thought of a hypersurface (since $f$ is regular) slicing our algebra $R_0$. These hypersurfaces are parameterized by $\alpha$ and we hope to use this understanding to say something about the global structure of $R_0$.
+
+\section{Varieties}
+
+\subsection{Support Varieties}
+The theory of support varieties was developed by Carlson in \cite{carlson83} in the context of group algebras $kG$. There he recalled let $R\eqdef H^\ast(G,k)=\Ext^\ast_{kG}(k,k)$ and considered certain ideals of this (graded commutative) ring to define the support variety of a module. In particular, if $M\in \lmod{kG},$ we define
+\[V(M)\eqdef \operatorname{Ann}_R{\Ext_{kG}^\ast(M,M)}.\]
+\begin{rmk}
+    Recall that for any (semisimple?!) $k$-algebra $\Lambda$, we get an action of $\Ext_\lambda^\ast(k,k)$ on $\Ext_\Lambda^\ast(M,M)$ in the following way: let
+    \begin{align*}
+        &X_\bullet = 0\to k\to E_1\to \cdots\to E_n\to k\to 0\in \Ext^n_\Lambda(k,k)\\
+        &\text{and}\quad Y_\bullet=0\to M\to D_1\to\cdots\to D_m\to M\to 0\in\Ext_\Lambda^m(M,M)
+    \end{align*}
+    Then we can define $X_\bullet\cdot Y_\bullet$ to be the Yoneda product of $X_\bullet\otimes M$ and $Y_\bullet$, giving us an element in $\Ext^{n+m}_\Lambda(M,M).$ Note that we require here that $\Lambda$ is flat, hence our requirement that $\Lambda$ be semisimple (although $\Lambda$ could also be Von Neumann regular (all left modules are flat)).
+\end{rmk}
+
+\subsection{Rank Varieties}
+For elementary abelian groups and for generalizations a la Pevtsova and Witherspoon \cite{pevtsova-witherspoon09} and Benson, Erdmann, and Holloway \cite{benson-erdmann-holloway07}.
+
+\subsubsection{For complete intersections}
+In Avramov and Iyengar \cite[\S 4.3]{avramov-iyengar}, the authors establish a way to compute rank varieties in the commutative case. If $(P,\frakm)$ is local regular and $R=P/I$ is a complete intersection (quotient by regular sequence $f_1,\dots,f_c$ in $\frakm^2$), one can set $f=\sum_if_is_i\in P[s_1,\dots,s_c]$ and consider $\tilde Q=P[s_i]/(f).$ This last ring is a hypersurface, so we get a free resolution of $(P/\frakm)[s_i]$ which is eventually 2-periodic, corresponding to a matrix factorization:
+\[\cdots G_{c+2}\xrightarrow{B}G_{c+1}\xrightarrow{A}G_c\]
+where $G_i=\tilde Q^{2^{d-1}}$.
+
+Thus for any $R$-module $M$, this gives us an endomorphism
+\[\begin{pmatrix}
+0& A\\B & 0
+\end{pmatrix}:M[s_i]^{2^d}\to M[s_i]^{2^d}.\]
+Then \cite[Thm. 4.4]{avramov-iyengar} states that (if $\rank_R M<\infty$),
+\[\calV_R(M)=\calV(I_r(\begin{smallmatrix}0&A\\B&0\end{smallmatrix}))\]
+where $r=(\rank_kM)2^{d-1}$, $I_r$ is the ideal generated by $r\times r$ minors, and $\calV$ is the traditional vanishing in $k^c$.
+
+\subsection{Hypersurface Support}
+
+In this setup, we are considering our algebra $Q_0$ along with a choice of vector $\alpha\in k^n\setminus\mathbf{0}$ yielding the sequence from \eqref{eq:hypersurface}:
+\[Q_0\to Q_f\eqdef Q_{0,\alpha}\to R_0.\]
+Recall that a left $R_0$ module inherits a left $Q_f$-module structure by the action given by the map $Q_f\twoheadrightarrow R_0.$
+
+\begin{defn}
+    Given a module $M\in \lmod{R_0},$ we define the \emph{hypersurface support} of $M$ to be the subset of $k^n\setminus\mathbf 0$ defined to be
+    \[\supph(M)=\{\alpha\in k^n\setminus\mathbf{0}|\projdim_{Q_f}M = \infty\}.\]
+\end{defn}
+
+\subsubsection{Hypersurface support and matrix factorizations}
+
+In section \ref{sec:matrix-factorizations}, we define the notion of a matrix factorization arising from a module over a Gorenstein ring. Take a module $M\in \lmod {R_0}$ and for any $\alpha\in k^n\setminus\mathbf{0}$, pull it back to a module over $Q_{0,\alpha}\eqdef Q_f$. Letting $\mathbf{P}_\bullet\to M$ be a resolution over $Q_f$, the results in section~\ref{subsubsec:construction-of-res} give us that eventually there is a syzygy $\Omega^i(M)$ that has projective dimension 1 as a $Q_0$-module and then we can construct the rest of the (2-periodic) resolution from there.
+
+We want to say that a module has finite projective dimension if and only if the two-periodic part of the above resolution vanishes (that is eventually $\Ext^i$ vanishes for large enough values of $i$). One direction here is true by definition, but we will need some results to be able to go both ways.
+
+\begin{lem}
+    Let $M$ be any module over $Q_\alpha$. Then
+    \[\projdim M=d \Leftrightarrow \forall N\in\lmod{Q_\alpha},\,\Ext^{d+1}_{Q_\alpha}(N,M)=0.\]
+\end{lem}
+\begin{lem}
+    Let $M$ be as above and $\calS\subseteq\lmod{Q_\alpha}$ be the collection of simple modules. Then
+    \[\projdim M=d \Leftrightarrow \forall N\in\calS,\,\Ext^{d+1}_{Q_\alpha}(N,M)=0.\]
+\end{lem}
+{\color{red} One thing this requires is the existence of composition series. Is $Q_\alpha$ Artinian?}
+\begin{prf}
+    Using the result above, the forward implication is clear. To get the reverse, assume that $\Ext^{d+1}(-,M)$ vanishes on all simples and let
+    \[0=N_0\subset N_1\subset\cdots\subset N_n=N\]
+    be a composition series of $N$. Notice that for an exact $0\to A\to B\to C\to 0$ such that $\Ext^i(A,M)=0$, the long exact sequence for $\Ext$ gives us that
+    \[\Ext^i(B,M)\cong\Ext^i(C,M).\]
+    
+    Therefore for any $0\le i< n,$ we can consider the sequence 
+    \[N_{i+1}/N_i \to N/N_i\to (N/N_i)/(N_{i+1}/N_i)\cong N/N_{i+1}\]
+    and conclude that $\Ext^i(N/N_i, M)\cong \Ext^i(N/N_{i+1},M).$ Since we're working with a composition series and $\Ext$ vanishes on simples, $\Ext^i(N/N_{n-1},M)=0$, establishing that $\Ext^i(N/N_i,M)=0$ for all $i$.
+    
+    Finally consider the sequence $N_1\to N\to N/N_1$ and appealing once more to the long exact sequence, we get
+    \[\cdots\to \Ext^i(N/N_1,M)\to \Ext^i(N,M)\to \Ext^i(N_1,M)\to \cdots\]
+    and since $N_1$ is simple and the left hand term vanishes by the above argument, this proves that $\Ext^i(N,M)=0$, proving that it is equivalent to check for vanishing of $\Ext$ on simples.
+\end{prf}
+\begin{lem}
+    Let $M$ be as above. Then
+    \[\projdim M=d \Leftrightarrow \Ext_{Q_\alpha}^i(k,M)=0.\]
+\end{lem}
+
+\section{Noncommutative Algebra and Geometry}
+I want to establish analogs of things like Gorenstein/CM/regular local, etc, and make sure everything works the way we expect. I also want to collect results like the NC analog of Auslander-Buchsbaum so I can just use it below. Wu and Zhang wrote about this in \cite{wu-zhang01} and cited many earlier results for reference.
+
+Look in Henning's book!! 
+
+Duality for Gorenstein algebras (BIKP).
+
+\section{Matrix Factorizations}\label{sec:matrix-factorizations}
+Factoring elements over complete intersections using matrices was an important and powerful discovery by Eisenbud \cite{eisenbud80} and applied and extended by many others since. The core result of the early work was that there was a correspondence between so-called matrix factorizations over a complete intersection ring $A$ and the maximal Cohen-Macaulay modules over $A$. 
+
+To begin to see why this is the case, first we define:
+\begin{defn}[Matrix factorization]
+    Given an algebra $A$ and an element (generally assumed to be regular) $x\in A$, a \textbf{matrix factorization for $x$} is a pair of free modules $F, G$ along with maps $\varphi:F\to G$ and $\psi:F\to G$
+    satisfying
+    \[\varphi\circ\psi = x\cdot \id_F\quad \psi\circ\varphi=x\cdot \id_G.\]
+\end{defn}
+
+\begin{rmk}
+    In the case of a matrix factorization $(\varphi,\psi)$ corresponding to a \textit{regular element} $x\in A$, Eisenbud proved \cite[Prop. 5.5]{eisenbud80} that $\rank F=\rank G$ as well. Actually we only need that $(x)/(x^2)$ is free for this (the proposition gives us even more).
+\end{rmk} 
+
+\subsection{The commutative picture}
+
+To show how this works in the commutative case, we will follow Yoshino \cite{yoshino90}. Let $S$ be an $n$-dimensional regular local $k$-algebra, $f\in S$ a regular element, and $R=S/(f)$ the quotient algebra.
+
+Let $M$ be any Cohen Macaulay module over $R$ ($\depth_{R} M=\dim R=\dim S - 1$ since $f$ is regular). Using the quotient map $S\to R$, we can give this the structure of a $S$-module. Then by Auslander-Buchsbaum, we have the following:
+\[\projdim_{S} M=\depth_{S} S - \depth_{S} M.\]
+We then have (need) the two following facts:
+\begin{enumerate}
+    \item since $S$ is Cohen Macaulay, $\depth_{S} S=\dim S=n$
+    \item $\depth_S M=\depth_{R} M$
+\end{enumerate}
+{\color{red} The reasoning behind why (2) is true (for commutative rings) is suppressed in Yoshino. Make sure we know why this is true in our case (hopefully by general rather than ad-hoc arguments).
+
+LOOK INTO SPECTRAL SEQUENCES! $(f)\to Q\to Q/(f)$}
+
+
+
+Using these, we can come to the conclusion that
+\[\projdim_{S} M = 1,\]
+thus we have a projective (and since $S$ is local, free!) resolution of $M$ of the form
+\[S^n\xrightarrow{\varphi} S^n\xrightarrow{\varepsilon} M\to 0\]
+where we know the rank of the two free modules are the same since $\rank_SM=0$.
+
+Now since $M$ was originally defined as a module over $R$, we know that $f$ annihilates $M$ over $S$. Therefore for all $x\in fS^n,$ $\epsilon(fq)=f\epsilon(q)=0$
+and therefore
+\[f S^n\subseteq \ker\epsilon=\varphi(S^n).\]
+Since $\varphi$ is injective, this gives us a \textbf{unique} element $y\in S^n$ for each $x\in S^n$ such that 
+\[\varphi(y)=fx.\]
+
+This gives us a map $\psi:S^n\to S^n$ taking each $x$ to the $y$ described above. Linearity of this map follows since $f$ is central: for any such $x$ and $y$ and $a\in S$,
+\[f(ax)=a(fx)=a\varphi(y)=\varphi(ay).\]
+
+Consider the composition of these maps: if $x\in S^n$ and $y\in S^n$ such that $fx=\varphi(y)$, we get
+\[\varphi\circ\psi(x)=\varphi(y)=fx\]
+Now if $\tilde y$ is such that $f\varphi(x)=\varphi(fx)=\varphi(\tilde y),$ we can use the fact that $\varphi$ is monic to say $fx=\tilde y$. But then
+\[\psi\circ\varphi(x)=\tilde y=fx.\]
+Thus we get that 
+\[\varphi\circ\psi=\psi\circ\varphi=f\cdot\id_{S^n}.\]
+
+As noted above, we call such a pair $(\varphi,\psi)$ of $S$-module maps satisfying this property a \textbf{matrix factorization of $f$ over $S$}.
+
+\subsubsection{Passing to the quotient}
+Now we can imagine quotienting out by $f$ everywhere to try to understand $M$ as a $R$ module. Letting $\overline x$ denote the image of $x\in S$ under the map $S\twoheadrightarrow R$ (and the analogous thing for matrices), we now have a resolution
+\[\cdots\to R^n\xrightarrow{\overline\varphi}R^n\xrightarrow{\overline \psi}R^n\xrightarrow{\overline \varphi}R^n\xrightarrow{\overline\epsilon}M\to 0\]
+where this is a chain complex since
+\[\overline\psi\circ\overline\varphi=\overline\varphi\circ\overline\psi=\overline{f\id_{S^n}}=\overline{f}\id_{R^n}=0.\]
+To check exactness, we can use the following argument: let $\overline x\in \ker\overline\varphi.$ This implies
+\[\varphi(x)\in fS^n=\varphi\circ\psi(S^n)\]
+and since $\varphi$ is monic, this proves $x\in \Im\psi.$ The same argument goes through in the other direction. Thus we find that the matrix factorization $(\varphi,\psi)$ correspond to a 2-periodic resolution of $M$, and by computing the cokernel of these maps we can compute a module that corresponds to it.
+
+\subsection{Noncommutative algebras}
+In our case we have to make some replacements to recover similar phenomena. We begin by making some definitions:
+\begin{defn}
+    Let $\Lambda$ be a (two-sided) Noetherian ring.  Then $\Lambda$ is called \textbf{(Iwanaga-)Gorenstein} if $_\Lambda\Lambda$ and $\Lambda_\Lambda$ have finite injective dimension.
+\end{defn}
+\begin{rmk}
+    A result in \cite[Lem. A]{zaks1969} says that if the injective dimensions as a left and right module are finite, they must be the same. Thus by letting $d=\injdim {_\Lambda\Lambda}$,
+    we say that $\Lambda$ is \emph{Gorenstein of dimension $d$}.
+\end{rmk}
+
+Next we define the analogs of (maximal) Cohen-Macaulay modules:
+\begin{defn}
+    Let $\Lambda$ be a Gorenstein ring. Then an $X\in\lmod \Lambda$ is called \textbf{Gorenstein projective} if, for all $i\ne 0$,
+    \[\Ext^i_\Lambda(X,\Lambda)=0.\]
+\end{defn}
+
+Note that, following the discussion in the as-yet unpublished \cite{krauseII}, Gorenstein projectives are very nicely-behaved modules. We will record two useful ones:
+\begin{prop}[Krause 6.2.1(1)]
+    Let $\Lambda$ be Gorenstein of dimension $d$. For any module $X$, $\Omega^nX$ is Gorenstein projective for any $n\ge d.$
+\end{prop}
+The reason for this uses the degree shifting formula for $\Ext$. Since $\injdim \Lambda=d$, for all $i> 0$
+\[\Ext_\Lambda^{n+i}(X,\Lambda)=0.\]
+But then for all $i>0],$
+\[\Ext^i(\Omega^nX,\Lambda)\cong \Ext^{i+n}(X,\Lambda)=0.\]
+
+Since $\Ext^1(X,\Lambda)=0$ when $X$ is Gorenstein projective, we get
+\begin{prop}[Krause 6.2.1(2)]
+    Let $\Lambda$ be Gorenstein and $X$ a Gorenstein projective over $\Lambda.$ Then $\Omega^iX$ is Gorenstein projective for all $i\ge 1.$
+\end{prop}
+
+One of the interesting ideas that arise here is that the category $\calX\eqdef\mathbf{Gproj}(\Lambda)$ of Gorenstein projective modules forms what is called a \emph{cotorsion pair} with the category $\calY$ of $\Lambda$-modules of finite projective dimension.
+
+In particular, we have
+\begin{itemize}
+    \item $\Ext^i(X,Y)=0$ for $i\ge 1$ and $X\in\calX$ and $Y\in\calY$
+    \item $\calX\cap\calY=\mathbf{proj}(\Lambda)$
+\end{itemize}
+and for any $A\in\lmod \Lambda$, there are $G^A,G_A\in\mathbf{GProj}(\Lambda)$ and $P^A,P_A\in\calY$
+fitting into short exact sequences
+\[0\to P_A\to G_A\to A\to 0\quad\text{and}\quad 0\to A\to P^A\to G^A\to 0.\]
+
+\subsubsection{Constructing resolutions}\label{subsubsec:construction-of-res}
+From now on, let $M\in\mathbf{GProj}(\Lambda)$, where $\Lambda$ is a Gorenstein ring of dimension $d$. Then, using that $\Omega^{d}(M)$ is Gorenstein projective for any $M\in\lmod\Lambda$, we get a (Gorenstein projective) resolution
+\[0\to\Omega^d(M)\to P_d\to \cdots\to P_0\to M\to 0\]
+where each of the $P_i$ are actually projective.
+
+\begin{rmk}
+    Recall that an Ore extension $A\eqdef R[x;\sigma,\delta]$ of a ring $R$ is an endomorphism $\sigma:R\to R$ along with a $\sigma$-derivation $\delta$, a map satisfying
+    \[\delta(ab)=\sigma(a)\delta(b)+\delta(a)b,\quad\forall a,b\in A\]
+    subject furthermore to the condition that for all $a\in A$,
+    \[xa=\sigma(a)x+\delta(a).\]
+    The final condition can be thought of as a parameterization of how $x$ is allowed to commute with elements in $a$, with the conditions on $\sigma$ and $\delta$ to allow suitable compatibility.
+    
+    The Ore extension $R[x;\sigma,\delta]$ is \emph{quasi-commutative} if $\delta\equiv 0.$ An iterated Ore extension with indeterminates $x_1,\dots,x_n$ with endomorphisms $\sigma_1,\dots,\sigma_n$ is \emph{bijective} if the $\sigma_i$ are bijective and furthermore $x_ix_j=c_{ij}x_jx_i$ where all the $c_{ij}$ are invertible. Note that all of these conditions hold in the example of a quantum polynomial algebra.
+\end{rmk}
+
+\begin{rmk}
+    It is proven in \cite[lem. 4.5]{negron-pevtsovaII} that in fact all the algebras we are considering are Gorenstein (since each can be achieved from a regular sequence in the (commutative!) parameterizing algebra $Z$ in the sequence $Z\to Q\to R$.
+\end{rmk}
+
+More concretely, we have the sequence
+\[Z\eqdef k[x_1^p,\dots,x_n^p]\to k_q[x_1,\dots,x_p]\to k_q[x_i]/(x_i^p)\]
+where we notice that the first algebra is commutative (in fact, isomorphic to a polynomial algebra). The idea here is that we use this commutative algebra to port over some ideas from the commutative realm.
+
+Notice that the elements $\{x_1^p,\dots, x_n^p\}$ form a regular sequence in $Z$, so we can construct the Koszul resolution
+\[K(\{x_i\})=\bigwedge^n Z^n\xrightarrow{\delta} \bigwedge^{n-1}Z^n\xrightarrow{\delta}\cdots\xrightarrow{\delta}\bigwedge^1 Z^n\xrightarrow{\delta} Z\to 0\]
+where
+\[\delta:\bigwedge^k Z^n\to \bigwedge^{k-1}Z^n\]
+is given by (after some choice of ordered $Z$-basis $e_1,\dots,e_n$ for $Z^n$)
+\[\delta(e_{i_1}\wedge\dots\wedge e_{i_k})=\sum_{j=1}^k (-1)^jx_{i_j}^pe_{i_1}\wedge\cdots\wedge\hat e_{i_j}\wedge\cdots e_{i_k}.\]
+The general theory of Koszul resolutions gives us that this is a resolution of $k=Z/(x_i)$ by $Z$-modules. Then since (either by assumption in the general theory or a statement of fact for our algebras) $Q_0$ is flat over $Z$ we get a resolution of $Q_0/(x_i)\cong k$ as a $Q_0$ module:
+\[Q_0\otimes_Z K(\{x_i^p\})=Q_0\otimes_Z \bigwedge^n Z^n\to\cdots\to Q_0\otimes_Z Z^n\to Q_0\otimes_Z Z\to 0.\]
+
+Large parts of what follows can be found in Kirkman et al's paper, culminating in the general result \cite[Thm. 4.7]{kirkman13}. In what follows, we fix $f_\alpha$ and a normalizing automorphism $\sigma$ with $xf=f\sigma(x)$ for all $x$. The degree from the natural grading gives us $|f_\alpha|=p$, and for any $Q_0$(or $Q_\alpha$)-module $M$, we set
+\[M^{tw}\eqdef M^\sigma(p)=M(p)^\sigma.\]
+
+We will use the following results:
+\begin{prop}
+    Given a finitely generated graded $Q_\alpha$-module $M$ with $\projdim_{Q_0}(M)=1$, one can construct a (twisted) matrix factorization of $f=f_\alpha$. That is, if $\lambda_f^*:\ast\to \ast$ (for $\ast=F,G$) is the multiplication by $f$ map, there exist maps $\varphi$ and $\tau$ such that
+    \[\varphi\tau = \lambda_f^G\quad\text{and}\quad \tau\varphi^{tw}=\lambda_f^F\]
+    for some free modules $F$ and $G$.
+\end{prop}
+
+\begin{rmk}
+Notice that in our case $f_\alpha$ is central, so $\sigma=\id$ in what follows. I will retain the $(-)^{tw}$ notation to match previous papers, but for us $M^{tw}=M(p).$
+\end{rmk}
+
+For this proposition the construction closely follows the one from the commutative case (c.f. \cite{yoshino90}). Let
+\[0\to F\xrightarrow{\varphi}G\to M\to 0\]
+be a minimal free $Q_0$-resolution of $M$ (since it has projective dimension 1). Then we have the following commutative diagram:
+\begin{figure}[ht!]
+    \centering
+    \begin{tikzcd}
+        F^{tw}\ar[r,"\varphi^{tw}"]\ar[d,"\lambda_f^F",swap] & G^{tw}\ar[rd,"\lambda_f^G"]\ar[ld, "\tau",swap]\ar[d,dashed]\\
+        F\ar[r,"\varphi",swap] & \Im\varphi \ar[r,hookrightarrow] &G
+    \end{tikzcd}
+\end{figure}
+
+The dashed line exists since $f(_AM)=0$ ($A$ acts via $B$ on $M$), so $\Im\lambda_f^G\subseteq\Im\varphi$. The lift $\tau$ exists by (graded) projectivity. The relation $\varphi\tau=\lambda_f^G$ is immediate. More diagram chasing and that $\varphi$ is monic gives the other.
+
+\begin{defn}
+Given an $M$, $\tau$, and $\varphi$ constructed as above, we call $\mathbf{\Omega}(\varphi,\tau)$ the $B$-complex
+\[\cdots\to B\otimes_AF^{tw}\xrightarrow{1\otimes \varphi^{tw}}B\otimes_A G^{tw}\xrightarrow{1\otimes\tau} B\otimes_A F\xrightarrow{1\otimes\varphi} B\otimes_AG\to 0\]
+which, as long as $M$ has no $B$-free summand (c.f. \cite[prop 2.9]{kirkman13}), is a minimal graded free resolution of $_BM$.
+\end{defn}
+
+The last piece of the puzzle, then, is that we can hand off from a constructive (e.g. derived from a Koszul) resolution of our $M$ to a 2-periodic free resolution. Notice that our $Q_0$ is left Noetherian and AS-regular of dimension $n$. 
+
+\begin{prop}[\cite{kirkman13} prop 4.6]\label{prop:syzygy}
+    There exists an $s\le n$ such that $\projdim_{Q_0}(\Omega^s(M))=1$ for any finitely generated graded left $Q_\alpha$-module $M$. In particular, if $\depth_{Q_\alpha}(M)\eqdef\inf\{j|\Ext^j_{Q_\alpha}(k,M)\ne0\}=i$,
+    \[\projdim_{Q_0}(\Omega^{n-i}(M))=1.\]
+\end{prop}
+
+Thus given a (finite dimensional graded) $B$-module, we can construct an eventually 2-periodic resolution in the following way: start off with the a resolution $\mathbf{Q}_\bullet\to M$ over $Q_\alpha$ and compute $\Omega^k(M)$ where \[k=\operatorname{dim}(Q_0)-\depth_{Q_\alpha}=n-\inf\{j|\Ext_{Q_\alpha}^j(k,m)\ne 0\}.\]
+By \ref{prop:syzygy}, this module has projective dimension 2. By separating out the free part of this syzygy, we can construct a 2-periodic resolution of the summand $\widetilde\Omega^k(M)$ and piece this back together with the resolution $\mathbf{Q}_\bullet$ to get a resolution of the desired form for $M$.
+
+\subsubsection{Explicit construction}
+Let $n=3$, so $Q_0=k_q[x,y,z]$ and $R_0=k_q[x,y,z]/(x^p,y^p,z^p).$ Let $\alpha=(1,1,1)$ and $p=5$, so $f_\alpha=x^5+y^5+z^5.$ Let $M=k\cong Q_\alpha/\langle x, y, z\rangle$ be the $Q_\alpha$ module we're considering. 
+\[0\to Q^4_\alpha\xrightarrow{\left(\begin{smallmatrix}x& 0 & y^4 & -qz^4\\-q^{-1}y & z^4 & x^4 & 0\\ q^3z & y^4 & 0 & z^4\\ 0 & -q^{-1}x & z & y\end{smallmatrix}\right)}{Q_\alpha^4}\xrightarrow{\left(\begin{smallmatrix}y & x & 0 & z^4\\-q^{-1}z & 0 & x & y^4\\ 0 & -q^{-1}z & -q^{-1}y & x^4\end{smallmatrix}\right)}{\color{red}Q_\alpha^3}\xrightarrow{(z,y,x)}Q_\alpha\xrightarrow{\varepsilon} k \to 0\]
+I have highlighted the place where we get our syzygy of projective dimension 1 over $Q_0$. The 4x4 matrix given is our $\varphi$ and we can construct $\tau$ from it using the methods from \cite{kirkman13} and/or \cite{yoshino90}.
+
+\subsubsection{An iterative construction}\label{sec:resolution-construction}
+Here we will attempt to write down an iterative approach for constructing matrix factorizations for $\sum_i x_i^p$ over $Q_0$ for any dimension $n$. To do this, we first consider the $n=1$ case. Here notice that $Q_0\cong k[x]$ and our matrix factorization is given by $A=(x^{p-1})$ and $B=(x)$ since we have the resolution
+\[\cdots \to Q_\alpha\xrightarrow{(x)} Q_\alpha\xrightarrow{(x^{p-1})}Q_\alpha \xrightarrow{(x)} Q_\alpha\to 0\]
+which corresponds to $k\in \D(Q_\alpha).$
+\begin{rmk}
+    In what follows we will be abusing notation slightly in the interest of legibility. Recall that for any dimension $n$, we have a vector $\alpha\in(k^\times)^n$, a prime $p$, a $p^{th}$ root of unity $q$, as well as an integral, skew-symmetric matrix $\calQ=-\calQ^T$ giving us, for all $1\le i,j\le n$, the $q$-commutativity relation 
+    \[x_jx_i=q^{\calQ_{ij}}x_ix_j\eqdef q_{ij}x_ix_j.\]
+    
+    Although there are choices (some dimension-dependent) among the parameters $\alpha, p, q,$ and $\calQ$, we will use the same names regardless of the particular values they take. For instance, $\alpha$ will always refer to a length $n$ vector when used in the context of the $n$ dimensional algebra.
+\end{rmk}
+
+To construct a resolution for $k$ over $Q_\alpha$ in higher dimensions, we introduce some notation: for any $i$, we will be denoting by 
+\[A_{x_{i_1}\dots x_{i_k}}\quad\text{and}\quad B_{x_{i_1}\dots x_{i_k}}\]
+the matrices (arising from the below construction) which form a matrix factorization for $f=\sum_{j=1}^k \alpha_{i_j}x_{i_j}^p$ over $k_q[x_{i_1},\dots, x_{i_k}]$. When $(i_1,\dots, i_k)=(1,\dots, k)$, we will denote these matrices by $A_k$ and $B_k$, respectively.
+
+In service of this construction we define the following matrices iteratively. For any integer $1\le j\le n$, let
+\begin{align*}
+    C_1^j&\eqdef -\sqrt{q_{1j}}x_j\quad(=-q^{\calQ_{1j}/2}x_jI_1)\\
+    D_1^j&\eqdef \sqrt{q_{1j}}x_j^{p-1}\\
+    \widetilde{C_1^j} &\eqdef \sqrt{q_{j1}}x_j\\
+    \widetilde{D_1^j}&\eqdef -\sqrt{q_{j1}}x_j^{p-1}
+\end{align*}
+and then for any $1< i< j$, define
+\begin{align*}
+    C_i^j&\eqdef\begin{pmatrix}-\sqrt{q_{ij}}C_{i-1}^j & 0\\0 & -\sqrt{q_{ji}}\widetilde{C_{i-1}^j}\end{pmatrix}\qquad
+    D_i^j\eqdef\begin{pmatrix}\sqrt{q_{ji}}D_{i-1}^j & 0\\0 & \sqrt{q_{ij}}\widetilde{D_{i-1}^j}\end{pmatrix}\\
+    \widetilde{C_i^j}&\eqdef\begin{pmatrix}\sqrt{q_{ij}}\widetilde{C_{i-1}^j} & 0\\0 & \sqrt{q_{ji}}C_{i-1}^j\end{pmatrix}\qquad
+    \widetilde{D_i^j}\eqdef\begin{pmatrix}-\sqrt{q_{ji}}\widetilde{D_{i-1}^j} & 0\\0 & -\sqrt{q_{ij}}D_{i-1}^j\end{pmatrix}
+\end{align*}
+
+With these matrices in place, we can write down the following:
+\begin{prop}\label{prop:factorization}
+    Let $n>1$ and let $Q_0$ be $n$-dimensional skew polynomial algebra $k_q[x_1,\dots,x_n]$ where $q$ is a $p^{th}$ root of unity for some odd prime $p$. Let $\calQ$ be the matrix giving the $q$-commutativity relations for $Q_0$. Then a matrix factorization of $\sum_i x_i^p$ over $Q_0$ is given by
+    \[A_n=\begin{pmatrix}A_{n-1} & C_{n-1}^n\\D_{n-1}^n& B_{n-1}\end{pmatrix}\quad\text{and}\quad B_n=\begin{pmatrix}B_{n-1}&\widetilde{C_{n-1}^n}\\ \widetilde{D_{n-1}^n} & A_{n-1}\end{pmatrix}.\]
+\end{prop}
+\begin{prf}[prop~\ref{prop:factorization}]
+    We proceed by induction. We showed above that $A_1=x_1^{p-1}$ and $B_1=x_1$ were a factorization for the one-variable case, so we proceed to show this iterative formula works for the two-variable case. We have
+    \[A_2=\begin{pmatrix}A_1 & C_1^2\\ D_1^2& B_1\end{pmatrix}=\begin{pmatrix}x_1^{p-1} & -\sqrt{q_{12}}x_2\\ \sqrt{q_{12}}x_2^{p-1} & x_1\end{pmatrix}\]
+    as well as
+    \[B_2=\begin{pmatrix}B_1 & \widetilde{C_1^2}\\\widetilde{D_1^2} & A_1\end{pmatrix}= \begin{pmatrix}x_1 & \sqrt{q_{21}}x_2\\ -\sqrt{q_{21}}x_2^{p-1} & x_1^{p-1}\end{pmatrix}.\]
+    Begin by noticing
+    \[\sqrt{q_{ij}}\sqrt{q_{ji}} = q^{\calQ_{ij}/2}q^{\calQ_{ji}/2}=q^{\calQ_{ij}/2}q^{-\calQ_{ij}/2}=1.\]
+    Then we can compute
+    \begin{align*}
+    A_2B_2&=\begin{pmatrix}x_1^p + x_2^p & \sqrt{q_{21}}x_1^{p-1}x_2 - \sqrt{q_{12}}x_2x_1^{p-1}\\
+    \sqrt{q_{12}}x_2^{p-1}x_1 - \sqrt{q_{21}}x_1x_2^{p-1} & x_2^p+x_1^p\end{pmatrix}\\
+    &=\begin{pmatrix}x_1^p + x_2^p & \sqrt{q_{21}}x_1^{p-1}x_2 - \sqrt{q_{12}}q_{21}x_1^{p-1}x_2\\
+    \sqrt{q_{12}}q_{21}x_1x_2^{p-1} - \sqrt{q_{21}}x_1x_2^{p-1} & x_2^p+x_1^p\end{pmatrix}=(x_1^p+x_2^p)I_2
+    \end{align*}
+    \begin{align*}
+    B_2A_2&=\begin{pmatrix}x_1^p + x_2^p & -\sqrt{q_{21}}x_2^{p-1}x_1^{p-1}+\sqrt{q_{12}}x_1^{p-1}x_2^{p-1}\\
+    -\sqrt{q_{12}}x_1x_2 + \sqrt{q_{21}}x_2x_1 & x_2^p+x_1^p\end{pmatrix}\\
+    &=\begin{pmatrix}x_1^p + x_2^p & -\sqrt{q_{21}}q_{12}x_1^{p-1}x_2^{p-1}+\sqrt{q_{12}}x_1^{p-1}x_2^{p-1}\\
+    -\sqrt{q_{12}}x_1x_2 + \sqrt{q_{21}}q_{12}x_1x_2 & x_2^p+x_1^p\end{pmatrix}=(x_1^p+x_2^p)I_2
+    \end{align*}
+    proving the construction holds for $n=2$.
+    
+    Now assume that $A_{n-1}B_{n-1}=B_{n-1}A_{n-1}=(\sum_1^{n-1}x_i^p)I_{2^{n-1}}.$ Then notice
+    \[A_nB_n=\begin{pmatrix}A_{n-1} & C_{n-1}^n\\D_{n-1}^n& B_{n-1}\end{pmatrix}\begin{pmatrix}B_{n-1}&\widetilde{C_{n-1}^n}\\ \widetilde{D_{n-1}^n} & A_{n-1}\end{pmatrix}=\begin{pmatrix}A_{n-1}B_{n-1}+C_{n-1}^n\widetilde{D_{n-1}^n} & A_{n-1}\widetilde{C_{n-1}^n}+C_{n-1}^nA_{n-1}\\
+    D_{n-1}^nB_{n-1}+B_{n-1}\widetilde{D_{n-1}^n} & D_{n-1}^n\widetilde{C_{n-1}^n}+B_{n-1}A_{n-1}\end{pmatrix}\]
+    
+    Applying the induction hypothesis, the result follows from the following results:
+    \begin{itemize}
+        \item $C_{n-1}^n\widetilde{D_{n-1}^n}=D_{n-1}^n\widetilde{C_{n-1}^n}=x_n^p\cdot I_{2^{n-2}}$ (lem.~\ref{lem:monomial})
+        \item $A_{n-1}\widetilde{C_{n-1}^n}+C_{n-1}^nA_{n-1} = D_{n-1}^nB_{n-1}+B_{n-1}\widetilde{D_{n-1}^n}=0\cdot I_{2^{n-2}}$ (lem.~\ref{lem:zero-matrix})
+    \end{itemize}
+    \end{prf}
+    
+    The proofs of the computational lemmas used above follow:
+    \begin{lem}\label{lem:monomial}
+        For any $1\le i<j$:
+        \[C_i^j\widetilde{D_i^j}=D_i^j\widetilde{C_i^j}=x_j^p\cdot I_{2^{i-1}}\]
+    \end{lem}
+    \begin{prf}
+    We proceed by induction on $i+j$. Begin by assuming that $i+j=3$, which has a single solution $i=1$ and $j=2$. Then the equality is obvious since scalars and powers of $x_2$ commute with one another. Next assume that equality holds for any $i+j=n$ and let $i+j=n+1.$ Then
+    \begin{align*}
+        C_i^j\widetilde{D_i^j} &=\begin{pmatrix}-\sqrt{q_{ij}}C_{i-1}^j & 0\\0 & -\sqrt{q_{ji}}\widetilde{C_{i-1}^j}\end{pmatrix}\begin{pmatrix}-\sqrt{q_{ji}}\widetilde{D_{i-1}^j} & 0\\0 & -\sqrt{q_{ij}}D_{i-1}^j\end{pmatrix}\\
+        &=\begin{pmatrix}C_{i-1}^j\widetilde{D_{i-1}^j} & 0 \\ 0 & \widetilde{C_{i-1}^j}D_{i-1}^j\end{pmatrix}\\
+        &=\begin{pmatrix}x_j^p\cdot I_{2^{i-2}} & 0\\0 & x_j^p\cdot I_{2^{i-2}}\end{pmatrix}=x_j^p\cdot I_{2^{i-1}}
+    \end{align*}
+    where the last line follows by the induction hypothesis since $(i-1)+j = n.$ The result for $D_i^j\widetilde{C_i^j}$ is directly analogous.
+    \end{prf}
+    
+    \begin{lem}\label{lem:zero-matrix}
+        For any $1\le i<j$:
+        \[A_i\widetilde{C_i^j}+C_i^jA_{i} = D_i^jB_{i}+B_{i}\widetilde{D_i^j}=0\cdot I_{2^{i-1}}\]
+    \end{lem}
+    \begin{prf}
+    Again we proceed by induction on $i+j.$ The base case $i+j=3$ ($i=1$ and $j=2$) can be seen via:
+    \[A_1\widetilde{C_1^2}=x_1^{p-1}\sqrt{q_{21}}x_2=\sqrt{q_{21}}q_{21}^{p-1}x_2x_1^{p-1}=q_{21}^{p-\frac{1}{2}}x_2x_1^{p-1}=\sqrt{q_{12}}x_2x_1^{p-1}=-C_1^2 A_1\]
+    and
+    \[D_1^2B_1=\sqrt{q_{12}}x_2^{p-1}x_1=q_{12}^{p-\frac{1}{2}}x_1x_2^{p-1}=\sqrt{q_{21}}x_1x_2^{p-1}=-B_1\widetilde{D_1^2}.\]
+    
+    For the induction step, assume that the equalities hold for $i+j=n$ and let $i$ and $j$ be such that $i+j=n+1$. As an initial observation, note that the matrices $C_i^j, D_i^j, \widetilde{C_i^j},$ and $\widetilde{D_i^j}$ all commute with one another, as they are all diagonal matrices with entries entirely in $(x_j)\in k_q[x_1,\dots, x_n].$ Then we compute
+    \[
+        A_i\widetilde{C_i^j} =\begin{pmatrix}
+            A_{i-1} & C_{i-1}^i\\ D_{i-1}^i & B_{i-1}
+        \end{pmatrix}\begin{pmatrix}
+            \sqrt{q_{ij}}\widetilde{C_{i-1}^j} & 0\\ 0 & \sqrt{q_{ji}}C_{i-1}^j
+        \end{pmatrix}=\begin{pmatrix}
+            \sqrt{q_{ij}}A_{i-1}\widetilde{C_{i-1}^j} & \sqrt{q_{ji}}C_{i-1}^iC_{i-1}^j\\
+            \sqrt{q_{ij}}D_{i-1}^i\widetilde{C_{i-1}^j} & \sqrt{q_{ji}}B_{i-1}C_{i-1}^j
+        \end{pmatrix}
+    \]
+    as well as
+    \[-C_i^jA_i = \begin{pmatrix}
+            \sqrt{q_{ij}}C_{i-1}^j & 0\\ 0 & \sqrt{q_{ji}}\widetilde{C_{i-1}^j}
+        \end{pmatrix}\begin{pmatrix}
+            A_{i-1} & C_{i-1}^i\\ D_{i-1}^i & B_{i-1}
+        \end{pmatrix}=\begin{pmatrix}
+            \sqrt{q_{ij}}C_{i-1}^jA_{i-1} & \sqrt{q_{ij}}C_{i-1}^jC_{i-1}^i\\
+            \sqrt{q_{ji}}\widetilde{C_{i-1}^j}D_{i-1}^i & \sqrt{q_{ji}}\widetilde{C_{i-1}^j}B_{i-1}
+        \end{pmatrix}\]
+    
+    This proves that $A_i\widetilde{C_i^j}+C_i^jA_i=0$ and the other equality can be computed similarly.
+    \end{prf}
+
+\subsection{Categories}
+One can talk about the category of matrix factorizations. Similar for the category of CM modules over $Q_f$. Using the process described above, we get a functor from one category to the other. By computing the cokernel of the resolution from a matrix factorization, one gets a CM module. After quotienting out by the proper things (essentially looking at stable categories), one gets an equivalence in the commutative case.
+
+{\color{red} Does the same thing go through completely in our case? Maybe cite Kirkman et al.}
+
+\subsection{Examples}
+We are going to begin by looking at matrix factorizations with different parameter choices. In each case, we will use \texttt{Singular/Plural} to compute a (minimal) resolution of $k$ over $Q_f$ and then parse this information into a matrix factorization. From there, we should be able to compute an explicit presentation of each module we are looking at.
+
+\subsubsection{Dimension 2}
+Here we will be setting $n=2$, so $Q$ will be a quotient of $k\langle x,y\rangle$ by the relations given by some $R$ matrix. Here $f=\alpha_1x^p+\alpha_2y^p.$ If we allow our field to contain $p^{th}$ roots of the $\alpha_i$, we can set $\hat x_i=\sqrt[p]{\alpha_i}x_i$ and so on so that effectively the coefficients are both one. Thus at first we will assume $f=x^p+y^p.$
+
+Any choice of (primitive) root of unity $q$ will give us the same results. We will let $R=(\begin{smallmatrix}0 & 1\\-1 & 0\end{smallmatrix})$, so $yx=qxy.$
+\[\cdots\to Q_f^2\xrightarrow{B_{xy}}Q_f^2\xrightarrow{A_{xy}}Q_f^2\xrightarrow{(y\,x)}Q_f\xrightarrow{\epsilon}k\to 0\]
+where
+\[A_{xy}=\begin{pmatrix}y^{p-1} & x\\x^{p-1} & -qy\end{pmatrix}\qquad B_{xy}=\begin{pmatrix}y & x\\ x^{p-1} & -q^{-1}y^{p-1}\end{pmatrix}.\]
+Notice here we are letting $Q_f^2$ be \emph{column vectors} and the matrices act on the left. Some quick computations reveal that
+\[\begin{pmatrix}y & x\end{pmatrix}\begin{pmatrix}y^{p-1} & x\\ x^{p-1} & -qy\end{pmatrix}=\begin{pmatrix}y^p+x^p & yx-qxy\end{pmatrix} = \mathbf 0\]
+as well as
+\[A_{xy}B_{xy}=\begin{pmatrix}y^{p-1} & x\\x^{p-1} & -qy\end{pmatrix}\begin{pmatrix}y & x\\ x^{p-1} & -q^{-1}y^{p-1}\end{pmatrix}=\begin{pmatrix}x^p+y^p & y^{p-1}x-q^{-1}xy^{p-1}\\ x^{p-1}y-qyx^{p-1} &x^p+y^p\end{pmatrix}=\mathbf 0\]
+and
+\[B_{xy}A_{xy}=\begin{pmatrix}y & x\\ x^{p-1} & -q^{-1}y^{p-1}\end{pmatrix}\begin{pmatrix}y^{p-1} & x\\x^{p-1} & -qy\end{pmatrix}=\begin{pmatrix}x^p+y^p & yx-qxy \\ x^{p-1}y^{p-1}-q^{-1}y^{p-1}x^{p-1} &x^p+y^p\end{pmatrix}=\mathbf 0\]
+so this is indeed a chain complex.
+
+Computing the cokernel of $A_{xy}$, we get that the module this complex corresponds to (in the above discussion of CM modules vs. matrix factorizations) is given by the quotient
+\[Q_f/(x,y^{p-1})\oplus Q_f/(x^{p-1},y)\cong Q_f/(x^{p-1},y^{p-1})\]
+
+{\color{red}To-do: this should just be the special case when $i=1$. See if we can generalize this easily.}
+
+\section{Twisted complexes}
+Let $\calC_\bullet$ be a chain complex:
+\[\cdots\to\calC_{n+1}\xrightarrow{\partial^\calC_{n+1}}\calC_n\xrightarrow{\partial^\calC_n}\calC_{n-1}\to\cdots\]
+then for any $k$, we can construct the \textbf{$k$-fold staggered sum} $^k\calC_\bullet=\oplus_{i=0}^{k-1}\calC_\bullet[i]$. That is,
+\[^k\calC_i = \calC_{i+k-1}\oplus\calC_{i+k-2}\oplus\cdots\oplus \calC_{i+1}\oplus \calC_i\qquad \partial^{^k\calC}_{i}=\partial^\calC_{i+k-1} \oplus\partial^\calC_{i+k-2} \oplus\cdots\oplus\partial^\calC_i.\]
+We think of $^k\calC_\bullet$ as creating $k$ parallel copies of the chain complex $\calC_\bullet$, offsetting each copy from its neighbors by one. This construction will allow us, along with the twist described below, to make statements about (length $k$) ranges of homology with a single computation.
+
+This leads to the definition:
+\begin{defn}\label{def:twisted-complex}
+    Given a chain complex $\calC_\bullet,$ a positive integer $k$, and a ``twist'' $\sigma\in\frakS_k,$ the \textbf{($\sigma$-)twisted ($k$-fold staggered) complex} $^\sigma\calC_\bullet$ is $^k\calC_\bullet$ with the $^k\calC_i$ twisted by $\sigma^i$. That is,
+    \begin{equation}\label{eqn:twisted-complex}
+        ^\sigma\calC_i=\calC_{i-1+\sigma^i(k)}\oplus\calC_{i-1+\sigma^i(k-1)}\oplus\cdots\oplus \calC_{i-1+\sigma^i(2)}\oplus \calC_{i-1+\sigma^i(1)}
+    \end{equation}
+    and the differentials are
+    \[\partial^{^\sigma\calC}_i=\partial^\calC_{i-1+\sigma^i(k)}\oplus\partial^\calC_{i-1+\sigma^i(k-1)}\oplus\cdots\oplus \partial^\calC_{i-1+\sigma^i(1)}.\]
+\end{defn}
+\begin{rmk}
+    In the case that the complex is over a $k$-algebra and each $\calC_i$ has the same $k$-dimension $n$, this can be written more compactly as
+    \[\partial^{^\sigma\calC}_i=(A_{\sigma}^{i-1}\otimes I_n)\partial_i^{^k\calC}(A_{\sigma^{-1}}^i\otimes I_n),\]
+    where $A_\sigma$ is the permutation matrix corresponding to $\sigma$.
+\end{rmk}
+
+Using this definition, now assume that $\calC_\bullet$ is a $k$-periodic chain complex. Then by picking $\tau=(1\,k\,k-1\,\cdots\,2)\in\frakS_k,$ we can define the \textbf{shuffled periodic complex} $^\tau\calC_\bullet$.
+\begin{rmk}
+    In the case that $\dim_k \calC_i=n$ for all $i$, the differential for the shuffled periodic complex is
+\[\partial^{^\tau\calC}_i=\begin{pmatrix}
+0 & 0 & 0 & \cdots &0& \partial^\calC_{i}\\
+\partial^{\calC}_{i+k-1} & 0 & 0 & \cdots &0& 0\\
+0&\partial^{\calC}_{i+k-2}& 0 & \cdots &0& 0\\
+0 & 0 &\partial^\calC_{i+k-3}& \cdots &0& 0\\
+\vdots &\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & 0 & \cdots & \partial^\calC_{i+1} & 0
+\end{pmatrix}\]
+\end{rmk}
+
+The following results lead us to the conclusion that the shuffled periodic complex ``collapses'' a periodic complex in a way that turns the detection of eventually vanishing homology into a single computation. 
+\begin{prop}\label{prop:periodic}
+    If $\calC_\bullet$ is $k$-periodic and $\tau=(1\,k\,\cdots\, 2)\in\frakS_k,$ then $^\tau\calC_\bullet$ is a 1-periodic complex. That is, all differentials are the same.
+\end{prop}
+\begin{prf}
+    If $\calC_\bullet$ is $k$-periodic, then $\calC_i=\calC_{i+k}$ and $\partial^\calC_i=\partial^\calC_{i+k}$ for all $i$. Begin by remarking that, since $\tau^i(j)-1\equiv j-i-1\equiv\tau^{i+1}(j)\pmod{k},$
+    \[(i+1)-1+\tau^{i+1}(j)\equiv(i+1)-1+\tau^i(j)-1\equiv i-1+\tau^i(j)\pmod{k}.\]
+    Thus, since $\calC_\bullet$ is $k$-periodic, we get immediately that
+    \[\calC_{(i+1)-1+\tau^{i+1}(j)}=\calC_{i-1+\tau^i(j)}\]
+    and therefore by Equation~\ref{eqn:twisted-complex}, we get that $^\tau\calC_i={^\tau\calC_{i+1}}$ since all summands are equal. Since the differentials are dependent completely on the (order of the) summands of $^\tau\calC_i,$ this implies that $\partial^{^\tau\calC}_i=\partial^{^\tau\calC}_{i+1},$ proving that $^\tau\calC_\bullet$ is ($1$-)periodic.
+\end{prf}
+{\color{red}We should extend this to $\calC_\bullet$ that are only \textit{eventually} periodic. Should just require one extra piece (that the index under consideration is big enough).}
+
+
+
+\begin{prop}\label{prop:homology}
+    If $\calC_\bullet$ is a chain complex, $k$ is a positive integer, and $\sigma\in\frakS_k,$
+    \[H_i(^\sigma\calC_\bullet)=H_{i-1+\sigma^i(k)}(\calC_\bullet)\oplus H_{i-1+\sigma^i(k-1)}(\calC_\bullet)\oplus\cdots\oplus H_{i-1+\sigma^i(2)}(\calC_\bullet)\oplus H_{i-1+\sigma^i(1)}(\calC_\bullet)\]
+\end{prop}
+\begin{prf}
+    This follows quickly from the fact that
+    \[\ker\partial^{^\sigma\calC}_i=\ker\partial^\calC_{i-1+\sigma^i(k)}\oplus\ker\partial^\calC_{i-1+\sigma^i(k-1)}\oplus\cdots\oplus \ker\partial^\calC_{i-1+\sigma^i(1)}\]
+    and a similar equality holds for the image. Thus the quotient of the sum is the sum of the quotients and the result follows.
+\end{prf}
+
+\section{Rank varieties from matrix factorizations}
+In this section we will pull together our contributions as well as connections between some of the previous work in this area. In what follows we continue with the notation $Q_0\to Q_\alpha\to R_0$ to denote the skew polynomial ring in $n$ variables, hyperplane corresponding to $\alpha\in\mathbb P^n$, and finite dimensional algebras, respectively.
+
+
+Let $M\in\lmod{R_0}$ and let $M_\alpha$ denote the pullback of $M$ to $Q_\alpha.$ Furthermore, let $\calC_\bullet$ be the resolution of $k$ over $Q_\alpha$ given in {\color{red} insert reference for general theory (kirkman?)}. Define $\tilde\calC_\bullet=\calC_\bullet\otimes_{Q_\alpha} M$ and let $\calD_\bullet$ be the twisted complex (c.f. Definition~\ref{def:twisted-complex})
+\[\calD_\bullet={^{(1\,2)}\tilde\calC_\bullet.}\]
+We have shown in Section~\ref{sec:resolution-construction} how to construct a matrix pair $(A,B)$ representing the matrix factorization for $f_\alpha$ over $Q_0$. These, in turn, describe the differentials in $\calC_\bullet$ as maps between free $Q_\alpha$ modules: $\partial^\calC_{d+2k}=A$ and $\partial^\calC_{d+2k+1}=B.$ But then
+\[\partial^{\tilde\calC}_{d+2k}=A\otimes M\eqdef\tilde A\qquad \partial^{\tilde\calC}_{d+2k+1}=B\otimes M\eqdef\tilde B\]
+We know that $\calD_\bullet$ is eventually periodic from proposition~\ref{prop:periodic} and more specifically we can compute, for all $i>d$, that (depending on the parity of $d$) either
+\[\partial^\calD_i=\begin{pmatrix}0&\tilde A\\\tilde B&0\end{pmatrix}\qquad\text{or}\qquad\partial^\calD_i=\begin{pmatrix}0&\tilde B\\\tilde A&0\end{pmatrix}.\]
+
+Note that while $\partial^{\calD}_i$ is, by definition, a $Q_\alpha$-linear morphism, we can identify it as a genuine matrix over $k$ by specialization. That is, by taking $I=(x_1-\alpha_1,\dots,x_n-\alpha_n)$ and considering the $k$-morphism
+\[C(M_\alpha)\eqdef \partial^\calD_i\otimes_{Q_\alpha}Q_\alpha/I:\calD_i\otimes_{Q_\alpha}Q_\alpha/I\to \calD_{i-1}\otimes_{Q_\alpha}Q_\alpha/I.\]
+
+The general theory of these algebras tells us that when we use $n$ variables, the rank of these modules is $2^{n-1}$. When $M$ is finite dimensional over $k$ (say $\dim_k M=m)$, we can consider therefore any map $\varphi:Q_\alpha^{2^{n-1}}\otimes M\to Q_\alpha^{2^{n-1}}\otimes M$ as a $k[x_1,\dots,x_n]$-linear map between free modules of rank $ 2^{n-1}m.$ Since $C(M_\alpha)$  corresponds to the sum of two copies of $\partial^\calC_i$, this means that $C(M_\alpha)$ is a $(2^nm\times 2^nm)$ matrix.
+
+\begin{prop}
+    Let $Q_\alpha$ and $M$ be as above. Then the maximum rank of $C(M_\alpha)$ is $2^{n-1}m$.
+\end{prop}
+\begin{prf}
+    Since the resolution becomes 1-periodic with differential $C(M_\alpha)$, $\Im C(M_\alpha)\subset \ker C(M_\alpha)$, the conclusion is a consequence of the rank-nullity theorem.
+\end{prf}
+
+With this we can define
+\begin{defn}
+    Let $Q$ and $R$ be as usual. Let $M\in\lmod{R}$ and for any $\alpha\in\bbP^{n-1}$ let $M_\alpha$ denote the pullback of $M$ through the map $Q_\alpha\twoheadrightarrow R$. Then the \emph{rank variety corresponding to $M$} is
+    \[\supp^\mathrm{rnk}(M)=\{\alpha\in\bbP^{n-1}|\rk C(M_\alpha) < 2^{n-1}\cdot\dim_k M\}.\]
+\end{defn}
+
+\subsection{The result}
+We begin with a corollary
+\begin{thm}
+    Given $\alpha\in\bbP^{n-1}$, $\alpha\in\supp^\mathrm{rnk}(M)$ if any only if $\alpha\in \supp^\mathrm{hyp}(M).$
+\end{thm}
+\begin{prf}
+    Begin by assuming that $\alpha\in\supp^\textrm{rnk}(M),$ so that the rank of $C(M_\alpha)$ is less than $2^{n-1}\dim_kM.$ Then $\dim_k(H_i(\calD_\bullet))\ge\operatorname{nullity}C(M_\alpha)-\rank C(M_\alpha)>0$ for all $i\ge d$.
+    
+    We continue by recognizing that $H_i(\calD_\bullet)\cong H_i(\calC_\bullet)\oplus H_{i+1}(\calC_\bullet)\ne0$ if and only if $H_i(\calC_\bullet)$ or $H_{i+1}(\calC_\bullet)$ is nonzero. Thus by prop.~\ref{prop:homology}, either $\Tor^{Q_\alpha}_i(k,M)$ or $\Tor^{Q_\alpha}_{i+1}(k,M)$ is nonzero for all $i\ge d$. 
+
+    Recall that $Q_\alpha$ is $d$-Gorenstein and that $\Lambda = Q_\alpha/\operatorname{Jac}(Q_\alpha)=k$. Then by \cite[cor. 3.2]{negron-pevtsovaII}, the fact that $\Tor^{Q_\alpha}_i(k,M)$ is nonzero for arbitrarily large $i$ is equivalent to the fact that $\projdim M=\infty$, so we conclude that $\alpha\in\supp^\mathrm{hyp}(M)$.
+    
+    For the reverse direction, the same equivalences go through using the fact that $\calC_\bullet$ is 2-periodic. Therefore either $H_{d+2k}(\calC_\bullet)$ or $H_{d+2k+1}(\calC_\bullet)$ are all nonzero for positive $k$, hence $H_{\ge d}(\calD_\bullet)\ne0.$
+\end{prf}
+
+From this result, the following is an easy corollary.
+\begin{cor}
+    The varieties defined by $\supp^\textrm{hyp}$ and $\supp^\textrm{rnk}$ have the same underlying (topological) subspace of $\bbP^{n-1}.$
+\end{cor}
+
+\section{Hopf algebras}
+In this section, we will assemble the results that are relevant to our topic from the world of Hopf algebras. Our discussion will begin with a reminder of the definition of a Hopf object in a category and continue through a description of the process of bosonization. The section will culminate in a development of different varieties that can be associated to a Hopf algebra and some connections between them.
+
+\subsection{Hopf objects and algebras}
+One of the allures of the theory of Hopf algebras is that their definition is completely diagrammatic. Thus, for any monoidal category $\calC$, we can write out a series of diagrams which completely categorize the Hopf objects in $\calC$.
+
+\subsubsection{Hopf objects}
+Given a braided monoidal category $\calC$ with monoidal unit $k$ and twist isomorphism $\tau:A\otimes A\to A\otimes A$, we let a \textbf{Hopf object in $\calC$} be an object $A\in\calC$ along with maps
+\[\Delta:A\to A\otimes A\quad \nabla:A\otimes A\to A\quad \varepsilon:A\to k\quad u:k\to A\quad\text{and}\quad S:A\to A\]
+satisfying the diagrams for (co)associativity
+\begin{center}
+    \begin{tikzcd}
+        A\otimes A\otimes A \ar[r,"1\otimes\nabla"]\ar[d,"\nabla\otimes 1"]& A\otimes A\ar[d,"\nabla"]\\
+        A\otimes A\ar[r,"\nabla"] & A
+    \end{tikzcd}\qquad
+    \begin{tikzcd}
+        A\otimes A\otimes A & A\otimes A\ar[l,"1\otimes\Delta"]\\
+        A\otimes A\ar[u,"\Delta\otimes 1"] & A\ar[u,"\Delta"]\ar[l,"\Delta"]
+    \end{tikzcd}
+\end{center}
+(co)unit
+\begin{center}
+    \begin{tikzcd}
+        k\otimes A\ar[r,"u\otimes 1"] &A\otimes A\ar[d,"\nabla"]& A\otimes k\ar[l,"1\otimes u"]\\
+        & \ar[ur,leftrightarrow,"\simeq",swap]\ar[ul,leftrightarrow,"\simeq"]A &
+    \end{tikzcd}\qquad
+    \begin{tikzcd}
+        k\otimes A &A\otimes A\ar[l,"\varepsilon\otimes 1"]\ar[r,"1\otimes\varepsilon"]& A\otimes k\\
+        & \ar[ur,leftrightarrow,"\simeq",swap]\ar[ul,leftrightarrow,"\simeq"]A\ar[u,"\Delta"] &
+    \end{tikzcd}
+\end{center}
+compatibility relations
+\begin{center}
+    \begin{tikzcd}
+        A\otimes A\ar[d,"\Delta\otimes\Delta"]\ar[r,"\nabla"] & A\ar[r,"\Delta"] & A\otimes A\\
+        A\otimes A\otimes A\otimes A\ar[rr,"1\otimes\tau\otimes 1"] & & A\otimes A\otimes A\otimes A\ar[u,"\nabla\otimes\nabla"]
+    \end{tikzcd}
+\end{center}
+\begin{center}
+    \begin{tikzcd}
+        A\otimes A\ar[d,"\nabla"] & \ar[l,"u\otimes u"] k\otimes k\ar[d,leftrightarrow,"\simeq"]\\
+        A & k\ar[l,"u"]
+    \end{tikzcd}\qquad
+    \begin{tikzcd}
+        A\otimes A\ar[r,"\varepsilon\otimes\varepsilon"] & k\otimes k\ar[d,leftrightarrow,"\simeq"]\\
+        A\ar[r,"\varepsilon"]\ar[u,"\Delta"] & k
+    \end{tikzcd}\qquad
+    \begin{tikzcd}
+        k\ar[r,"u"]\ar[rr,bend right,swap,"id"] & A\ar[r,"\varepsilon"] & k
+    \end{tikzcd}
+\end{center}
+and finally that of the antipode
+\begin{center}
+    \begin{tikzcd}
+        A\otimes A \ar[r,"S\otimes 1"] & A\otimes A\ar[d,"\nabla"]\\
+        A\ar[u,"\Delta"]\ar[d,"\Delta"]\ar[r,"u\circ\varepsilon"] & A\\
+        A\otimes A\ar[r,"1\otimes S"] & A\otimes A\ar[u,"\nabla"]
+    \end{tikzcd}
+\end{center}
+
+In the special case when $\calC=\Vectk$, we call $A$ \textbf{a Hopf algebra (over $k$).}
+
+\subsection{Yetter-Drinfel'd categories}
+The key motivation for Yetter-Drinfel'd module categories in our work is to recognize a Hopf algebra $A$ as a smash product with another Hopf algebra, $\Gamma$, thereby decomposing $A$ into simpler parts. We do this by identifying a Hopf subalgebra $\Gamma$ in $A$ and then recognizing (in some way) a complement to $\Gamma$ that can be recognized as an element of $\GYD$. Then the process of bosonization developed in \cite{majid-bosonization} gives us a way to pass back and forth between Hopf objects in $\GYD$ and Hopf algebras admitting a nice inclusion of $\Gamma$.
+
+We begin by defining $\GYD$ itself. Let $\Gamma$ be a Hopf algebra in the traditional sense. \textbf{Then an object $M\in \GYD$} is a module with (left) action $\cdot:\Gamma\otimes M\to M$ and a comodule with (left) coaction $\rho:M\to \Gamma\otimes M$ subject to the compatibility condition
+\begin{equation}\label{eq:yd-condition}
+    g_{(1)}m_{(-1)}\otimes g_{(2)}\cdot m_{(0)}=(g_{(1)}\cdot m)_{(-1)}g_{(2)}\otimes (g_{(1)}\cdot m)_{(0)}
+\end{equation}
+and in the case that $\Gamma$ is a Hopf algebra (so that we have an antipode), we can rewrite this as
+\begin{equation}\label{eq:hopf-yd-condition}
+    \rho(g\cdot m)=g_{(1)}m_{(-1)}S(g_{(3)})\otimes g_{(2)}\cdot m_{(0)}
+\end{equation}
+where the convention is that $(\Delta\otimes 1)\Delta(g)=g_{(1)}\otimes g_{(2)}\otimes g_{(3)}$ and $\rho(m)=m_{(-1)}\otimes m_{(0)}$ in Sweedler notation. Compare this to the usual compatibility condition for a Hopf module:
+\[\rho(g\cdot m)=(\nabla_\Gamma\otimes \cdot)(1\otimes\tau\otimes 1)(\Delta\otimes\rho)(g\otimes m)=g_{(1)}m_{(-1)}\otimes g_{(2)}\cdot m_{(0)}.\]
+Here we can think of the extra $S(g_{(3)})$ term as encoding the ``twist'' that will later be shown to arise from a smash product.
+
+\subsubsection{Monoidal structure}
+In order to talk about a Hopf object in $\GYD$, we first need to establish that there is a meaningful $M\otimes N$ for $M,N\in\GYD$. In other words, we need to define a monoidal structure on this category. In fact, it will admit a braided monoidal structure!
+
+The monoidal structure that can be applied to $\GYD$ comes from the usual way of defining (co)actions on tensor products. Let $M,N\in\GYD$. Then we can define (co)actions on the vector space $M\otimes N$ in the following way: for $g\in \Gamma, m\in M,$ and $n\in N,$
+\begin{equation}\label{eq:tensor-action-coaction}
+    g\cdot (m\otimes n)=g_{(1)}\cdot m\otimes g_{(2)}\cdot n\qquad \rho(m\otimes n)=m_{(-1)}n_{(-1)}\otimes m_{(0)}\otimes n_{(0)}
+\end{equation}
+
+In the case that $\Gamma$ is the group algebra for an abelian group (which will suffice for our needs), the Yetter-Drinfel'd condition \eqref{eq:hopf-yd-condition} reduces to
+\[\rho(g\cdot m)=gm_{(-1)}g^{-1}\otimes g\cdot m_{(0)}=m_{(-1)}\otimes g\cdot m_{(0)}=(1\otimes g)\rho(m).\]
+For these $\Gamma$, we can easily confirm that $M\otimes N$ with the (co)action defined in \eqref{eq:tensor-action-coaction} satisfies this property:
+\begin{align*}
+    \rho(g\cdot m\otimes n)&= \rho(g\cdot m\otimes g\cdot n)\\
+    &= (g\cdot m)_{(-1)}(g\cdot n)_{(-1)}\otimes (g\cdot m)_{(0)}\otimes (g\cdot n)_{(0)}\\
+    &= m_{(-1)}n_{(-1)}\otimes g\cdot m_{(0)}\otimes g\cdot n_{(0)}\\
+    &= (1\otimes g)\rho(m\otimes n)
+\end{align*}
+so $M\otimes N\in\GYD.$ The computation for a general Hopf algebra requires leveraging coassociativity throughout, making the proof more difficult to read. In the following I compress the subscript notation so that (e.g.) $g_{(1)(2)(1)}$ becomes $g_{121}.$
+\begin{align*}
+    \rho(g\cdot m\otimes n)&=\rho(g_1\cdot m\otimes g_2\otimes n)\\
+    &=(g_1\cdot m)_{-1}(g_2\cdot n)_{-1}\otimes (g_1\cdot m)_0\otimes (g_2\cdot n)_0\\
+    &=g_{111}m_{-1}S(g_{12})g_{211}n_{-1}S(g_{22})\otimes g_{112}\cdot m_0\otimes g_{21}\cdot n_0\\
+    &= g_{111}m_{-1}S(g_{121})g_{122}n_{-1}S(g_{22})\otimes g_{112}\cdot m_0\otimes g_{21}\cdot n_0\\
+    &=g_{111}m_{-1}\varepsilon(g_{12})n_{-1}S(g_{22})\otimes g_{112}\cdot m_0\otimes g_{21}\cdot n_0\\
+    &=g_{11}m_{-1}n_{-1}S(g_{22})\otimes \varepsilon(g_{122})g_{121}\cdot m_0\otimes g_{21}\cdot n_0\\
+    &=g_{11}(m\otimes n)_{-1}S(g_{22})\otimes g_{12}\cdot m_0\otimes g_{21}\cdot n_0\\
+    &=g_{11}(m\otimes n)_{-1}S(g_{2})\otimes g_{121}\cdot m_0\otimes g_{122}\cdot n_0\\
+    &=g_{11}(m\otimes n)_{-1}S(g_{2})\otimes g_{12}\cdot (m_0\otimes n_0)\\
+    &=g_1(m\otimes n)_{-1}S(g_3)\otimes g_2\cdot(m\otimes n)_0
+\end{align*}
+This computation shows that $M\otimes N$ with the given (co)action is indeed back in $\GYD$.
+
+We still need to define the monoidal unit, which will be $k$. We can define (co)module structures thusly:
+\[g\cdot 1_k=\varepsilon(g)\qquad \rho(1_k)=1_\Gamma\otimes 1_k,\]
+where we can verify the YD condition \eqref{eq:yd-condition} for $m=1_k$ and $g\in \Gamma$
+\begin{align*}
+    g_{(1)}m_{(-1)}\otimes g_{(2)}m_{(0)}&= g_{(1)}1_\Gamma\otimes g_{(2)}\cdot 1_k\\
+    &= g_{(1)}\otimes \varepsilon(g_{(2)})\\
+    &= g_{(1)}\varepsilon(g_{(2)})\otimes 1_k\\
+    &= \varepsilon(g_{(1)})g_{(2)}\otimes 1_k\\
+    &= (g_{(1)}\cdot 1_k)_{(-1)}g_{(2)}\otimes (g_{(1)}\cdot 1_k)_{(0)}
+\end{align*}
+and by using the isomorphism $\lambda:M\otimes k\to M$ via $m\otimes n\mapsto nm$, we can see
+\[\lambda(g\cdot m\otimes n)=\lambda(g_{(1)}\cdot m\otimes g_{(2)}\cdot n)=\lambda(g_{(1)}\cdot m\otimes\varepsilon(g_{(2)})n)=g\cdot nm=g\cdot\lambda(m\otimes n)\]
+and for the coaction
+\begin{align*}
+    (1\otimes\lambda)(\rho(m\otimes n))&=(1\otimes\lambda)(n\rho(m\otimes 1_k))\\
+    &=(1\otimes\lambda)(n(m_{(-1)}1_\Gamma\otimes m_{(0)}\otimes 1_k))\\
+    &=\rho(n)\rho(m)=\rho(\lambda(m\otimes n))
+\end{align*}
+so it is indeed the tensor unit.
+
+\subsubsection{Braidings}\label{subsubsec:braiding}
+Returning to the case of a general $\Gamma$, this monoidal structure on $\GYD$ admits a braiding defined by isomorphisms:
+\[\sigma_{M,N}(m\otimes n)=(m_{(-1)}\cdot n)\otimes m_{(0)}\]
+with inverses
+\[(\sigma_{M,N})^{-1}(n\otimes m)=m_{(0)}\otimes S^{-1}(m_{(-1)})\cdot n.\]
+\begin{rmk}
+    Notice that this definition requires the definition of both an action and coaction in order to be defined. To establish these are honest inverses, consider the composition
+    \begin{align*}
+        {\sigma_{M,N}}^{-1}\circ\sigma_{M,N}(m\otimes n) &={\sigma_{M,N}}^{-1}((m_{(-1)}\cdot n)\otimes m_{(0)})\\
+        &=m_{(0)(0)}\otimes S^{-1}(m_{(0)(-1)})\cdot(m_{(-1)}\cdot n)\\
+        &=m_{(0)}\otimes S^{-1}(m_{(-1)(1)}))\cdot(m_{(-1)(2)}\cdot n)\\
+        &=m_{(0)}\otimes (S^{-1}(m_{(-1)(1)})m_{(-1)(2)})\cdot n\\
+        &=m_{(0)}\otimes \varepsilon(m_{(-1)})n\\
+        &=m\otimes n.
+    \end{align*}
+    Here we required the use of both the action and coaction to define the braiding, but the above proof used only (co)associtivity, (co)unit, and other properties inherent in bimodules over a Hopf algebra.
+\end{rmk}
+
+The braiding given above indeed satisfies the braid relation:
+\begin{align*}
+    \sigma_{A\otimes B,C}(a\otimes b\otimes c)&=(a\otimes b)_{(-1)}\cdot c\otimes (a\otimes b)_{(0)}\\
+    &=(a_{(-1)}b_{(-1)})\cdot c\otimes a_{(0)}\otimes b_{(0)}\\
+    &=(\sigma_{A,C}\otimes 1)(a\otimes b_{(-1)}\cdot c\otimes b_{(0)})\\
+    &=(\sigma_{A,C}\otimes 1)(1\otimes\sigma_{B,C})(a\otimes b\otimes c)
+\end{align*}
+so the braidings given above indeed define a braided monoidal structure on $\GYD$, as desired.
+
+\subsection{Bosonization}
+The process of Bosonization was introduced by Radford in \cite{radford-product} and rediscovered and renamed by Majid in \cite{majid-bosonization}, but has been studied widely thereafter, including the work in \cite{andruskiewitsch-schneider-lifting}. A nice discussion of bosonization and its context among other topics in Hopf algebras can be found in Radford's book \cite[chp. 11]{radford-book}.
+
+\subsubsection{Bosonizing}
+To demonstrate the bosonization process, we begin by letting $R\in\GYD$ be a Hopf object. That means that $R$ is naturally imbued with a large amount of data: an action $\cdot:\Gamma\otimes R\to R$, a coaction $\rho:R\to \Gamma\otimes R$, a multiplication $\nabla_R:R\otimes R\to R$, a comultiplication $\Delta_R:R\to R\otimes R$, a unit $u_R:k\to R$, a counit $\varepsilon_R:R\to k,$ and an antipode $S_R:R\to R$. The bosonization of $R$ is the result of computing $A=R\#\Gamma$ (more accurately, the Radford biproduct $R\times \Gamma$ although we use the ``smash'' notation in what follows), which, leveraging the action and coaction on $R$, will result in a Hopf structure $(\nabla_A,\Delta_A,u_A,\varepsilon_A,S_A)$ on $A$.
+
+As a vector space, $A=R\otimes \Gamma$ and the algebra structure on $A$ comes from the traditional Hopf smash product (c.f. \cite{montgomery}), which requires that $R$ be a module over $\Gamma$. We will use the notation $r\# g$ to denote a simple tensor in $R\# \Gamma$, sometimes omitting the smash symbol ($r\#g=rg$) when it is clear from context that $r\in R$ and $g\in \Gamma.$ Then in $R\#\Gamma$ the multiplication is given as
+\[\nabla_A((r\# g)\otimes (s\# h))=r(g_{(1)}\cdot s)\# g_{(2)}h\]
+and $A$ is imbued with the unit
+\[u(r\# g)=u_R(r)\# u_\Gamma(g).\]
+
+What distinguishes the Radford biproduct from the usual smash product, however, is that we can leverage our coaction to give us a coalgebra structure on $A$. Specifically, we define
+\[\Delta_A(r\# g)=(r_{(1)}\# r_{(2)(-1)}g)\otimes(r_{(2)(0)}\# g)\]
+where, notice, that the subscripts above come from the comultiplication and coaction on $R\in\GYD.$ The counit is
+\[\varepsilon_A(r\otimes g)=\varepsilon_R(r)\varepsilon_\Gamma(g).\]
+Using the antipodes on both $R$ and $\Gamma$, we can define
+\[S_A(r\# g)=\nabla_A(1\#S_\Gamma(r_{(-1)}g)\otimes S_R(r_{(0)})\# 1).\]
+
+We reproduce without proof the following result:
+\begin{thm}[\cite{radford-book}, pp. 371-3]
+    If $\Gamma$ is a Hopf algebra and $R$ is a Hopf object in $\GYD$, the biproduct $A=R\# \Gamma$, with the operations defined above, is a Hopf algebra (over $k$).
+\end{thm}
+
+\subsubsection{``De''bosonizing}
+Notice that in the case of $R\#\Gamma$ above, there are two maps that show up naturally:
+\[\pi:R\#\Gamma\to \Gamma,\quad \pi(r\# g)=g\qquad\text{and}\qquad \iota:\Gamma\to R\# \Gamma,\quad \iota(g)=1\# g.\]
+Further, we have $\pi\circ\iota=\mathrm{id}_{\Gamma}$ and one can confirm that these are both Hopf algebra morphisms. In fact, any time a Hopf algebra $A$ admits such maps, we can reverse this process to extract a Hopf object $R\in\GYD$ that bosonizes to $A$!
+
+Let $\Gamma$ be a Hopf algebra as per usual and let $A$ be another Hopf algebra admitting (Hopf) maps $\iota:\Gamma\to A$ and $\pi:A\to \Gamma$ satisfying $\pi\circ\iota=\mathrm{id_\Gamma}.$ Notice that we can define a right coaction on $A$ by $\Gamma$ via
+\[\hat\rho(a)=a_{(1)}\otimes\pi(a_{(2)})\in A\otimes \Gamma.\]
+Then we define $R$ to be the ($\hat\rho,1$)-coinvariants of this action:
+\[R=\{a\in A:\hat\rho(a)=a\otimes 1\}.\]
+This is a useful way to think of $R$ as a set since it matches very closely with what we would hope $R$ would look like inside $A$ (it the elements with a trivial coaction by $\Gamma$). However we can do one better! We can define a projection $\Pi:A\to R$ as follows:
+\[\Pi(a)=a_{(1)}\iota(S(\pi(a_{(2)})))\]
+and this gives us a way to project onto the ``part'' of $a$ that is in $R$.
+
+Now, $R$ admits an action and coaction by $\Gamma$ defined by
+\[g\cdot r = \iota(g_{(1)})r\iota(S_\Gamma(g_{(2)}))\qquad \rho(r)=\pi(r_{(1)})\otimes r_{(2)}\]
+and we can compute that $R\in\GYD$
+\begin{align*}
+    \rho(g\cdot r)&=\rho(\iota(g_{(1)})r\iota(S_\Gamma(g_{(2)})))\\
+    &=\pi(\iota(g_{(1)})_{(1)}r_{(1)}\iota(S(g_{(2)}))_{(1)})\otimes\iota(g_{(1)})_{(2)}r_{(2)}\iota(S(g_{(2)}))_{(2)}\\
+    &= g_{(1)(1)}r_{(-1)}S(g_{(2)(1)})\otimes \iota(g_{(1)(2)})r_{(0)}\iota(S(g_{(2)(2)}))\\
+    &={\text{\color{red}Finish this up}}
+\end{align*}
+
+The algebra structure and counit on $R$ is inherited as a subalgebra of $A$, since if $r,s\in R$, \[\hat\rho(rs)=\hat\rho(r)\hat\rho(s)=rs\otimes 1.\]
+Furthermore, we can define coalgebra structure on $R$ in the following way:
+\[\Delta(r)=\Pi(r_{(1)})\otimes r_{(2)}\qquad \varepsilon(r)=\varepsilon_A\circ \Pi(r).\]
+
+\subsection{Examples}
+In this section, we work through a couple of examples of (de)bosonization, illustrating how one can pass from a Hopf object in $\GYD$ to a Hopf algebra and back.
+\subsubsection{Taft algebra}
+Let $\ell\in\bbN$ be a positive integer and $q\in\bbC$ be an $\ell^\text{th}$ root of unity. Then the \textbf{Taft algebra} $T(q)$ corresponding to these choices is
+\[T(q)\eqdef \bbC[c,x]/\langle c^\ell-1, x^\ell, xc-qcx\rangle.\]
+Now $T(q)$ also admits a coalgebra structure defined by
+\[\Delta(x)=c\otimes x + x\otimes 1\qquad \Delta(c)=c\otimes c\qquad \varepsilon(x)=0\qquad \varepsilon(c)=1\]
+along with antipode
+\[S(c)=c^{-1}=c^{\ell-1}\qquad S(x)=-c^{\ell-1}x.\]
+
+Let $G=\bbZ/\ell\bbZ$ and $\Gamma$ be the Hopf algebra $\bbC G\cong\bbC[g]/(g^\ell).$ There are (Hopf) maps
+\[\iota:\Gamma\to T(q)\quad\text{via}\quad \iota(g^i)=c^i\qquad\text{and}\qquad \pi:T(q)\to \Gamma\quad\text{via}\quad \pi(x)=0,\quad\pi(c)=g\]
+and one easily verifies that $\pi\circ\iota$ is the identity on $\Gamma.$ Therefore we can debosonize $T(q):$ here we let $\hat\rho(a)=a_{(1)}\otimes \pi(a_{(2)})$ and get
+\[R=\{a\in T(q):\hat\rho(a)=a\otimes 1\}=\bbC[x]/(x^\ell)\subset T(q).\]
+
+Since
+\[(\Delta\otimes 1)\circ\Delta(x)=c\otimes c\otimes x+c\otimes x\otimes 1+x\otimes 1\otimes 1,\]
+we can compute the $\Gamma$-action and -coaction on $R$ to be
+\[g\cdot x = \iota(g)x\iota(S(g))=cxc^{\ell-1}=q^{\ell-1}x\qquad\text{and}\qquad\rho(x)=\pi(c)\otimes x + \pi(x)\otimes 1 = g\otimes x\]
+and one easily verifies
+\begin{align*}
+    \rho(g\cdot x)&=q^{\ell-1}\rho(x)\\
+    &=q^{\ell-1}g\otimes x\\
+    &=ggg^{-1}\otimes q^{\ell-1}x\\
+    &=g_{(1)}m_{(-1)}S(g_{(3)})\otimes g_{(2)}\cdot x_{(0)}
+\end{align*}
+so indeed $R\in\GYD.$
+
+The projection map $\Pi:T(q)\to R$ is
+\[\Pi(x)=x_{(1)}\iota(S(\pi(x_{(2)})))=c\iota(S(\pi(x)))+x\iota(S(\pi(1)))=x\]
+and
+\[\Pi(c)=c\iota(S(\pi(c)))=cc^{\ell-1}=1\]
+so the coalgebra structure is given by
+\[\Delta_R(x)=(\Pi\otimes 1)\circ\Delta_{T(q)}(x)=1\otimes x+x\otimes 1\quad\text{and}\quad\varepsilon_R(x)=\varepsilon_{T(q)}\circ\Pi(x)=0.\]
+Notice that the bialgebra structure is defined identically to the $\ell$-truncated universal enveloping algebra of $\bbC$. Although this is a bialgebra object in $\GYD$ (instead of in $\Vectk$), we still get that there is a unique antipode
+\[S_R(x)=-x\]
+making $R$ into a Hopf object.
+
+\subsubsection{Quantum complete intersections}
+More relevant to our needs in this work are the quantum complete intersections. Here, we start with a positive integer $\ell$, a skew symmetric matrix $A=(a_{ij}),$ and an $\ell^\text{th}$ root of unity $q$ with $q_{ij}=q^{a_{ij}}.$ This gives us an algebra
+\[R_0=k_q[x_1,\dots,x_n]/(x_ix_j-q_{ji}x_jx_i, x_i^\ell).\]
+We can define the coalgebra structure on $R_0$ by making the $x_i$ all primitive:
+\[\Delta_R(x_i)=x_i\otimes 1+1\otimes x_i,\qquad \varepsilon_R(x_i)=0\]
+along with antipode $S(x_i)=-x_i.$
+
+There are many different choices for $\Gamma$, but first we pick $\Gamma=\bbC G,$ where $G$ the elementary abelian group
+\[G=(\bbZ/\ell\bbZ)^n=\langle g_1,\dots,g_n|g_ig_j=g_jg_i, g_i^\ell=1\rangle.\]
+Next we need to identify an action and coaction by $\Gamma$ on $R_0$. We let
+\[g_i\cdot x_j=q_{ji}x_j\qquad\text{and}\qquad \rho(x_i)=g_i\otimes x_i\]
+and see that $R_0$ with this structure is in $\GYD:$
+\begin{align*}
+    \rho(g_i\cdot x_j)&=\rho(q_{ji}x_j)\\
+    &=q_{ji}g_j\otimes x_j\\
+    &=g_ig_jg_i^{-1}\otimes g_i\cdot x_j\\
+    &=(g_i)_{(1)}(x_j)_{(-1)}S((g_i)_{(3)})\otimes (g_i)_{(2)}\cdot (x_j)_{(0)}.
+\end{align*}
+
+Notice that $\GYD$ admits a braiding as we saw in section~\ref{subsubsec:braiding} and in particular we get
+\[\sigma_{R_0,R_0}(x_i\otimes x_j)=g_i\cdot x_j\otimes x_i=q_{ji}x_j\otimes x_i\]
+which mirrors the $q$-commutativity relation $x_ix_j=q_{ji}x_jx_i.$
+
+Now we construct $\Lambda=R_0\#\Gamma.$ We have the usual smash product for the algebra structure:
+\[(x_i\#g_j)(x_k\#g_l)=x_i(g_j\cdot x_k)\#g_jg_l=q_{kj}x_ix_k\#g_jg_l\]
+and for the coalgebra structure we have
+\[\Delta_\Lambda(x_i\# g_j)=(x_i\# g_j)\otimes(1\# g_j) + (1\# g_ig_j)\otimes(x_i\# g_j).\]
+When we replace $g_j$ with $1$ and suppress the sharp notation, we get that 
+\[\Delta(x_i)=x_i\otimes 1+g_i\otimes x_i\]
+which matches with the character notation of \cite{negron-pevtsovaI}:
+\[\Delta(x_i)=x_i\otimes 1+K_i\otimes x_i\]
+where $K_i$ is the character $q^{(e_i,-)}:G^\vee\to\bbC^\times.$
+
+Finally we compute the antipode for $\Lambda$ to be
+\[S_\Lambda(x_i\#g_j)=(1\# g_j^{-1}g_i^{-1})(-x_i\# 1)=-q_{ij}^{-1}q_{ii}^{-1}x_i\#g_j^{-1}g_i^{-1}=-q_{ji}x_i\#g_j^{-1}g_i^{-1}\]
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%  Bibliography %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\printbibliography
+
+\end{document}

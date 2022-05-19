@@ -1,0 +1,2154 @@
+%  ========================================================================
+%  Copyright (c) 1985 The University of Washington
+%
+%  Licensed under the Apache License, Version 2.0 (the "License");
+%  you may not use this file except in compliance with the License.
+%  You may obtain a copy of the License at
+%
+%      http://www.apache.org/licenses/LICENSE-2.0
+%
+%  Unless required by applicable law or agreed to in writing, software
+%  distributed under the License is distributed on an "AS IS" BASIS,
+%  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%  See the License for the specific language governing permissions and
+%  limitations under the License.
+%  ========================================================================
+%
+
+% Documentation for University of Washington thesis LaTeX document class
+% by Jim Fox
+% fox@washington.edu
+%
+%    Revised 2020/02/24, added \caption()[]{} option.  No ToC.
+%
+%    Revised for version 2015/03/03 of uwthesis.cls
+%    Revised, 2016/11/22, for cleanup of sample copyright and title pages
+%
+%    This document is contained in a single file ONLY because
+%    I wanted to be able to distribute it easily.  A real thesis ought
+%    to be contained on many files (e.g., one for each chapter, at least).
+%
+%    To help you identify the files and sections in this large file
+%    I use the string '==========' to identify new files.
+%
+%    To help you ignore the unusual things I do with this sample document
+%    I try to use the notation
+%       
+%    % --- sample stuff only -----
+%    special stuff for my document, but you don't need it in your thesis
+%    % --- end-of-sample-stuff ---
+
+
+%    Printed in twoside style now that that's allowed
+%
+ 
+\documentclass [11pt, proquest] {uwthesis}[2020/02/24]
+
+%% Nico's imports %%
+%\usepackage{setspace}
+\usepackage[thmmarks]{ntheorem}
+\usepackage{amssymb, amsfonts, amsmath, mathrsfs, color, tikz-cd, adjustbox, bbm, xcolor, wasysym}
+\usepackage[ntheorem,framemethod=TikZ]{mdframed}
+\usepackage{diagbox}
+%Disabling for now to speed up compilation
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks = true,
+	linkcolor = [rgb]{0,0,0.5},
+	citecolor = [rgb]{0.6,0,0},
+	urlcolor = [rgb]{0,0,0.5}
+}
+
+% Document-Specific Macros
+\DeclareMathOperator{\Spc}{Spc}
+\DeclareMathOperator{\Pol}{Pol}
+\newcommand{\vi}{\mathbf{i}}
+\newcommand{\vj}{\mathbf{j}}
+\newcommand{\vk}{\mathbf{k}}
+\newcommand{\vl}{\mathbf{l}}
+\newcommand{\vm}{\mathbf{m}}
+\DeclareMathOperator{\rad}{rad}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\add}{\mathbf{add}}
+
+% FIX NOTATION SO THAT RING IS INCLUDED
+\DeclareMathOperator{\supph}{supp^\mathit{hyp}}
+\DeclareMathOperator{\supphR}{supp^\mathit{hyp}_R}
+\DeclareMathOperator{\supphRnaught}{supp^\mathit{hyp}_{R_0}}
+\DeclareMathOperator{\suppc}{supp^\mathit{coh}_R}
+\DeclareMathOperator{\suppr}{supp^\mathit{rnk}}
+\DeclareMathOperator{\supprR}{supp^\mathit{rnk}_R}
+\DeclareMathOperator{\supprRnaught}{supp^\mathit{rnk}_{R_0}}
+\DeclareMathOperator{\rk}{rk}
+\newcommand{\doubleharpoonright}{%
+  \rightharpoonup\mathrel{\mspace{-15mu}}\rightharpoonup
+}
+\newcommand{\doubleharpoonleft}{%
+  \leftharpoonup\mathrel{\mspace{-15mu}}\leftharpoonup
+}
+
+% Suppress mdframed telling us about "bad breaks". I can already see them.
+%\usepackage{silence}
+%\WarningFilter{mdframed}{You got a bad break}
+%\makeatletter
+%\mdf@PackageWarning{You got a bad break\MessageBreak
+%  because the last split box is empty\MessageBreak
+%  You have to change the settings}
+%\makeatother
+
+
+%Input my definitions
+\input{mydefs.tex}
+
+ 
+%
+% The following line would print the thesis in a postscript font 
+
+% \usepackage{natbib}
+% \def\bibpreamble{\protect\addcontentsline{toc}{chapter}{Bibliography}}
+\newcommand{\comment}[1]{}
+
+\setcounter{tocdepth}{1}  % Print the chapter and sections to the toc
+ 
+
+% ==========   Local defs and mods
+%
+ 
+
+
+
+\begin{document}
+ 
+% ==========   Preliminary pages
+%
+% ( revised 2012 for electronic submission )
+%
+
+\prelimpages
+ 
+%
+% ----- copyright and title pages
+%
+\Title{Representations and Support Theory for Bosonized Quantum Complete Intersections}
+\Author{Nico Courts}
+\Year{2022}
+\Program{Mathematics}
+
+\Chair{Julia Pevtsova}{Professor}{Mathematics}
+\Signature{Max Lieblich}
+\Signature{James Zhang}
+\Signature{Marina Meila}
+
+\copyrightpage
+
+\titlepage  
+
+
+%
+% ----- abstract
+%
+
+
+\setcounter{page}{-1}
+\abstract{%
+    Support theories are frequently used by representation theorists when trying to understand module categories with complicated structure. We associate to an algebra $\Lambda$ a variety where the topological structure is determined by the support of modules over $\Lambda.$ Support comes in many flavors, from the easily described (but computationally difficult) to more abstract notions of support that are more amenable to computation. In this work, we are interested in understanding support theories on a class of algebras called bosonized quantum complete intersections (BQCIs), which are noncommutive $k$-algebras with some useful parallels to commutative algebra. Drawing upon prior notions of matrix factorizations and hypersurface support, we develop a notion of rank support $\suppr$ that reduces the computation of homological support to (essentially) a linear algebra problem. Along the way, we develop computational tools necessary to explicitly compute support for these algebras and provide some insight into the theoretical results that power our observations.
+}
+ 
+%
+% ----- contents & etc.
+%
+\tableofcontents
+%\listoffigures % kinda silly
+%\listoftables  % I have no tables
+ 
+
+%
+% ----- acknowledgments
+%
+\acknowledgments{% \vskip2pc
+  % {\narrower\noindent
+  I wish to express sincere appreciation to
+  the members of the Mathematics department at the University of Washington, without whom 
+  none of this would have been possible. In particular, I could not have succeeded without the help of professors Sara Billey, Max Lieblich, Monty McGovern, Isabella Novik, Steffen Rohde, Paul Smith, and James Zhang, all of whom have put significant time and energy into helping shape me into the mathematician and person I am today. Uncountable email exchanges and meetings are doubtless the reason that this document exists at all. The advising department, particularly Sarah Garner and Alice Boytz, have been invaluable in navigating my way through the department. Truly, this program is what it is largely due to your efforts. My love goes out to my colleagues in the department, in particular Molly Baird, Thomas Carr, Joon Yong Choi, David Clancy, Sami Davies, Kirill Golubnichiy, Graham Gordon, Sean Griffin, Paige Helms, Sid Mathur, Sam Roven, Smart Thep, Cody Tipton, Jordan Weaver, and many, many others that I have worked with and who have impacted my career and life for the better.
+  
+  Of course, none of this would have been possible without my wonderful advisor, Julia Pevtsova. Julia, you've not only helped me learn everything I know about representation theory, but your love for life, nature, and your family have had a huge impact on how I have grown in the past several years. I can only hope that one day I will embody some of the wonderful qualities you share with the world: your wisdom, your heart, and your love for sharing knowledge with others. Thank you for everything you've given me.
+  % \par}
+}
+
+%
+% ----- dedication
+%
+\dedication{\begin{center}To my loving partner in life, Allison.\end{center}}
+
+%
+% end of the preliminary pages
+ 
+ 
+ 
+%
+% ==========      Text pages
+%
+
+\textpages
+ 
+% ========== Chapter 1
+ 
+\chapter {Introduction}
+
+    The goal of this document is to understand and extend the representation and support theory associated with a family of \textit{bosonized quantum complete intersections (BQCIs)}, studied by Negron and Pevtsova in a series of recent preprints including \cite{negron-pevtsovaI} and \cite{negron-pevtsovaII}. These algebras can be viewed as a ``Hopfy'' analog of the traditional complete intersection rings one encounters in commutative algebra. Although these rings admit several equivalent descriptions, one way to define them is as (possibly the completion of) a quotient of a regular local ring by an ideal that is generated by a regular sequence. In particular, these rings are Gorenstein, which gives us nice finiteness properties in terms of their cohomology. In fact, it is usually this latter condition that will empower us as we talk about BQCIs and other associated algebras.
+    
+    The most natural construction of BQCIs is as follows: we begin with a skew polynomial algebra $Q_0$ and compute the truncated version $R_0=Q_0/(x_i^\ell)$ for some positive integer $\ell$. The resulting algebra is not a Hopf algebra in the traditional sense (over the base field $k$), but is a \textit{braided Hopf algebra}, or a Hopf object in a non-symmetric monoidal category $\GYD.$ The general theory of these objects has been developed in detail by \cite{majid-bosonization} and \cite{radford-product}, among others, where this process has been named \textit{bosonization.} This gives an equivalence between braided Hopf algebras in $\GYD$ and honest Hopf algebras with subalgebras $\Gamma$ where the inclusion map $\Gamma\hookrightarrow H$ admits a section.
+    
+    The benefit of thinking about a BQCI as the result of this process is that we can use the algebras generated along the way to compute support in a more familiar setting, and then study how each of these processes affects this computation. This leads to the following natural division of the focus of this document: in Part~\ref{prt:qci-qlp} of this work, we will focus in on the quantum complete intersection rings via a $q$-commutative analog of the the work done by \cite{avramov-iyengar} (itself relying on the foundational work of \cite{eisenbud80} in matrix factorizations) to determine the support for such rings using more computationally-friendly techniques. In Chapter~\ref{chp:matrix-factorizations}, we will write down a process for determining a suitable matrix factorization (equivalently, periodic resolution) corresponding to a module $M$ over a \textit{hypersurface} $Q_\alpha$ for some $\alpha\in\bbP^{n-1}.$ In essence, we will be using the language of hypersurfaces to ``slice'' our algebra and then use these local pictures to say something about our algebra $R_0.$ 
+    
+    In Part~\ref{prt:bqci}, we introduce the details of bosonization including examples for how to compute them explicitly, then continue to describe how the bosonization process affects the cohomology (and thus the support!) of an algebra. Along with the foundational work in \cite{radford-product} and \cite{majid-bosonization} on bosonization, we also discuss results in \cite{lorenzlorenz95}, which empowers us to use the language of spectral sequences to compute the support of a bosonized algebra. In understanding these computations, we will be enabled to give an explicit method for computing support of these algebras by appealing to the techniques developed in Part~\ref{prt:qci-qlp}. We also include a discussion of the tensor product property as it relates to these algebras as well as a conjecture as to whether it is satisfied.
+
+\section{Our contributions}
+    We collect here for convenience the major results of our work.
+    \begingroup
+    \def\thethm{3.10}
+    \addtocounter{thm}{-1}
+    \begin{thm} %
+        Given any $\alpha\in\bbP^{n-1}$, $\alpha\in\supprRnaught(M)$ if any only if $\alpha\in \supphRnaught(M).$
+    \end{thm}
+    \endgroup
+    \begingroup
+    \def\thethm{6.7}
+    \addtocounter{thm}{-1}
+    \begin{thm} % Theorem 7'
+        Let $R_0,$ $R,$ $M,$ and $G$ be as in section \ref{sec:notation}. Then if $\alpha:\supphR(M)\to \supprR(M)$ is the bijection arising from lemmas \ref{thm:hyp-rank-equiv} and \ref{lem:G-action-bosonization},
+        $\alpha\circ\kappa$ provides a homeomorphism
+        \[\suppc(M)\cong\supprR(M)\cong\supprRnaught\]
+    \end{thm}
+    \endgroup
+
+\section{Notation and constructions}\label{sec:notation}
+    Throughout this document we will work with the same objects in many different ways. There are a lot of parameters that are used to define the algebras we study herein (although in many cases they will not significantly affect the final results). Instead of reintroducing them each time, we establish once and for all a set of notation that will always represent the parameters that correspond to the algebra currently under discussion. Notice that the exact number of parameters will depend on the context---for instance, if we are computing within an example where $n=3$, we will have a $q_{13},$ though this notation wouldn't make sense for $n=2.$
+    
+    Let $Q_0=(k, n, \ell, q, A, \le)$ be the \textbf{skew polynomial algebra} over the field $k$ (can often be any field with $\ch k=0$ or $>\ell$, though we are primarily concerned with $k=\bbC$) given by the following data:
+    \begin{itemize}
+        \item $n$ indeterminates $x_1,\dots, x_n$
+        \item a positive integer $\ell$
+        \item a primitive $\ell^\text{th}$ root of unity, $q$
+        \item a skew-symmetric matrix $A=(a_{ij})\in M_n(\bbZ)$
+    \end{itemize}
+    We will make repeated use of the simplifying notation $q_{ij}\eqdef q^{a_{ij}}$ in what follows. Then $Q_0$ is given explicitly by
+    \[Q_0=k\langle x_1,\dots,x_n\rangle/(x_ix_j-q_{ji}x_jx_i)_{i,j}\]
+    where, notice, that this is simply a $q$-analog of the polynomial algebra $k[x_i]$ and, furthermore, that the skew-symmetry of $A$ ensures that the $q$-commutativity relations on $Q_0$ are compatible. Note that, when the matrix $A$ and commutativity relations are understood to exist (as will always be the case in this work), we talk about ``the'' skew polynomial algebra and write
+    \[Q_0 = k_q[x_1,\dots,x_n]\]
+    which will be useful when we want to emphasize the generators without having to worry about writing down the explicit commutativity relations.
+    
+    We define the \textbf{(unbosonized) quantum complete intersection} (or QCI) to be the truncated version of the skew polynomial algebra where we mod out by $\ell^{th}$ powers:
+    \[R_0 = Q_0/(x_i^\ell)_{i=1}^n=k\langle x_1,\dots,x_n\rangle/(x_ix_j-q_{ji}x_jx_i, x_i^\ell)_{i,j}.\]
+    Using these constructions, we get the sequence of algebras
+    \[Z\eqdef k[y_1,\dots,y_n]\xrightarrow{y_i\mapsto x_i^\ell} Q_0\twoheadrightarrow R_0\]
+    which will play a role later on. For now, notice that the $\ell^{th}$ powers of the $x_i$ are all central, which gives us a kind of parameterization of $R_0$ by an object that can be studied using commutative algebra techniques.
+    
+    Next, there is the matter of completion. Throughout this work we will let $\frakm_Z=(y_1,\dots,y_n)\lhd Z$ be the kernel of the augmentation $1:Z\to k$. By completing $Z$ with respect to this ideal, we get $\widehat Z=k[[y_1,\dots,y_n]]$ and by letting $\widehat Q_0=\widehat Z\otimes_Z Q_0$, this gives us what \cite{negron-pevtsovaII} calls a \textit{formally smooth deformation}
+    \[\widehat Z\to \widehat Q_0\to R_0,\label{eq:formally-smooth-deformation} \tag{FSD}\]
+    which the authors use to prove several results about these algebras. Notice that after completing $Z$ and $Q_0$, the cokernel remains unchanged! This gives us a way to replace our deformation with one consisting of local algebras. Many times passing to the completion is a formal step that must be taken to make statements about existence and about sufficiency of certain techniques. Therefore we will appeal to this when necessary, but often return to the non-complete realm to perform our computations.
+    
+    In order to study $R_0$, we use the theory of hypersurfaces. Notice that $\frakm_Z/\frakm_Z^2$ is an $n$-dimensional vector space over $k$. We identify $\bbP(\frakm_Z/\frakm_Z^2)$ with $\bbP^{n-1}$ for notational simplicity. Let $\alpha=(\alpha_1,\dots,\alpha_n)\in \bbP^{n-1}$ be the a choice of coefficients defining
+    \[f_\alpha = \alpha_1x_1^\ell+\cdots+\alpha_nx_n^\ell\]
+    and define the \textbf{quantum hypersurface corresponding to $\alpha$} to be the quotient
+    \[Q_\alpha\eqdef Q_{0,\alpha}=Q_0/(f_\alpha).\]
+    This fits into a sequence
+    \[
+        Q_0\twoheadrightarrow Q_\alpha \twoheadrightarrow R_0\label{eq:hypersurface} \tag{HS}
+    \]
+    and in this way can be thought of a hypersurface (since $f$ is regular) slicing our algebra $R_0$. These hypersurfaces are parameterized by $\alpha\in\bbP^{n-1}$ and we will use this understanding to say something about the global structure of $\lmod{R_0}$.
+    
+    The constructions up to now have used the $\square_0$ notation, which we use to denote that we are working in the ``unbosonized'' regime. In Part~\ref{prt:bqci}, we will be interested in studying the \textbf{bosonized quantum complete intersection} (BQCI), which, as an algebra, is defined to be the smash product of $R_0$ with a group algebra. This is called the \textit{bosonization} process. Given an $R_0$ as above, we define this algebra to be
+    \[R = R_0 \# \bbC(\bbZ/\ell\bbZ)^n\]
+    along with a compatible coalgebra structure and antipode, making $R$ into a Hopf algebra. The details of this construction are given in Section~\ref{sec:bosonization}.
+
+\section{Motivation for studying the tensor product property of support}
+    The content of this section borrows largely from the expository work I did as part of my general exam, but it provides a level of motivation to why we are investigating support and the so-called \textit{tensor product property}. Recall that the tensor product property in a monoidal category with a notion of support is 
+    \[\supp(V\otimes W)=\supp(V)\cap\supp(W).\label{eq:tensor-product-property} \tag{TPP}\]
+    
+    One can imagine why the tensor product property may hold for a general notion of support. For instance, if we let $X\subset\bbR^n$ be a topological space and $f,g:X\to\bbR$ be functions, we can define the (set theoretic) support as 
+    \[\supp(f)=\{x\in X|f(x)\ne 0\}\]
+    and then it is clear that the function $f\otimes g$ sending $x$ to $f(x)\cdot g(x)$ satisfies \ref{eq:tensor-product-property}. It is not true that it always holds, however! In work by Plavnik and Witherspoon, the authors investigate some cases in which \ref{eq:tensor-product-property} definitely does not hold. A (paraphrased) result from their work is
+    \begingroup
+    \def\thethm{}
+    \addtocounter{thm}{-1}
+    \begin{thm}[\cite{plavnik-witherspoon17}, thm. 3.3]
+        Let $A$ be a finite dimensional non-semisimple Hopf algebra satisfying some mild finiteness conditions and the TPP. Then the algebra $(A\otimes A)\natural k^{\bbZ_2}$ does not satisfy the TPP.
+    \end{thm}
+    \endgroup
+    Here $\natural$ represents the smash coproduct and $k^{\bbZ_2}$ is the linear dual to $k\bbZ_2.$ The authors proceed by finding a non-projective module $M$ such that $M\otimes M$ is projective.
+    
+    \subsection{The Balmer spectrum}
+    Why might one be interested in whether a certain notion of support satisfies \ref{eq:tensor-product-property}? To answer this, we turn to Balmer's work in \cite{balmer-spc} concerning the notion of support in a tensor-triangulated category. The principle here is to model the study of the structure of such a category after the study of $\Spec R$ for ring $R$.
+
+    We begin with a definition
+    \begin{defn}
+    	A \textbf{tensor-triangulated category} (TTC) $\calC$ is both a symmetric monoidal category and a triangulated category such that 
+    	the monoidal structure preserves the triangulated structure. 
+    \end{defn}
+
+    Once the appropriate context is identified, the construction 
+    very closely mirrors the construction seen in elementary algebraic geometry:
+    \begin{defn}
+    	Let $\calC$ be a tensor-triangulated category (TTC). Then a \textbf{(thick tensor) ideal} $I\subseteq \calC$ is a full triangulated subcategory 
+    	with the following conditons:
+    	\begin{itemize}
+    		\item \textit{(2-of-3 rule/Triangulation)} If $A,B,$ and $C\in\calC$ are objects that fit into a distinguished triangle
+    		\[A\to B\to C\to A[1]\]
+    		in $\calC$, and if any two of the three are objects in $I$, then so is the third.
+    		\item \textit{(Thickness)} If $A\in I$ is an object that splits as $A\cong B\oplus C$ in $\calC$, then both $B$ and $C$ belong to $I$.
+    		\item \textit{(Tensor Ideal)} If $A\in I$ and $B\in \calC$ then $A\otimes B=B\otimes A\in I$.
+    	\end{itemize}
+    \end{defn}
+    
+    From here the rest of the picture is relatively straightforward:
+    \begin{defn}
+    	Let $\calC$ be a TTC as before. Then an ideal $I\subseteq\calC$ is called a \textbf{prime ideal}
+    	if, whenever $A\otimes B\in I$ for some $A,B\in \calC$, either $A$ or $B$ is in $I$.
+    
+    	We call the collection of all primes the \textbf{spectrum} of $\calC$ and write 
+    	$\operatorname{Spc}(\calC)$.
+    \end{defn}
+    
+    Here the construction varies slightly from the traditional construction of $\Spec$: we define 
+    \[Z(S)\eqdef\{\calP\in\Spc(\calC)|S\cap\calP=\varnothing\}\]
+    and define 
+    \[\supp(A)\eqdef Z(\{A\})=\{\calP\in\Spc\calC|A\notin \calP\}.\]
+    Furthermore, Balmer defines a structure sheaf on $\Spc\calC$, which creates a locally-ringed space which we denote $\Spec_\text{Bal}\calC.$
+    
+    In service of some sweeping results on universality, Balmer defines an abstract support datum:
+    \begin{defn}
+    	A \textbf{support datum} for a TTC $\calC$ is a pair 
+    	\[(X,\sigma)\]
+    	where $X$ is a topological space and $\sigma:\calC\to \operatorname{closed}(X)$ is a map sending $a\mapsto\sigma_a$ such that 
+    	\begin{enumerate}
+    		\item $\sigma(0)=\varnothing$ and $\sigma(1)=X$,
+    		\item $\sigma(a\oplus b)=\sigma(a)\cup\sigma(b)$,
+    		\item $\sigma (a[1])=\sigma(a)$,
+    		\item $\sigma(a)\subseteq \sigma(b)\cup\sigma(c)$ for any triangle $a\to b\to c\to a[1]$,
+    		\item $\sigma(a\otimes b)=\sigma(a)\cap\sigma(b).$
+    	\end{enumerate}
+    \end{defn}
+    Using this definition, Balmer shows 
+    \begin{thm}[{\cite[thm. 3.2]{balmer-spc}}]
+    	$(\Spc\calC,\supp)$ is a support datum for $\calC$ and furthermore this support datum is terminal in the category of 
+    	support data for $\calC$. That is, for any other $(X,\sigma)$, there exists a unique continuous map $f:X\to \Spc\calC$ such that 
+    	\[\sigma(a)=f^{-1}(\supp(a)).\]
+    \end{thm}
+    
+    \begin{rmk}
+        An important thing to focus on here is that $\Spc$ is \textit{explicitly constructed} to describe the structure of a TTC by clustering by 
+        prime (thick) tensor ideals. In the case of representation theory, the category in question is often $\stmod(kG)$, the category of stable $kG$ modules for a field $k$ and group $G$.
+        
+        In cases where the representation theory of $G$ can't be computed explicitly, sometimes a classification of the tensor ideals are as close as we can come to understanding these modules. However the definition of $\Spc$ is purely existential and non-constructive, so in order to compute these ideals, we need to find a theory of support for which there is an isomorphism in the appropriate category of support data on $\stmod(kG)$ between something computable and the Balmer spectrum. In \cite{negron-pevtsovaIII}, the authors refer to such a support theory as \textit{lavish} and show that in certain cases explicit examples exist.
+    \end{rmk}
+    
+    To finish up the discussion of tensor-triangulated geometry, we state a couple of results originally proven in different contexts but used 
+    by Balmer to motivate the utility of this construction. In \cite{thomason}, the author classifies the triangulated tensor subcategories 
+    of $\Dperf(X)$, thereby defining the set $\Spc\Dperf(X)$. Applying Balmer's language and structure, he proved that 
+    \begin{thm}[{\cite[thm. 6.3(a)]{balmer-spc}}]
+    	If $X$ is a topologically Noetherian scheme, then (as ringed spaces)
+    	\[\Spec_\text{Bal}\Dperf(X)\simeq X.\]
+    \end{thm}
+    
+    Furthermore another result from Friedlander and Pevtsova \cite{friedlander-pevtsova-pi} showed (again using 
+    the language of $\Spec_\text{Bal}$):
+    \begin{thm}[{\cite[thm. 3.6]{friedlander-pevtsova-pi},\cite[thm. 6.3(b)]{balmer-spc}}]
+    	Let $G$ be a finite group scheme over a field $k$. Then 
+    	\[\Spec_\text{Bal}(\stmod(kG))\simeq\Proj(H^\bullet(G,k))\]
+    	where, $\stmod(kG)$ is the full subcategory of the stable module category consisting of the finitely generated modules and $H^\bullet(G,k)=\Ext_G^\bullet(k,k)$ is the cohomology ring of $G$.
+    \end{thm}
+
+\part{Quantum complete intersections \& quantum hypersurfaces}\label{prt:qci-qlp}
+
+\chapter{Matrix factorizations}\label{chp:matrix-factorizations}
+    Factoring elements over complete intersections using matrices was an important and powerful discovery by Eisenbud \cite{eisenbud80} and has been applied and extended by many others since. The core result of the early work was that there was a correspondence between so-called matrix factorizations over a complete intersection ring $A$ and the maximal Cohen-Macaulay modules over $A$. 
+    
+    To begin to see why this is the case, first we define:
+    \begin{defn}[Matrix factorization]
+        Given an algebra $A$ and an element (generally assumed to be regular) $x\in A$, a \textbf{matrix factorization for $x$} is a pair of free modules $F, G$ along with maps $\varphi:F\to G$ and $\psi:F\to G$
+        satisfying
+        \[\varphi\circ\psi = x\cdot \id_F\quad \psi\circ\varphi=x\cdot \id_G.\]
+    \end{defn}
+
+\begin{rmk}
+    In the case of a matrix factorization $(\varphi,\psi)$ corresponding to a \textit{regular element} $x\in A$, Eisenbud proved \cite[Prop. 5.5]{eisenbud80} that $\rank F=\rank G$ as well. Actually we only need that $(x)/(x^2)$ is free for this (the proposition gives us even more).
+\end{rmk} 
+
+\section{The commutative picture}
+    To show how this works in the commutative case, we will follow Yoshino \cite{yoshino90}. Let $S$ be an $n$-dimensional regular local $k$-algebra, $f\in S$ a regular element, and $R=S/(f)$ the quotient algebra.
+    
+    Let $M$ be any Cohen Macaulay module over $R$ ($\depth_{R} M=\dim R=\dim S - 1$ since $f$ is regular). Using the quotient map $S\to R$, we can give this the structure of a $S$-module. Then by Auslander-Buchsbaum, we have the following:
+    \[\projdim_{S} M=\depth_{S} S - \depth_{S} M.\]
+    We then have the two following facts:
+    \begin{enumerate}
+        \item since $S$ is Cohen Macaulay, $\depth_{S} S=\dim S=n$
+        \item $\depth_S M=\depth_{R} M$
+    \end{enumerate}
+    
+    Using these, we can come to the conclusion that
+    \[\projdim_{S} M = 1,\]
+    thus we have a projective (and since $S$ is local, free!) resolution of $M$ of the form
+    \[0\to S^n\xrightarrow{\varphi} S^n\xrightarrow{\varepsilon} M\to 0\]
+    where we know the rank of the two free modules are the same since $\rank_SM=0$.
+    
+    Now since $M$ was originally defined as a module over $R$, we know that $f$ annihilates $M$ over $S$. Therefore for all $x\in fS^n,$ $\epsilon(fq)=f\epsilon(q)=0$
+    and therefore
+    \[f S^n\subseteq \ker\epsilon=\varphi(S^n).\]
+    Since $\varphi$ is injective, this gives us a \textbf{unique} element $y\in S^n$ for each $x\in S^n$ such that 
+    \[\varphi(y)=fx.\]
+    
+    This gives us a map $\psi:S^n\to S^n$ taking each $x$ to the $y$ described above. Linearity of this map follows since $f$ is central: for any such $x$ and $y$ and $a\in S$,
+    \[f(ax)=a(fx)=a\varphi(y)=\varphi(ay).\]
+    
+    Consider the composition of these maps: if $x\in S^n$ and $y\in S^n$ such that $fx=\varphi(y)$, we get
+    \[\varphi\circ\psi(x)=\varphi(y)=fx\]
+    Now if $\tilde y$ is such that $f\varphi(x)=\varphi(fx)=\varphi(\tilde y),$ we can use the fact that $\varphi$ is monic to say $fx=\tilde y$. But then
+    \[\psi\circ\varphi(x)=\tilde y=fx.\]
+    Thus we get that 
+    \[\varphi\circ\psi=\psi\circ\varphi=f\cdot\id_{S^n}.\]
+    
+    As noted above, we call such a pair $(\varphi,\psi)$ of $S$-module maps satisfying this property a \textbf{matrix factorization of $f$ over $S$}.
+
+\subsection{Passing to the quotient}
+    Now we can imagine quotienting out by $f$ everywhere to try to understand $M$ as a $R$ module. Letting $\overline x$ denote the image of $x\in S$ under the map $S\twoheadrightarrow R$ (and the analogous thing for matrices), we now have a resolution
+    \[\cdots\to R^n\xrightarrow{\overline\varphi}R^n\xrightarrow{\overline \psi}R^n\xrightarrow{\overline \varphi}R^n\xrightarrow{\overline\epsilon}M\to 0\]
+    where this is a chain complex since
+    \[\overline\psi\circ\overline\varphi=\overline\varphi\circ\overline\psi=\overline{f\id_{S^n}}=\overline{f}\id_{R^n}=0.\]
+    To check exactness, we can use the following argument: let $\overline x\in \ker\overline\varphi.$ This implies
+    \[\varphi(x)\in fS^n=\varphi\circ\psi(S^n)\]
+    and since $\varphi$ is monic, this proves $x\in \Im\psi.$ The same argument goes through in the other direction. Thus we find that the matrix factorization $(\varphi,\psi)$ correspond to a 2-periodic resolution of $M$ over $R.$ 
+    
+\subsection{Formalizing the connection}
+    In all, we have demonstrated how to extract a matrix factorization for any regular element $f\in S,$ but Eisenbud in fact makes this more concrete in the form of an equivalence of categories.
+    
+    \begin{thm}[\cite{eisenbud80}, cor. 6.3]
+        Let $S$ be a regular local ring and $R=S/(f)$ be a proper factor ring. Then the associations
+        \[(\varphi,\psi)\mapsto \cdots\xrightarrow{\bar\varphi}\bar G\xrightarrow{\bar\psi}\bar F\xrightarrow{\bar\varphi}\bar G\]
+        and
+        \[(\varphi,\psi)\mapsto \coker\varphi\]
+        induce bijections between
+        \begin{enumerate}
+            \item Equivalence classes of matrix factorizations for $f$ over $S$
+            \item Isomorphism classes of nontrivial periodic minimal free resolutions over $R$
+            \item Maximal Cohen-Macaulay $R$-modules without free summands
+        \end{enumerate}
+    \end{thm}
+    
+    The key idea in this work is that the periodicity of the modules that arise in this case (MCM modules over a Cohen-Macaulay ring) are almost entirely determined by different ways to matrix factorize $f$ over $S$. The picture over more complicated rings gets a bit more complicated, but we will demonstrate in later sections how to recover similar results.
+
+\section{Noncommutative algebras}
+    As alluded to above, we are going to be able to use the commutative case as inspiration for our own work. In particular, when a ring is Gorenstein (as we will see is true in our case), we can recover objects that play the role of matrix factorizations that will aid in computing cohomological properties of modules over our ring.
+    
+\subsection{Definitions and properties}
+    We begin by making some definitions:
+    \begin{defn}
+        Let $\Lambda$ be a (two-sided) Noetherian ring.  Then $\Lambda$ is called \textbf{(Iwanaga-)Gorenstein} if $_\Lambda\Lambda$ and $\Lambda_\Lambda$ have finite injective dimension.
+    \end{defn}
+    \begin{rmk}
+        A result in \cite[Lem. A]{zaks1969} says that if the injective dimensions as a left and right module are finite, they must be the same. Thus by letting $d=\injdim {_\Lambda\Lambda}$,
+        we say that $\Lambda$ is \emph{Gorenstein of dimension $d$}.
+    \end{rmk}
+    
+    Next we define the analogs of (maximal) Cohen-Macaulay modules:
+    \begin{defn}
+        Let $\Lambda$ be a Gorenstein ring. Then an $X\in\lmod \Lambda$ is called \textbf{Gorenstein projective} if, for all $i\ne 0$,
+        \[\Ext^i_\Lambda(X,\Lambda)=0.\]
+    \end{defn}
+    
+    Note that, following the discussion in \cite{krause-book}, Gorenstein projectives are very nicely-behaved modules. We will record two useful properties:
+    \begin{prop}[\cite{krause-book} 6.2.1(1)]
+        Let $\Lambda$ be Gorenstein of dimension $d$. For any module $X$, $\Omega^nX$ is Gorenstein projective for any $n\ge d.$
+    \end{prop}
+    The reason for this uses the degree shifting formula for $\Ext$. Since $\injdim \Lambda=d$, for all $i> 0$
+    \[\Ext_\Lambda^{n+i}(X,\Lambda)=0.\]
+    But then for all $i>0,$
+    \[\Ext^i(\Omega^nX,\Lambda)\cong \Ext^{i+n}(X,\Lambda)=0.\]
+    
+    Since $\Ext^1(X,\Lambda)=0$ when $X$ is Gorenstein projective, we get
+    \begin{prop}[\cite{krause-book} 6.2.1(2)]
+        Let $\Lambda$ be Gorenstein and $X$ a Gorenstein projective over $\Lambda.$ Then $\Omega^iX$ is Gorenstein projective for all $i\ge 1.$
+    \end{prop}
+    
+    One of the interesting ideas (that will not have much bearing on our particular case) that arise here is the following: let $\calX=\mathbf{Gproj}(\Lambda)$ of Gorenstein projective modules and let $\calY$ be the category of \textbf{finitely presented} $\Lambda$-modules of finite projective dimension. Then $\calX$ and $\calY$ form a \textit{cotorsion pair} for the category $\lmod\Lambda$ of finitely-generated modules over $\Lambda.$
+    
+    In particular, we have
+    \begin{itemize}
+        \item $\Ext^i(X,Y)=0$ for $i\ge 1$ and $X\in\calX$ and $Y\in\calY$
+        \item $\calX\cap\calY=\mathbf{proj}(\Lambda)$
+    \end{itemize}
+    and for any $M\in\lmod \Lambda$, there are $G^M,G_M\in\mathbf{GProj}(\Lambda)$ and $P^M,P_M\in\calY$
+    fitting into short exact sequences
+    \[0\to P_M\to G_M\to M\to 0\quad\text{and}\quad 0\to M\to P^M\to G^M\to 0.\]
+    The exact sequence on the left is usually called a \textit{Gorenstein approximation of $M$.}
+
+\subsection{Existence of resolutions over Gorenstein rings}\label{subsubsec:construction-of-res}
+    We begin with an observation adapted from lemma 4.5 in $\cite{negron-pevtsovaII}$:
+    \begin{cor}
+        $Q_0,Q,R_0,R,$ and $Q_\alpha,$ as introduced in section \ref{sec:notation}, are all Gorenstein algebras. 
+    \end{cor}
+    This result is due to the fact that each can be achieved from $Q/(f_1,\dots,f_m)$ for some regular sequence in the parameterizing algebra $Z$ for our deformation $Z\to Q\to R.$ Therefore the nice theory of Gorenstein algebras indeed applies to our work.
+    
+    We will be primarily interested in constructing $Q_\alpha$ resolutions for our modules in what follows. We know from the theory in the last section that if $M\in\mathbf{GProj}(Q_\alpha)$, there is a $d\ge 0$ such that $\Omega^{d}(M)$ is Gorenstein projective. That is, we get a (Gorenstein projective) resolution
+    \[0\to\Omega^d(M)\to P_d\to \cdots\to P_0\to M\to 0\]
+    where each of the $P_i$ are genuine projective modules over $Q_\alpha$. 
+    
+% This was going to be how I proved that our algebras were Gorenstein, but we have all we need from Negron-Pevtsova
+%    \begin{rmk}
+%        Recall that an Ore extension $A\eqdef R[x;\sigma,\delta]$ of a ring $R$ is an endomorphism $\sigma:R\to R$ along with a $\sigma$-derivation $\delta$, a map satisfying
+%        \[\delta(ab)=\sigma(a)\delta(b)+\delta(a)b,\quad\forall a,b\in A\]
+%        subject furthermore to the condition that for all $a\in A$,
+%        \[xa=\sigma(a)x+\delta(a).\]
+%        The final condition can be thought of as a parameterization of how $x$ is allowed to commute with elements in $a$, with the conditions on $\sigma$ and $\delta$ to allow suitable compatibility.
+%        
+%        The Ore extension $R[x;\sigma,\delta]$ is \emph{quasi-commutative} if $\delta\equiv 0.$ An iterated Ore extension with indeterminates $x_1,\dots,x_n$ with endomorphisms $\sigma_1,\dots,\sigma_n$ is \emph{bijective} if the $\sigma_i$ are bijective and furthermore $x_ix_j=c_{ij}x_jx_i$ where all the $c_{ij}$ are invertible. Note that all of these conditions hold in the example of a quantum polynomial algebra.
+%    \end{rmk}
+    
+    Large parts of what follows can be found in Kirkman et al's paper, culminating in the general result \cite{kirkman13}. The generality presented in this work requires the use of a normalizing automorphism $\sigma$ for our $f_\alpha\in Z,$ meaning that $xf_\alpha=f_\alpha\sigma(x)$ for all $x$. Since our $f_\alpha$ is central in $Q_0$, we  set $\sigma=\id$. The degree from the natural grading gives us $|f_\alpha|=\ell$, and for any $Q_0$(or $Q_\alpha$)-module $M$, we set
+    \[M^{tw}\eqdef M^\sigma(\ell)=M(\ell).\]
+    
+    The following is an adaptation of proposition 2.9 from \cite{kirkman13} using the following changes:
+    \begin{enumerate}
+        \item We let $A=Q_0$ and $B=Q_0/(f_\alpha)=Q_\alpha.$
+        \item $Q_0$ is Artin-Schelter regular of dimension $n$.
+    \end{enumerate}
+    The regularity in the last item above amounts to the observation that the global and Gelfand-Kirillov dimension of $Q_0$ is $n$ and, as we saw above, $Q_0$ is Gorenstein.
+    \begin{prop}
+        Given a finitely generated graded $Q_\alpha$-module $M$ with $\projdim_{Q_0}(M)=1$ and no free $Q_\alpha$ summand, one can construct a (twisted) matrix factorization of $f=f_\alpha$ giving a 2-periodic free resolution of $M$ over $Q_\alpha$. 
+        
+        That is, if $\lambda_f^*:\ast\to \ast$ (for $\ast=F,G$) is the multiplication by $f$ map for $Q_0$, there exist maps $\varphi$ and $\tau$ such that
+        \[\varphi\tau = \lambda_f^G\quad\text{and}\quad \tau\varphi^{tw}=\lambda_f^F\]
+        for some free $Q_0$ modules $F$ and $G$ and, after extending scalars to $Q_\alpha$,
+        \[\cdots\xrightarrow{\bar\varphi^{tw}}\bar G^{tw}\xrightarrow{\bar\tau} \bar F\xrightarrow{\bar\varphi} \bar G\to M\to 0\]
+        is a free resolution of $M$ over $Q_\alpha.$
+    \end{prop}
+    
+    \begin{rmk}
+    As a reminder: $f_\alpha$ is central in our case, so $\sigma=\id$ in what follows. I will retain the $(-)^{tw}$ notation to match previous papers, but this will amount to a degree shift $M^{tw}=M(p).$
+    \end{rmk}
+    
+    For this proposition the construction closely follows the one from the commutative case (c.f. \cite{yoshino90}). Let
+    \[0\to F\xrightarrow{\varphi}G\to M\to 0\]
+    be a minimal free $Q_0$-resolution of $M$ (since it has projective dimension 1). Then we have the commutative diagram in figure~\ref{fig:factorization-diagram}
+    \begin{figure}[ht!]
+        \centering
+        \begin{tikzcd}
+            F^{tw}\ar[r,"\varphi^{tw}"]\ar[d,"\lambda_f^F",swap] & G^{tw}\ar[rd,"\lambda_f^G"]\ar[ld, "\tau",swap]\ar[d,dashed]\\
+            F\ar[r,"\varphi",swap] & \Im\varphi \ar[r,hookrightarrow] &G
+        \end{tikzcd}
+        \caption{A commutative diagram for twisted matrix factorizations.}
+        \label{fig:factorization-diagram}
+    \end{figure}
+    
+    The dashed line exists since $f(_{Q_0}M)=0$ (recall $Q_0$ acts via $Q_\alpha$ on $M$), so $\Im\lambda_f^G\subseteq\Im\varphi$. The lift $\tau$ exists by (graded) projectivity. The relation $\varphi\tau=\lambda_f^G$ is immediate. More diagram chasing and that $\varphi$ is monic gives the other.
+    
+    The last piece of the puzzle, then, is that we can hand off from a constructed resolution of our finitely-generated module $M$ to a 2-periodic free resolution. Again we will use that our $Q_0$ is left Noetherian and AS-regular of dimension $n$. 
+    
+    \begin{prop}[\cite{kirkman13} prop 4.6]\label{prop:syzygy}
+        There exists an $s\le n$ such that $\projdim_{Q_0}(\Omega^s(M))=1$ for any finitely generated graded left $Q_\alpha$-module $M$. In particular, if $\depth_{Q_\alpha}(M)\eqdef\inf\{j|\Ext^j_{Q_\alpha}(k,M)\ne0\}=i$,
+        \[\projdim_{Q_0}(\Omega^{n-i}(M))=1.\]
+    \end{prop}
+    
+    Thus given a (finite dimensional graded) $Q_\alpha$-module, we can construct an eventually 2-periodic resolution in the following way: start off with the a resolution $\mathbf{Q}_\bullet\to M$ over $Q_\alpha$ and compute $\Omega^i(M)$ where \[i=\operatorname{dim}(Q_0)-\depth_{Q_\alpha}=n-\inf\{j|\Ext_{Q_\alpha}^j(k,M)\ne 0\}.\]
+    By \ref{prop:syzygy}, this module has projective dimension 1. By separating out the free part of this syzygy, we can construct a 2-periodic resolution of the summand $\widetilde\Omega^i(M)$ and piece this back together with the resolution $\mathbf{Q}_\bullet$ to get a resolution of the desired form for $M$.
+
+\subsection{Construction of a resolution}
+    So now that we know these resolutions (and matrix factorizations) exist, how can we construct them? We will eventually be interested in computing $\Tor_i^{Q_\alpha}(k,M)$ for a module $M$, so we would like to know how to compute this explicitly for $k$. Therefore we can make use of a standard resolution.
+    
+    Notice that the elements $\{x_1 ,\dots, x_n \}$ form a regular sequence in $Q_\alpha$, so we can construct the Koszul resolution (first developed for use in Lie algebra cohomology in \cite{koszul-resolution})
+    \[K(\{x_i\})=\bigwedge^n Q_\alpha^n\xrightarrow{\delta} \bigwedge^{n-1}Q_\alpha^n\xrightarrow{\delta}\cdots\xrightarrow{\delta}\bigwedge^1 Q_\alpha^n\xrightarrow{\delta} Q_\alpha\to 0\]
+    where
+    \[\delta:\bigwedge^k Q_\alpha^n\to \bigwedge^{k-1}Q_\alpha^n\]
+    is given by (for any choice of $e_1,\dots,e_n$ in $Q_\alpha^n$)
+    \[\delta(e_{i_1}\wedge\dots\wedge e_{i_k})=\sum_{j=1}^k (-1)^jx_{i_j} e_{i_1}\wedge\cdots\wedge\hat e_{i_j}\wedge\cdots e_{i_k}.\]
+    One can easily compute that the image of $\delta$ in $Q_\alpha$ is $(x_1,\dots,x_n)$, so following with the augmentation map $\varepsilon:Q_0\to k$ demonstrates that $K$ is a resolution of $k=Q_\alpha/(x_i)$ by $Q_\alpha$-modules. We will use this construction later to compute cohomology.
+\subsection{Using technology}
+    We will demonstrate how the theory above comes to work in practice by computing an explicit resolution of a module over some choice of $Q_\alpha$.
+    Let $n=3$ and $a_{ij}=1$ if $i>j$, so $Q_0=k_q[x,y,z]$ where $x_ix_j=qx_jx_i$ for $i>j$ and $R_0=k_q[x,y,z]/(x^\ell ,y^\ell ,z^\ell ).$ Furthermore let $\alpha=(1,1,1)$ and $\ell=5$, so $f_\alpha=x^5+y^5+z^5.$ 
+    
+    We will proceed to compute a resolution of our field $k.$ We pull $k$ back to a $Q_\alpha$ module and use our augmentation map $\varepsilon(x)=0$ and can compute a resolution using the \texttt{SINGULAR} \cite{singular} code found in the appendix in section~\ref{code:singular-resolution}.
+    \begin{align*}
+        \cdots\to Q^4_\alpha\xrightarrow{\left(
+        \begin{smallmatrix}
+            z^4& y^4 & x^4 & 0\\
+            q^3y & -q^{-1}z & 0 & x^4\\ 
+            0 & -q^{-1}x & y & -q^{-1}z^4\\ 
+            q^3x & 0 & -q^{-1}z & -q^{-1}y^4\end{smallmatrix}
+        \right)} &Q^4_\alpha\xrightarrow{\left(
+        \begin{smallmatrix}
+            x& 0 & y^4 & -qz^4\\
+            -q^{-1}y & z^4 & x^4 & 0\\ 
+            q^3z & y^4 & 0 & z^4\\ 
+            0 & -q^{-1}x & z & y\end{smallmatrix}
+        \right)}\\&{Q_\alpha^4}\xrightarrow{\left(
+        \begin{smallmatrix}
+            y & x & 0 & z^4\\
+            -q^{-1}z & 0 & x & y^4\\ 
+            0 & -q^{-1}z & -q^{-1}y & x^4
+        \end{smallmatrix}\right)}
+        {\color{red}Q_\alpha^3}\xrightarrow{(z,y,x)}Q_\alpha\xrightarrow{\varepsilon} k \to 0
+    \end{align*}
+    I have highlighted in red the place ($Q_\alpha^3$) where we get our syzygy of projective dimension 1 over $Q_0$ predicted by prop.~\ref{prop:syzygy}. While \texttt{SINGULAR} can compute a minimal resolution of our module by computing a Gr\"obner basis for each syzygy module, we do not expect that the choice of basis in each $Q_\alpha^4$ nor the choice of representative when descending $Q_0\to Q_\alpha$ should yield actual matrix factorizations over $Q_0,$ though we will see that the leftmost matrices are actually not too far from the ones we construct in section \ref{sec:resolution-construction}. To make these factorizations accessible, we will next write down an explicit method for computing a matrix factorization of $f_\alpha$ over $Q_0$ that will give us access to the matrices in question without having to appeal to Gr\"obner bases and \textit{ad-hoc} computational techniques.
+
+\section{An iterative construction for matrix factorizations}\label{sec:resolution-construction}
+    Let $n,q_{ij},$ and $\alpha$ be fixed parameters as per usual and let $f_\alpha,Q_0, R_0,$ and $Q_\alpha$ be the constructions using these parameters described in section~\ref{sec:notation}. To construct a matrix factorization for $f_\alpha$, we must first introduce some notation: we will be denoting by 
+    $A_n^\alpha$ and $B_n^\alpha$ the matrices (arising from the below construction) which form a matrix factorization for $f=\sum \alpha_ix_i^\ell$ over $Q_0$. When $\alpha=(1,1,\dots,1),$ we will suppress this $\alpha$ and simply denote these matrices by $A_n$ and $B_n$.
+    
+    In service of this construction we define the following ``auxiliary matrices'' iteratively. In what follows, we choose a square root $\sqrt{q_{ij}}$ for all $i$ and $j,$ chosen such that $\sqrt{q_{ij}}\sqrt{q_{ji}}=1.$ If $k=\bbC$, we can simply set $\sqrt{q_{ij}}=q^{a_{ij}/2}.$ For any integer $1\le j\le n$, let
+    \begin{align*}
+        C_1^j&\eqdef -\sqrt{q_{1j}}x_j\\
+        D_1^j&\eqdef \sqrt{q_{1j}}x_j^{\ell -1}\\
+        \widetilde{C_1^j} &\eqdef \sqrt{q_{j1}}x_j\\
+        \widetilde{D_1^j}&\eqdef -\sqrt{q_{j1}}x_j^{\ell -1}
+    \end{align*}
+    and then for any $1< i< j$, define
+    \begin{align*}
+        C_i^j&\eqdef\begin{pmatrix}-\sqrt{q_{ij}}C_{i-1}^j & 0\\0 & -\sqrt{q_{ji}}\widetilde{C_{i-1}^j}\end{pmatrix}\qquad
+        D_i^j\eqdef\begin{pmatrix}\sqrt{q_{ji}}D_{i-1}^j & 0\\0 & \sqrt{q_{ij}}\widetilde{D_{i-1}^j}\end{pmatrix}\\
+        \widetilde{C_i^j}&\eqdef\begin{pmatrix}\sqrt{q_{ij}}\widetilde{C_{i-1}^j} & 0\\0 & \sqrt{q_{ji}}C_{i-1}^j\end{pmatrix}\qquad
+        \widetilde{D_i^j}\eqdef\begin{pmatrix}-\sqrt{q_{ji}}\widetilde{D_{i-1}^j} & 0\\0 & -\sqrt{q_{ij}}D_{i-1}^j\end{pmatrix}
+    \end{align*}
+    
+    With these matrices in place, we can write down the following:
+    \begin{thm}\label{thm:factorization}
+        Let $n>1$ and fix a skew symmetric $A\in M_n(k)$ and parameters $q_{ij}=q^{a_{ij}}$ for primitive $\ell^{th}$ root of unity $q.$ Let $Q_0$ be the quantum polynomial algebra $k_q[x_1,\dots,x_n]$ defined by these parameters. Then a matrix factorization of $\sum_i x_i^\ell$ over $Q_0$ is given by
+        \[A_n=\begin{pmatrix}A_{n-1} & C_{n-1}^n\\D_{n-1}^n& B_{n-1}\end{pmatrix}\quad\text{and}\quad B_n=\begin{pmatrix}B_{n-1}&\widetilde{C_{n-1}^n}\\ \widetilde{D_{n-1}^n} & A_{n-1}\end{pmatrix}.\]
+    \end{thm}
+    \begin{prf}[thm~\ref{thm:factorization}]
+        We proceed by induction. We showed above that $A_1=x_1^{\ell -1}$ and $B_1=x_1$ were a factorization for the one-variable case, so we proceed to show this iterative formula works for the two-variable case. We have
+        \[A_2=\begin{pmatrix}A_1 & C_1^2\\ D_1^2& B_1\end{pmatrix}=\begin{pmatrix}x_1^{\ell -1} & -\sqrt{q_{12}}x_2\\ \sqrt{q_{12}}x_2^{\ell -1} & x_1\end{pmatrix}\]
+        as well as
+        \[B_2=\begin{pmatrix}B_1 & \widetilde{C_1^2}\\\widetilde{D_1^2} & A_1\end{pmatrix}= \begin{pmatrix}x_1 & \sqrt{q_{21}}x_2\\ -\sqrt{q_{21}}x_2^{\ell -1} & x_1^{\ell -1}\end{pmatrix}.\]
+        Then we can compute
+        \begin{align*}
+        A_2B_2&=\begin{pmatrix}x_1^\ell  + x_2^\ell  & \sqrt{q_{21}}x_1^{\ell -1}x_2 - \sqrt{q_{12}}x_2x_1^{\ell -1}\\
+        \sqrt{q_{12}}x_2^{\ell -1}x_1 - \sqrt{q_{21}}x_1x_2^{\ell -1} & x_2^\ell +x_1^\ell \end{pmatrix}\\
+        &=\begin{pmatrix}x_1^\ell  + x_2^\ell  & \sqrt{q_{21}}x_1^{\ell -1}x_2 - \sqrt{q_{12}}q_{21}x_1^{\ell -1}x_2\\
+        \sqrt{q_{12}}q_{21}x_1x_2^{\ell -1} - \sqrt{q_{21}}x_1x_2^{\ell -1} & x_2^\ell +x_1^\ell \end{pmatrix}=(x_1^\ell+x_2^\ell)I_2
+        \end{align*}
+        \begin{align*}
+        B_2A_2&=\begin{pmatrix}x_1^\ell  + x_2^\ell  & -\sqrt{q_{21}}x_2^{\ell -1}x_1^{\ell -1}+\sqrt{q_{12}}x_1^{\ell -1}x_2^{\ell -1}\\
+        -\sqrt{q_{12}}x_1x_2 + \sqrt{q_{21}}x_2x_1 & x_2^\ell +x_1^\ell \end{pmatrix}\\
+        &=\begin{pmatrix}x_1^\ell  + x_2^\ell  & -\sqrt{q_{21}}q_{12}x_1^{\ell -1}x_2^{\ell -1}+\sqrt{q_{12}}x_1^{\ell -1}x_2^{\ell -1}\\
+        -\sqrt{q_{12}}x_1x_2 + \sqrt{q_{21}}q_{12}x_1x_2 & x_2^\ell +x_1^\ell \end{pmatrix}=(x_1^\ell+x_2^\ell)I_2
+        \end{align*}
+        proving the construction holds for $n=2$.
+        
+        Now assume that $A_{n-1}B_{n-1}=B_{n-1}A_{n-1}=(\sum_1^{n-1}x_i^\ell)I_{2^{n-1}}.$ Then notice
+        \begin{align*}
+            A_nB_n&=\begin{pmatrix}A_{n-1} & C_{n-1}^n\\D_{n-1}^n& B_{n-1}\end{pmatrix}\begin{pmatrix}B_{n-1}&\widetilde{C_{n-1}^n}\\ \widetilde{D_{n-1}^n} & A_{n-1}\end{pmatrix}\\
+            &=\begin{pmatrix}A_{n-1}B_{n-1}+C_{n-1}^n\widetilde{D_{n-1}^n} & A_{n-1}\widetilde{C_{n-1}^n}+C_{n-1}^nA_{n-1}\\
+        D_{n-1}^nB_{n-1}+B_{n-1}\widetilde{D_{n-1}^n} & D_{n-1}^n\widetilde{C_{n-1}^n}+B_{n-1}A_{n-1}\end{pmatrix}
+        \end{align*}
+        
+        Applying the induction hypothesis, the result follows from the following results:
+        \begin{itemize}
+            \item $C_{n-1}^n\widetilde{D_{n-1}^n}=D_{n-1}^n\widetilde{C_{n-1}^n}=x_n^\ell \cdot I_{2^{n-2}}$ (lem.~\ref{lem:monomial})
+            \item $A_{n-1}\widetilde{C_{n-1}^n}+C_{n-1}^nA_{n-1} = D_{n-1}^nB_{n-1}+B_{n-1}\widetilde{D_{n-1}^n}=0\cdot I_{2^{n-2}}$ (lem.~\ref{lem:zero-matrix})
+        \end{itemize}
+    \end{prf}
+        
+        The proofs of the computational lemmas used above follow:
+    \begin{lem}\label{lem:monomial}
+        For any $1\le i<j$:
+        \[C_i^j\widetilde{D_i^j}=D_i^j\widetilde{C_i^j}=x_j^\ell \cdot I_{2^{i-1}}\]
+    \end{lem}
+    \begin{prf}
+        We proceed by induction on $i+j$. Begin by assuming that $i+j=3$, which has a single solution $i=1$ and $j=2$. Then the equality is obvious since scalars and powers of $x_2$ commute with one another. Next assume that equality holds for any $i+j=n$ and let $i+j=n+1.$ Then
+        \begin{align*}
+            C_i^j\widetilde{D_i^j} &=\begin{pmatrix}-\sqrt{q_{ij}}C_{i-1}^j & 0\\0 & -\sqrt{q_{ji}}\widetilde{C_{i-1}^j}\end{pmatrix}\begin{pmatrix}-\sqrt{q_{ji}}\widetilde{D_{i-1}^j} & 0\\0 & -\sqrt{q_{ij}}D_{i-1}^j\end{pmatrix}\\
+            &=\begin{pmatrix}C_{i-1}^j\widetilde{D_{i-1}^j} & 0 \\ 0 & \widetilde{C_{i-1}^j}D_{i-1}^j\end{pmatrix}\\
+            &=\begin{pmatrix}x_j^\ell \cdot I_{2^{i-2}} & 0\\0 & x_j^\ell \cdot I_{2^{i-2}}\end{pmatrix}=x_j^\ell \cdot I_{2^{i-1}}
+        \end{align*}
+        where the last line follows by the induction hypothesis since $(i-1)+j = n.$ The result for $D_i^j\widetilde{C_i^j}$ is directly analogous.
+    \end{prf}
+        
+    \begin{lem}\label{lem:zero-matrix}
+            For any $1\le i<j$:
+            \[A_i\widetilde{C_i^j}+C_i^jA_{i} = D_i^jB_{i}+B_{i}\widetilde{D_i^j}=0\cdot I_{2^{i-1}}\]
+    \end{lem}
+    \begin{prf}
+        Again we proceed by induction on $i+j.$ The base case $i+j=3$ ($i=1$ and $j=2$) can be seen via:
+        \[A_1\widetilde{C_1^2}=x_1^{\ell -1}\sqrt{q_{21}}x_2=\sqrt{q_{21}}q_{21}^{\ell -1}x_2x_1^{\ell -1}=q_{21}^{\ell -\frac{1}{2}}x_2x_1^{\ell -1}=\sqrt{q_{12}}x_2x_1^{\ell -1}=-C_1^2 A_1\]
+        and
+        \[D_1^2B_1=\sqrt{q_{12}}x_2^{\ell -1}x_1=q_{12}^{\ell -\frac{1}{2}}x_1x_2^{\ell -1}=\sqrt{q_{21}}x_1x_2^{\ell -1}=-B_1\widetilde{D_1^2}.\]
+        
+        For the induction step, assume that the equalities hold for $i+j=n$ and let $i$ and $j$ be such that $i+j=n+1$. As an initial observation, note that the matrices $C_i^j, D_i^j, \widetilde{C_i^j},$ and $\widetilde{D_i^j}$ all commute with one another, as they are all diagonal matrices with entries entirely in $(x_j)\in k_q[x_1,\dots, x_n].$ Then we compute
+        \[
+            A_i\widetilde{C_i^j} =\begin{pmatrix}
+                A_{i-1} & C_{i-1}^i\\ D_{i-1}^i & B_{i-1}
+            \end{pmatrix}\begin{pmatrix}
+                \sqrt{q_{ij}}\widetilde{C_{i-1}^j} & 0\\ 0 & \sqrt{q_{ji}}C_{i-1}^j
+            \end{pmatrix}=\begin{pmatrix}
+                \sqrt{q_{ij}}A_{i-1}\widetilde{C_{i-1}^j} & \sqrt{q_{ji}}C_{i-1}^iC_{i-1}^j\\
+                \sqrt{q_{ij}}D_{i-1}^i\widetilde{C_{i-1}^j} & \sqrt{q_{ji}}B_{i-1}C_{i-1}^j
+            \end{pmatrix}
+        \]
+        as well as
+        \[-C_i^jA_i = \begin{pmatrix}
+                \sqrt{q_{ij}}C_{i-1}^j & 0\\ 0 & \sqrt{q_{ji}}\widetilde{C_{i-1}^j}
+            \end{pmatrix}\begin{pmatrix}
+                A_{i-1} & C_{i-1}^i\\ D_{i-1}^i & B_{i-1}
+            \end{pmatrix}=\begin{pmatrix}
+                \sqrt{q_{ij}}C_{i-1}^jA_{i-1} & \sqrt{q_{ij}}C_{i-1}^jC_{i-1}^i\\
+                \sqrt{q_{ji}}\widetilde{C_{i-1}^j}D_{i-1}^i & \sqrt{q_{ji}}\widetilde{C_{i-1}^j}B_{i-1}
+            \end{pmatrix}\]
+        
+        This proves that $A_i\widetilde{C_i^j}+C_i^jA_i=0$ and the other equality can be computed similarly.
+    \end{prf}
+    
+    One will notice that we have only determined a way to construct a matrix factorization $(A_n,B_n)$ for $f_\alpha$ when $\alpha=(1,\dots,1).$ However by picking a sufficient extension of our basefield, we can use prop.~\ref{thm:factorization} to factorize an arbitrary $f_\alpha$. Specifically,
+    \begin{thm}\label{thm:factorization_general}
+        Fix arbitrary parameters $n,q,$ and $A\in M_n(k)$ as usual and let $\alpha\in\bbP^{n-1}.$ Assume further that $k$ contains an $\ell^{th}$ root of $\alpha_i$ for all $i$ (this is satisfied when $k=\bbC$ or when $k$ is replaced by a suitable finite extension of itself). Then there are matrices $A_n^\alpha$ and $B_n^\alpha$ (which can be readily computed from the $A_n$ and $B_n$ of thm.~\ref{thm:factorization}) that form a factorization for $f_\alpha$ over $Q_0$.
+    \end{thm}
+    \begin{prf}
+        To construct $A_n^\alpha$ and $B_n^\alpha$, simply replace each $x_i$ in the matrices $A_n$ and $B_n$ with $\sqrt[\ell]{\alpha_i}x_i$. Since these matrices already satisfy
+        \[A_nB_n=B_nA_n=\left(\sum_i x_i^\ell\right)I_{2^n},\]
+        we get that
+        \[A_n^\alpha B_n^\alpha=B_n^\alpha A_n^\alpha=\left(\sum_i (\sqrt[\ell]{\alpha_i}x_i)^\ell\right)I_{2^n}=\left(\sum_i\alpha_ix_i^\ell\right)I_{2^n}.\]
+    \end{prf}
+
+\section{Examples}
+    The iterative construction of the previous section makes proofs easy, but what do these matrices look like? In this section we will compute some resolutions using our new constructions and establish ways to compute properties of them.
+
+\subsection{Dimension 2}\label{subsec:dim-two-factorization}
+    Here we will be setting $n=2$, so $Q_0$ will be $k_q[x,y]$ with commutativity relations given by matrix $A=(\begin{smallmatrix}0 & 1\\-1 & 0\end{smallmatrix})$ (so that $yx=qxy$). Let let $a$ and $b$ be scalars in $k$ such that $\alpha=[a^7:b^7]\in\bbP^1$. Finally let $\zeta=\sqrt{q}=q^{1/2}.$ Then we have a resolution of the form 
+    \[\cdots\to Q_\alpha^2\xrightarrow{A_2^\alpha}Q_\alpha^2\xrightarrow{B_2^\alpha}Q_\alpha^2\to Q_\alpha\xrightarrow{\varepsilon} k \to 0.\]
+    
+    Using the computations from above, we have
+    \[A_2^\alpha=
+    \begin{pmatrix}
+        a^6x^6 & -\zeta^{-1}by\\ 
+        \zeta^{-1} b^6y^6 & ax
+    \end{pmatrix}\qquad B_2^\alpha=
+    \begin{pmatrix}
+        ax & \zeta by\\ 
+        -\zeta b^6y^{6} & a^6 x^{6}
+    \end{pmatrix}\]
+    which can be independently verified to form a matrix factorization (although we will appeal to theorem~\ref{thm:factorization_general} for that fact). This gives us a representative for $k$ in the category for matrix factorizations over $Q_\alpha$.
+\subsection{Dimension 3}
+    In the interest of seeing how these matrices scale up, let's set $n=3$ and $\alpha=[a^7:b^7:c^7]$ and let $x_3=z$. Furthermore let
+    \[A=\left(\begin{smallmatrix}
+        0& 1& 1\\-1&0&1\\-1&-1&0
+    \end{smallmatrix}\right)\]
+    and leave the rest of the parameters unchanged from the last section. Then we have a resolution
+    \[\cdots\to Q_\alpha^4\xrightarrow{A_3^\alpha}Q_\alpha^4\xrightarrow{B_3^\alpha}Q_\alpha^4\to Q_\alpha^3\to Q_\alpha\xrightarrow{\varepsilon}k\to 0\]
+    with
+    \[C_2^3=\begin{pmatrix}
+        -\sqrt{q_{23}}C_1^3 & 0 \\ 0&-\sqrt{q_{32}}\widetilde{C_1^3}
+    \end{pmatrix}=\begin{pmatrix}
+        \zeta^2cz & 0\\0& -\zeta^{-2}cz
+    \end{pmatrix}\]
+    and
+    \[\widetilde{C_2^3}=\begin{pmatrix}
+        \sqrt{q_{23}}\widetilde{C_1^3} & 0 \\ 0&\sqrt{q_{23}}C_1^3
+    \end{pmatrix}=\begin{pmatrix}
+        cz & 0\\0&cz
+    \end{pmatrix}\]
+    as well as 
+    \[D_2^3=\begin{pmatrix}
+        c^6z^6 & 0\\0& c^6z^6
+    \end{pmatrix}\quad\text{and}\quad\widetilde{D_2^3}=\begin{pmatrix}
+        \zeta^{-2}c^6z^6&0\\0&-\zeta^2c^6z^6
+    \end{pmatrix}\]
+    so we know our matrix factorization is
+    \[A_3^\alpha=\begin{pmatrix}
+        A_{2} & C_{2}^3\\D_{2}^3& B_{2}
+    \end{pmatrix}=\begin{pmatrix}
+        a^6x^{6} & -\zeta^{-1}by& \zeta^2cz & 0\\ 
+        \zeta^{-1} b^6y^{6} & ax&0&-\zeta^{-2}cz\\
+        c^6z^6 & 0&ax & \zeta by\\
+        0& c^6z^6&-\zeta b^6y^{6} & a^6x^{6}
+    \end{pmatrix}\]
+    and
+    \[B_3^\alpha=\begin{pmatrix}
+        B_{2}&\widetilde{C_{2}^3}\\ \widetilde{D_{2}^3} & A_{2}
+    \end{pmatrix}=\begin{pmatrix}
+        ax & \zeta by&cz & 0\\ 
+        -\zeta b^6y^{6} & a^6x^{6}&0& cz\\
+         \zeta^{-2}c^6z^6&0&a^6x^{6} & -\zeta^{-1} by\\
+         0&-\zeta^2c^6z^6&\zeta^{-1} b^6y^{6} & ax
+    \end{pmatrix}\]
+    
+\subsection{Our matrix factorizations work!}
+    At the moment we have found a very nice way to write down matrix factorizations for $f_\alpha\in Q_0$ for an arbitrary choice of $\alpha\in\bbP^{n-1}.$ We are particularly interested in computing a 2-periodic resolution for the trivial module $k$, however, so we need to confirm that these are indeed the ones we need.
+    
+    \begin{conj}
+        The matrix factorizations given in theorem \ref{thm:factorization_general} are the ones corresponding to the trivial module $k\in\lmod{Q_\alpha}.$ That is, they comprise the 2-periodic portion of a free resolution of $k$.
+    \end{conj}
+    
+    We begin with some initial (partial) results.
+    \begin{lem}
+        $A_2^\alpha$ and $B_2^\alpha$ define the 2-periodic part of a free resolution of $k$ when $n=2.$
+    \end{lem}
+    \begin{prf}
+        We prove this by writing down an explicit resolution. Consider the chain
+        \[\cdots\to Q_\alpha^2\xrightarrow{B_2^\alpha} Q_\alpha^2\xrightarrow{A_2^\alpha} Q_\alpha^2\xrightarrow{C} Q_\alpha \xrightarrow{\varepsilon}k\to 0.\]
+        We claim that the map $C$, in the $Q_\alpha$ basis induced by $A_2^\alpha$ on $Q_\alpha^2$ and the basis $\{1_{Q_\alpha}\}$ for $Q_\alpha$ is given by the matrix
+        \[C=\begin{pmatrix}
+            \sqrt{q_{12}}a x_1 & bx_2
+        \end{pmatrix}\]
+        where $a^\ell=\alpha_1$ and $b^\ell=\alpha_2$.
+        
+        Notice first that the exactness of this chain is clear at $k$ and for the 2-periodic portion of the chain by the results above. Further, 
+        \begin{align*}
+            C\circ A_2^\alpha &= \begin{pmatrix}
+            \sqrt{q_{12}}a x_1 & bx_2
+        \end{pmatrix}\begin{pmatrix}
+            a^{\ell-1}x_1^{\ell -1} & -\sqrt{q_{12}}bx_2\\ 
+            \sqrt{q_{12}}b^{\ell-1}x_2^{\ell -1} & ax_1
+        \end{pmatrix}\\
+        &=\begin{pmatrix}
+            \sqrt{q_{12}}(\alpha_1x_1^\ell + \alpha_2x_2^\ell) & -q_{12}abx_1x_2+abx_2x_1
+        \end{pmatrix}\\
+        &=0
+        \end{align*}
+        and
+        \[\varepsilon\circ C = 0\]
+        since for any $s\in Q_\alpha^2,$ $C(s)\in(x_1,x_2)\lhd Q_\alpha$. Thus the chain above is honestly a chain complex. The image of $C$ is $(x_1,x_2)$, which can be realized by considering the image of $(\begin{smallmatrix}
+            \sqrt{q_{21}}a^{-1}\\ 0
+        \end{smallmatrix})$ and $(\begin{smallmatrix}
+            0\\ b^{-1}
+        \end{smallmatrix}).$ Thus we need only check exactness at the first $Q_\alpha^2.$
+        
+        Let $(\begin{smallmatrix}
+            r\\ s
+        \end{smallmatrix})\in\ker C$ so
+        \[\sqrt{q_{12}}ax_1r + bx_2s=0.\]
+        From this it is clear by considering degrees that $s\in (x_1)$ and $r\in(x_2)$, so write $r=x_2r'$ and $s=x_1s'.$ Then by collecting the $x_1x_2$ term on the left, we get
+        \[\sqrt{q_{12}}x_1x_2(ar'+\sqrt{q_{12}}bs')=0\]
+        and since $x_1x_2$ is not a zero divisor, we get that $ar'=-\sqrt{q_{12}}bs'.$ Then we can compute
+        \[A_2^\alpha\begin{pmatrix}
+            0 \\ -b^{-1}\sqrt{q_{21}}r'
+        \end{pmatrix}=\begin{pmatrix}
+            yr' \\ -b^{-1}\sqrt{q_{21}}x(ar')
+        \end{pmatrix}=\begin{pmatrix}
+            yr' \\ -b^{-1}\sqrt{q_{21}}(-\sqrt{q_{12}}bs')
+        \end{pmatrix}=\begin{pmatrix}
+            r \\ s
+        \end{pmatrix}\]
+        so $\ker C=\operatorname{im} A_2^\alpha$ so the chain given is exact and thus a free resolution of $k$ over $Q_\alpha.$
+    \end{prf}
+
+\section{Twisted complexes}
+    Whenever we are interested in whether cohomology of a module eventually vanishes, it is helpful when the module admits a(n eventually) periodic resolution, because it reduces this computation to one that requires only checking finitely many places. Sometimes, either for theory or computation, it would be simpler to only have to check a single place to determine whether the cohomology vanishes. To that end, we introduce \textit{twisted complexes} that collapse a complex back onto itself, reducing statements about the cohomological vanishing of a periodic resolution $\calC_\bullet$ to a statement about the vanishing of $H^i(\calC_\bullet)$ for a particular $i$.
+
+    Let $\calC_\bullet$ be a chain complex:
+    \[\cdots\to\calC_{n+1}\xrightarrow{\partial^\calC_{n+1}}\calC_n\xrightarrow{\partial^\calC_n}\calC_{n-1}\to\cdots\]
+    then for any $k$, we can construct the \textbf{$k$-fold staggered sum} $^k\calC_\bullet=\oplus_{i=0}^{k-1}\calC_\bullet[i]$. That is,
+    \[^k\calC_i = \calC_{i+k-1}\oplus\calC_{i+k-2}\oplus\cdots\oplus \calC_{i+1}\oplus \calC_i\qquad \partial^{^k\calC}_{i}=\partial^\calC_{i+k-1} \oplus\partial^\calC_{i+k-2} \oplus\cdots\oplus\partial^\calC_i.\]
+    We think of $^k\calC_\bullet$ as creating $k$ parallel copies of the chain complex $\calC_\bullet$, offsetting each copy from its neighbors by one. This construction will allow us, along with the twist described below, to make statements about (length $k$) ranges of homology with a single computation.
+    
+    This leads to the definition:
+    \begin{defn}\label{def:twisted-complex}
+        Given a chain complex $\calC_\bullet,$ a positive integer $k$, and a ``twist'' $\sigma\in\frakS_k,$ the \textbf{($\sigma$-)twisted ($k$-fold staggered) complex} $^\sigma\calC_\bullet$ is $^k\calC_\bullet$ with the $^k\calC_i$ twisted by $\sigma^i$. That is,
+        \begin{equation}\label{eqn:twisted-complex}
+            ^\sigma\calC_i=\calC_{i-1+\sigma^i(k)}\oplus\calC_{i-1+\sigma^i(k-1)}\oplus\cdots\oplus \calC_{i-1+\sigma^i(2)}\oplus \calC_{i-1+\sigma^i(1)}
+        \end{equation}
+        and the differentials are
+        \[\partial^{^\sigma\calC}_i=\partial^\calC_{i-1+\sigma^i(k)}\oplus\partial^\calC_{i-1+\sigma^i(k-1)}\oplus\cdots\oplus \partial^\calC_{i-1+\sigma^i(1)}.\]
+    \end{defn}
+    \begin{rmk}
+        In the case that the complex is over a $k$-algebra and each $\calC_i$ has the same $k$-dimension $n$, this can be written more compactly as
+        \[\partial^{^\sigma\calC}_i=(A_{\sigma}^{i-1}\otimes I_n)\partial_i^{^k\calC}(A_{\sigma^{-1}}^i\otimes I_n),\]
+        where $A_\sigma$ is the permutation matrix corresponding to $\sigma$.
+    \end{rmk}
+    
+    Using this definition, now assume that $\calC_\bullet$ is a $k$-periodic chain complex. Then by picking $\tau=(1\,k\,k-1\,\cdots\,2)\in\frakS_k,$ we can define the \textbf{shuffled periodic complex} $^\tau\calC_\bullet$.
+    \begin{rmk}
+        In the case that $\dim_k \calC_i=n$ for all $i$, the differential for the shuffled periodic complex is
+    \[\partial^{^\tau\calC}_i=\begin{pmatrix}
+    0 & 0 & 0 & \cdots &0& \partial^\calC_{i}\\
+    \partial^{\calC}_{i+k-1} & 0 & 0 & \cdots &0& 0\\
+    0&\partial^{\calC}_{i+k-2}& 0 & \cdots &0& 0\\
+    0 & 0 &\partial^\calC_{i+k-3}& \cdots &0& 0\\
+    \vdots &\vdots & \vdots & \ddots & \vdots\\
+    0 & 0 & 0 & \cdots & \partial^\calC_{i+1} & 0
+    \end{pmatrix}\]
+    \end{rmk}
+    
+    The following results lead us to the conclusion that the shuffled periodic complex ``collapses'' a periodic complex in a way that turns the detection of eventually vanishing homology into a single computation. 
+    \begin{prop}\label{prop:periodic}
+        If $\calC_\bullet$ is $k$-periodic and $\tau=(1\,k\,\cdots\, 2)\in\frakS_k,$ then $^\tau\calC_\bullet$ is a 1-periodic complex. That is, all differentials are the same.
+    \end{prop}
+    \begin{prf}
+        If $\calC_\bullet$ is $k$-periodic, then $\calC_i=\calC_{i+k}$ and $\partial^\calC_i=\partial^\calC_{i+k}$ for all $i$. Begin by remarking that, since $\tau^i(j)-1\equiv j-i-1\equiv\tau^{i+1}(j)\pmod{k},$
+        \[(i+1)-1+\tau^{i+1}(j)\equiv(i+1)-1+\tau^i(j)-1\equiv i-1+\tau^i(j)\pmod{k}.\]
+        Thus, since $\calC_\bullet$ is $k$-periodic, we get immediately that
+        \[\calC_{(i+1)-1+\tau^{i+1}(j)}=\calC_{i-1+\tau^i(j)}\]
+        and therefore by Equation~\ref{eqn:twisted-complex}, we get that $^\tau\calC_i={^\tau\calC_{i+1}}$ since all summands are equal. Since the differentials are dependent completely on the (order of the) summands of $^\tau\calC_i,$ this implies that $\partial^{^\tau\calC}_i=\partial^{^\tau\calC}_{i+1},$ proving that $^\tau\calC_\bullet$ is ($1$-)periodic.
+    \end{prf}
+    \begin{rmk}
+        It is a mild generalization to extend the above result to the case when $\calC_\bullet$ is \textit{eventually periodic}, that is when $\calC_{i+k}=\calC_i$ and $\partial_{i+k}=\partial i$ only for $i$ larger than some $N$. Then as long as we restrict to the case when $i>N$, all the results mentioned go through as usual. This can be seen by applying the results above to the truncation of $\calC_\bullet$ to an honestly periodic one.
+    \end{rmk}
+    
+    
+    
+    \begin{prop}\label{prop:homology}
+        If $\calC_\bullet$ is a chain complex, $k$ is a positive integer, and $\sigma\in\frakS_k,$
+        \[H_i(^\sigma\calC_\bullet)=H_{i-1+\sigma^i(k)}(\calC_\bullet)\oplus H_{i-1+\sigma^i(k-1)}(\calC_\bullet)\oplus\cdots\oplus H_{i-1+\sigma^i(2)}(\calC_\bullet)\oplus H_{i-1+\sigma^i(1)}(\calC_\bullet)\]
+    \end{prop}
+    \begin{prf}
+        This follows quickly from the fact that
+        \[\ker\partial^{^\sigma\calC}_i=\ker\partial^\calC_{i-1+\sigma^i(k)}\oplus\ker\partial^\calC_{i-1+\sigma^i(k-1)}\oplus\cdots\oplus \ker\partial^\calC_{i-1+\sigma^i(1)}\]
+        and a similar equality holds for the image. Thus the quotient of the sum is the sum of the quotients and the result follows.
+    \end{prf}
+
+
+\chapter{Varieties for quantum complete intersections}
+We begin our discussion of varieties associated to algebras with those that are naturally formed on quantum complete intersections. The computational simplicity of QCIs admit relatively clear definitions and algorithms, so we define these here and then later (in chapter~\ref{chp:var-qbci}) we extend these to the Hopf algebras we are actually interested in studying.
+
+\section{Hypersurface Support}
+    We begin with the definition of hypersurface support, elucidated in the commutative case in \cite{avramov-iyengar} and further generalized in later works including \cite{negron-pevtsovaI} and others. The principle idea is that we can compute support by ``slicing'' our algebra by hypersurfaces parameterized by $\bbP^{n-1}$ and then $x\in\bbP^{n-1}$ is in $\supph M$ if $M_\alpha$ (the pullback of $M$ along $Q_\alpha\to R_0$) satisfies a kind of homological finiteness property. 
+    
+    In this setup, we are considering our algebra $Q_0$ along with a choice of vector $\alpha\in k^n\setminus\mathbf{0}$ yielding the sequence from \eqref{eq:hypersurface}:
+    \[Q_0\to Q_\alpha\eqdef Q_0/(f_\alpha)\to R_0.\]
+    Recall that a left $R_0$ module inherits a left $Q_\alpha$-module structure by the action given by the map $Q_\alpha\twoheadrightarrow R_0.$
+    
+    \begin{defn}\label{defn:hyp-support}
+        Given a module $M\in \lmod{R_0},$ we define the \emph{hypersurface support} of $M$ to be the subset of $\bbP^{n-1}$ defined to be
+        \[\supph(M)=\{\alpha\in \bbP^{n-1}|\projdim_{\widehat{Q_\alpha}}M_\alpha = \infty\}.\]
+    \end{defn}
+    
+    \begin{rmk} 
+        A careful reader will notice a small detail of the above definition that strays from our usual setting: we are \textit{passing to the completion.} This is due to technical considerations (later we would like to use that our algebra $Q_\alpha$ has only a single simple module $k$, which is true if $Q_\alpha$ is local), but it makes sense to do this now. Notice that when we write $M_\alpha$ above, we really mean $\widehat{M_\alpha}\eqdef \widehat{Q_\alpha}\otimes_{Q_\alpha}M_\alpha.$ 
+        
+        Since $Q_\alpha$ is Noetherian (as all Gorenstein rings are), this means that $\widehat{Q_\alpha}$ is flat over $Q_\alpha$, meaning that if we start with a resolution $\calC_\bullet\to k$ over $Q_\alpha$, we get an exact chain complex $\widehat{\calC_\bullet}\eqdef \widehat{Q_\alpha}\otimes_{Q_\alpha}\calC_\bullet\to k$ over $\widehat{Q_\alpha}$ and furthermore since the resolutions we construct for $k$ are free, this also gives us a free (whence projective) resolution of $k$ over $\widehat{Q_\alpha}$.
+        
+        This all means that, in practice, the resolutions we use for our $R_0$ module $M$ over $Q_\alpha$ are effectively the same (e.g. they have the same matrix representations) as the ones of $\widehat{M_\alpha}$ over $\widehat{Q_\alpha}$ using the complex $\widehat{\calC_\bullet}\otimes_{\widehat{Q_\alpha}}\widehat{M_\alpha}\to \widehat{M_\alpha}.$ Since projectives over a local ring are free (and again using that the completion is projective over $Q_\alpha$), this means that the projective resolutions over $\widehat{Q_\alpha}$ \textit{are} projective resolutions over $Q_\alpha$ after restriction. Since we can both lift and restrict resolutions for $R_0$ modules to projective resolutions of the same length, this gives us that the finiteness of projective dimension for $Q_\alpha$ is actually exactly the same condition as the one in definition~\ref{defn:hyp-support}, so we will use the non-completed version for computations.
+    \end{rmk}
+
+\section{Rank Varieties}
+    In this section we will pull together our contributions as well as connections between some of the previous work in this area. In what follows we continue with the notation $Q_0\to Q_\alpha\to R_0$ to denote the skew polynomial ring in $n$ variables, hyperplane corresponding to $\alpha\in\mathbb P^n$, and finite dimensional algebras, respectively.
+    
+    
+    Let $M\in\lmod{R_0}$ and let $M_\alpha$ denote the pullback of $M$ to $Q_\alpha.$ Furthermore, let $\calC_\bullet$ be a resolution of $k$ over $Q_\alpha$ constructed by computing the syzygy assured to us by thm.~\ref{prop:syzygy} and using this to compute a 2-periodic resolution $P_\bullet\to k.$ Define $\tilde\calC_\bullet=\calC_\bullet\otimes_{Q_\alpha} M_\alpha$ and let $\calD_\bullet$ be the twisted complex (c.f. Definition~\ref{def:twisted-complex})
+    \[\calD_\bullet={^{(1\,2)}\tilde\calC_\bullet.}\]
+    We have shown in Section~\ref{sec:resolution-construction} how to construct a matrix pair $(A,B)$ representing the matrix factorization for $f_\alpha$ over $Q_0$. These, in turn, describe the differentials in $\calC_\bullet$ as maps between free $Q_\alpha$ modules: $\partial^\calC_{d+2k}=A$ and $\partial^\calC_{d+2k+1}=B.$ But then
+    \[\partial^{\tilde\calC}_{d+2k}=A\otimes \id_{M_\alpha}\eqdef\tilde A\qquad \partial^{\tilde\calC}_{d+2k+1}=B\otimes \id_{M_\alpha}\eqdef\tilde B\]
+    We know that $\calD_\bullet$ is eventually periodic from proposition~\ref{prop:periodic} and, more specifically, we can compute for all $i>d$ that (depending on the parity of $d$) either
+    \[\partial^\calD_i=\begin{pmatrix}0&\tilde A\\\tilde B&0\end{pmatrix}\qquad\text{or}\qquad\partial^\calD_i=\begin{pmatrix}0&\tilde B\\\tilde A&0\end{pmatrix}.\]
+    
+    Note that while $\partial^{\calD}_i$ is, by definition, a $Q_\alpha$-linear morphism, we can identify it as a genuine matrix over $k$ by choosing a basis for $M_\alpha$ and interpreting $\partial_i^\calD\otimes\id_{M_\alpha}$ as a $k$-linear map. In practice, this means that we can compute $\tilde A$ and $\tilde B$ as matrices representing $Q_\alpha$-linear maps and then specialize to a genuine matrix over $k$ by replacing each variable $x_i$ with the linear operator it represents on $Q_\alpha^s\otimes M_\alpha\cong M_\alpha^s.$
+    
+    The general theory of these algebras tells us that when we use $n$ variables, the rank of these modules is $2^{n-1}$. When $M$ is finite dimensional over $k$ (say $\dim_k M=m)$, we can consider therefore any map $\varphi:Q_\alpha^{2^{n-1}}\otimes M\to Q_\alpha^{2^{n-1}}\otimes M$ as a $k$-linear map between vector spaces of rank $2^{n-1}m.$ Since $C(M_\alpha)$ corresponds to the sum of two copies of $\partial^\calC_i$, this means that $C(M_\alpha)$ is a $(2^nm\times 2^nm)$ matrix.
+    
+    \begin{prop}
+        Let $Q_\alpha$ and $M$ be as above. Then
+        \[\rank C(M_\alpha)\le 2^{n-1}\cdot\dim_k M.\]
+    \end{prop}
+    \begin{prf}
+        Since the resolution becomes 1-periodic with differential $C(M_\alpha)$, we have that $\Im C(M_\alpha)\subset \ker C(M_\alpha).$ Since $C(M_\alpha)$ corresponds to a $2^n\cdot\dim_k M\times 2^n\cdot\dim_k M$ matrix over $k$, the conclusion is a consequence of the rank-nullity theorem.
+    \end{prf}
+    
+    With this we can define
+    \begin{defn}
+        Let $Q_0$ and $R_0$ be as usual. Let $M\in\lmod{R}$ and for any $\alpha\in\bbP^{n-1}$ let $M_\alpha$ denote the pullback of $M$ through the map $Q_\alpha\twoheadrightarrow R$. Then the \emph{rank variety corresponding to $M$} is
+        \[\supprRnaught(M)=\{\alpha\in\bbP^{n-1}|\rank C(M_\alpha) < 2^{n-1}\cdot\dim_k M\}.\]
+    \end{defn}
+    
+    \section{The result}
+    We begin with a result that is primarily an observation.
+    \begin{lem}\label{lem:tor}
+        Let $M$ be an $R_0$-module and let $\tilde\calC_\bullet\to M_\alpha$ be the resolution constructed above. Then
+        \[H^i(\tilde\calC_\bullet)=\Tor_i^{Q_\alpha}(k,M_\alpha).\]
+    \end{lem}
+    \begin{prf}
+        Notice that we computed $\tilde\calC_\bullet$ as $\calC_\bullet\otimes M_\alpha,$ where $\calC_\bullet$ is a $Q_\alpha$ projective (and thus flat) resolution of $k$. Therefore the homology of this chain complex is exactly $\Tor.$
+    \end{prf}
+    
+    The primary result of this chapter is that the notions of support we define above agree, and the major lifting will come from a number of lemmas discussing the homological properties of algebras like skew polynomial algebras and hypersurfaces. We reproduce the relevant part of the (synthesized) result below
+    
+    \begin{prop}[\cite{iwanaga80}, thm. 2; \cite{enochs-jenda11}, prop. 9.1.7]\label{prop:homological-dims}
+        Let $\Lambda$ be a $d$-Gorenstein ring and let $M$ be $\operatorname{Jac}(\Lambda)$-torsion. Then $\projdim M<\infty$ if and only if $\flatdim M<\infty.$
+    \end{prop}
+    This result (which applies to our case since we are always going to be taking $R_0$ modules, which will then be torsion over $Q_\alpha$ or $Q_0$. There are even more equivalences that can be found in the above resources, including the fact that $d$ (the Gorenstein dimension of $\Lambda$) is an upper bound for the different homological notions of dimension. Furthermore we have the result
+    \begin{prop}[\cite{negron-pevtsovaII}, prop. 3.1]\label{prop:flat-torsion-equiv}
+        Let $\Lambda$ be $d$-Gorenstein and $M$ be $\operatorname{Jac}(\Lambda)$ torsion. Then 
+        $\Tor_{\gg0}^\Lambda(\Lambda/\operatorname{Jac}(\Lambda),M)=0$ if and only if $M$ has finite flat dimension.
+    \end{prop}
+    \begin{rmk}
+        Notice the ``backward'' implication ($\Leftarrow$) above is clear, since we can compute Tor using a flat resolution of $M$. Since it is finite, eventually one will be computing maps between zero modules, so $\Tor$ will vanish. So the forward direction is the interesting one. 
+        
+        In \cite[sec. 3.1]{negron-pevtsovaII} the authors prove the proposition above by proving that $Q_\alpha$ admits composition series. Through this, we can prove a standard result from homological algebra that it suffices to check $\Tor$ on simples, as the atomic pieces of any module can be extracted from their composition series. Since we are really interested in the projective dimension over $\widehat{Q_\alpha}$, and since local rings have a single simple module $k$, this means that checking the vanishing of $\Tor_i(N,M)$ for arbitrary $N$ can be reduced to the very special case of when $N=k=\Lambda/\operatorname{Jac}(\Lambda).$
+    \end{rmk}
+    
+    Using these results, we get one directly applicable to our work.
+    \begin{cor}\label{cor:hypersurfaces-tor}
+        Let $n,\ell,q$ and $A$ be fixed parameters as usual and let $Q_0$ and $R_0$ be as per usual. Let $M$ be an $R_0$-module and let $M_\alpha$ be its pullback to $Q_\alpha$ for any $\alpha\in\bbP^{n-1}.$ Then the following are equivalent:
+        \begin{enumerate}
+            \item $\alpha\notin\supph(M)$
+            \item $\projdim_{Q_\alpha} M_\alpha < \infty$
+            \item $\Tor_{\gg 0}^{Q_\alpha}(k,M_\alpha)=0.$
+        \end{enumerate}
+    \end{cor}
+    \begin{prf}
+        The equivalence of the first two terms is simply the definition of $\supph$ as well as the discussion of completion that follows, so it remains to show the equivalence of the latter two. Notice first that each $x_i$ annihilates the module $N_\alpha$ where $N=\langle x_i^{\ell-1}\rangle\lhd R_0$, it lies in $\operatorname{Jac}(Q_\alpha)$. Therefore $\operatorname{Jac}(Q_\alpha)=(x_1,\dots,x_n).$ Since $M$ is an $R_0$ module, $x_i^\ell$ acts by zero on it for each $i,$ meaning that it is $\operatorname{Jac}(Q_\alpha)$ torsion. 
+        
+        Therefore applying propositions \ref{prop:homological-dims} and \ref{prop:flat-torsion-equiv}, we get
+        \[\Tor_i^{Q_\alpha}(Q_\alpha/\operatorname{Jac}(Q_\alpha),M_\alpha)=\Tor_i^{Q_\alpha}(k,M_\alpha)\]
+        and the result follows directly.
+    \end{prf}
+    
+    \begin{thm}\label{thm:hyp-rank-equiv}
+        Given $\alpha\in\bbP^{n-1}$, $\alpha\in\supprRnaught(M)$ if any only if $\alpha\in \supphRnaught(M).$
+    \end{thm}
+    \begin{prf}
+        Begin by assuming that $\alpha\in\supprRnaught(M),$ so that the rank of $C(M_\alpha)$ is less than $2^{n-1}\dim_kM.$ Then $\dim_k(H_i(\calD_\bullet))=\operatorname{nullity}C(M_\alpha)-\rank C(M_\alpha)>0$ for all $i\ge d$.
+        
+        We continue by recognizing that $H_i(\calD_\bullet)\cong H_i(\calC_\bullet)\oplus H_{i+1}(\calC_\bullet)\ne0$ if and only if $H_i(\calC_\bullet)$ or $H_{i+1}(\calC_\bullet)$ is nonzero. Thus by prop.~\ref{prop:homology}, either $H_i(\calD_\bullet)$ or $H_{i+1}(\calD_\bullet)$ is nonzero and so by Lemma~\ref{lem:tor}, either $\Tor^{Q_\alpha}_i(k,M)$ or $\Tor^{Q_\alpha}_{i+1}(k,M)$ is nonzero for all $i\ge d$. Applying Corollary~\ref{cor:hypersurfaces-tor}, we get that $\alpha\in\supphRnaught(M).$
+        
+        For the reverse direction, the logic is largely the same in reverse. If $\alpha\in\supphRnaught M,$ we get that $\Tor_i^{Q_\alpha}(k,M)\ne0$ for arbitrarily large $i$. Therefore we get that 
+        \[H_i(\calD_\bullet)\cong \Tor_i(k,M)\oplus \Tor_{i+1}(k,M)\ne 0\]
+        for arbitrarily large $i$. But since $\dim H_i(\calD_\bullet)>0,$ this means that for infinitely many $i$,
+        \[\operatorname{nullity} C(M_\alpha)>\rank C(M_\alpha),\]
+        from which we can conclude that $\rank C(M_\alpha)<2^{n-1}\cdot\dim_k M$ and finally that $\alpha$ belongs to $\supprRnaught(M).$
+    \end{prf}
+    
+    From this result, the following is an easy corollary since these varieties have the same closed sets induced by $\supphRnaught$ and $\supprRnaught$.
+    \begin{cor}
+        For any $R_0$-module $M$, the varieties defined by $\supphRnaught(M)$ and $\supprRnaught(M)$ have the same underlying (topological) subspace of $\bbP^{n-1}.$
+    \end{cor}
+
+\section{Examples of computing support}\label{sec:computing-support}
+    While in most cases the computations required for this work quickly become difficult to work with (the matrices in question become size $2^n\cdot \dim_k M$), we can compute some simpler cases by hand. 
+    
+    In both of the following cases, let $n=2$, $\ell=7$, $A=(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}),$ and $\alpha=[a^7:b^7]$ be arbitrary. Furthermore, let $\zeta=q^{1/2}.$ Then, as shown in section~\ref{subsec:dim-two-factorization}, we have a matrix factorization $(A_2^\alpha,B_2^\alpha)$ for $k$ given by
+    \[A_2^\alpha=
+    \begin{pmatrix}
+        a^6x^6 & -\zeta^{-1}by\\ 
+        \zeta^{-1} b^6y^6 & ax
+    \end{pmatrix}\qquad B_2^\alpha=
+    \begin{pmatrix}
+        ax & \zeta by\\ 
+        -\zeta b^6y^{6} & a^6 x^{6}
+    \end{pmatrix}\]
+    
+\subsection{First example}
+    To begin, we are going to consider the $R_0$-module $M=R_0/(x^2,y^2)$ with the $k$-basis $\langle 1,x,y,xy\rangle.$ Then in this basis, left multiplication by $r$ is given by the following linear operators $L_r$:
+    \[L_x=\begin{pmatrix}
+        0 & 0 & 0 & 0\\
+        1 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0\\
+        0 & 0 & 1 & 0
+    \end{pmatrix}\qquad L_y=\begin{pmatrix}
+        0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0\\
+        1 & 0 & 0 & 0\\
+        0 & q & 0 & 0
+    \end{pmatrix}\]
+    and since $L_{x^6}=(L_x)^6=L_{y^6}=\mathbf{0},$ the matrices for $A_2^\alpha\otimes \id_M$ and $B_2^\alpha\otimes \id_M$, respectively, are
+    \[\begin{pmatrix}
+        0&0&0&0 & 0 & 0 & 0 & 0\\
+        0&0&0&0 & 0 & 0 & 0 & 0\\
+        0&0&0&0 & -\zeta^{-1}b & 0 & 0 & 0\\
+        0&0&0&0 & 0 & -\zeta^{-1}bq & 0 & 0\\
+        0&0&0&0 & 0 & 0 & 0 & 0\\
+        0&0&0&0 & a & 0 & 0 & 0\\
+        0&0&0&0 & 0 & 0 & 0 & 0\\
+        0&0&0&0 & 0 & 0 & a & 0
+    \end{pmatrix}\qquad\begin{pmatrix}
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        a & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & \zeta b & 0 & 0 & 0\\
+        0 & 0 & a & 0 & 0 & \zeta bq & 0 & 0\\
+         0&0&0&0&0&0&0&0\\
+         0&0&0&0&0&0&0&0\\
+         0&0&0&0&0&0&0&0\\
+         0&0&0&0&0&0&0&0
+    \end{pmatrix}\]
+    where one notices immediately that, regardless of the choice of $a$ and $b$, the matrices have rank 3 or less. Therefore $C(M_\alpha)$ has rank less than or equal to 6. But $2^{n-1}\cdot \dim_k M=8,$ so $\suppr(M)=\bbP^1.$
+\subsection{Second example}
+    Let us use the same algebra as above, but this time consider the module $R_0/(x)$ with basis $\langle 1,y,y^2,y^3,y^4,y^5,y^6\rangle.$ Then $L_x=\mathbf 0$ and 
+    \[L_y=\begin{pmatrix}
+        0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        1 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 1 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 1 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 1 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 1 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 1 & 0
+    \end{pmatrix}\]
+    so $A_2^\alpha\otimes M$ corresponds to the $k$-linear map
+    \[\left(\begin{smallmatrix}
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & -\zeta^{-1}b & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\zeta^{-1}b & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\zeta^{-1}b & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\zeta^{-1}b & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\zeta^{-1}b & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -\zeta^{-1}b & 0\\
+        0 & 0 & 0 & 0 & 0 & \zeta^{-1} b^6 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & \zeta^{-1} b^6 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & \zeta^{-1} b^6 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & \zeta^{-1} b^6 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & \zeta^{-1} b^6 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        \zeta^{-1} b^6 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+    \end{smallmatrix}\right)\]
+    which we can compute has rank $12$ when $b$ is nonzero and rank 0 otherwise. The matrix for $B_2^\alpha\otimes M$ has the same nonzero entries, but with different constants, so has the exact same conditions on rank. Since $\rank C(M_\alpha)$ is the sum $\rank A_2^\alpha\otimes M+\rank B_2^\alpha\otimes M,$ we get that the rank is less than $2^{n-1}\cdot \dim M=14$ if and only if $b=0.$ Thus the support is just a single point:
+    \[\suppr(M)=\{[1:0]\}.\]
+
+\comment{\subsection{Hypersurface support and matrix factorizations}
+
+    In chapter~\ref{chp:matrix-factorizations}, we define the notion of a matrix factorization arising from a module over a Gorenstein ring. Take a module $M\in \lmod {R_0}$ and for any $\alpha\in k^n\setminus\mathbf{0}$, pull it back to a module over $Q_{0,\alpha}\eqdef Q_f$. Letting $\mathbf{P}_\bullet\to M$ be a resolution over $Q_f$, the results in section~\ref{subsubsec:construction-of-res} give us that eventually there is a syzygy $\Omega^i(M)$ that has projective dimension 1 as a $Q_0$-module and then we can construct the rest of the (2-periodic) resolution from there.
+    
+    We want to say that a module has finite projective dimension if and only if the two-periodic part of the above resolution vanishes (that is eventually $\Ext^i$ vanishes for large enough values of $i$). One direction here is true by definition, but we will need some results to be able to go both ways.
+    
+    \begin{lem}
+        Let $M$ be any module over $Q_\alpha$. Then
+        \[\projdim M=d \Leftrightarrow \forall N\in\lmod{Q_\alpha},\,\Ext^{d+1}_{Q_\alpha}(N,M)=0.\]
+    \end{lem}
+    \begin{lem}
+        Let $M$ be as above and $\calS\subseteq\lmod{Q_\alpha}$ be the collection of simple modules. Then
+        \[\projdim M=d \Leftrightarrow \forall N\in\calS,\,\Ext^{d+1}_{Q_\alpha}(N,M)=0.\]
+    \end{lem}
+    {\color{red} One thing this requires is the existence of composition series. Is $Q_\alpha$ Artinian?}
+    \begin{prf}
+        Using the result above, the forward implication is clear. To get the reverse, assume that $\Ext^{d+1}(-,M)$ vanishes on all simples and let
+        \[0=N_0\subset N_1\subset\cdots\subset N_n=N\]
+        be a composition series of $N$. Notice that for an exact $0\to A\to B\to C\to 0$ such that $\Ext^i(A,M)=0$, the long exact sequence for $\Ext$ gives us that
+        \[\Ext^i(B,M)\cong\Ext^i(C,M).\]
+        
+        Therefore for any $0\le i< n,$ we can consider the sequence 
+        \[N_{i+1}/N_i \to N/N_i\to (N/N_i)/(N_{i+1}/N_i)\cong N/N_{i+1}\]
+        and conclude that $\Ext^i(N/N_i, M)\cong \Ext^i(N/N_{i+1},M).$ Since we're working with a composition series and $\Ext$ vanishes on simples, we get that $\Ext^i(N/N_{n-1},M)=0$, establishing that $\Ext^i(N/N_i,M)=0$ for all $i$.
+        
+        Finally consider the sequence $N_1\to N\to N/N_1$ and appealing once more to the long exact sequence, we get
+        \[\cdots\to \Ext^i(N/N_1,M)\to \Ext^i(N,M)\to \Ext^i(N_1,M)\to \cdots\]
+        and since $N_1$ is simple and the left hand term vanishes by the above argument, this proves that $\Ext^i(N,M)=0$, proving that it is equivalent to check for vanishing of $\Ext$ on simples.
+    \end{prf}
+    \begin{lem}
+        Let $M$ be as above. Then
+        \[\projdim M=d \Leftrightarrow \Ext_{Q_\alpha}^i(k,M)=0.\]
+    \end{lem}}
+
+
+
+
+
+ 
+ 
+
+
+\part{Bosonized quantum complete intersections}\label{prt:bqci}
+
+\chapter{Hopf algebras}
+    In this section, we will assemble the results that are relevant to our topic from the world of Hopf algebras. Our discussion will begin with a reminder of the definition of a Hopf object in a category and continue through a description of the process of bosonization. The section will culminate in a development of different varieties that can be associated to a Hopf algebra and some connections between them.
+
+\section{Hopf objects and algebras}
+    One of the allures of the theory of Hopf algebras is that their definition is completely diagrammatic. Thus, for any monoidal category $\calC$, we can write out a series of diagrams which completely categorize the Hopf objects in $\calC$.
+
+\subsection{Hopf objects}
+    Given a braided monoidal category $\calC$ with monoidal unit $k$ and twist isomorphism $\tau:A\otimes A\to A\otimes A$, we let a \textbf{Hopf object in $\calC$} be an object $A\in\calC$ along with maps
+    \[\Delta:A\to A\otimes A\quad \nabla:A\otimes A\to A\quad \varepsilon:A\to k\quad u:k\to A\quad\text{and}\quad S:A\to A\]
+    satisfying the diagrams for (co)associativity
+    \begin{center}
+        \begin{tikzcd}
+            A\otimes A\otimes A \ar[r,"1\otimes\nabla"]\ar[d,"\nabla\otimes 1"]& A\otimes A\ar[d,"\nabla"]\\
+            A\otimes A\ar[r,"\nabla"] & A
+        \end{tikzcd}\qquad
+        \begin{tikzcd}
+            A\otimes A\otimes A & A\otimes A\ar[l,"1\otimes\Delta"]\\
+            A\otimes A\ar[u,"\Delta\otimes 1"] & A\ar[u,"\Delta"]\ar[l,"\Delta"]
+        \end{tikzcd}
+    \end{center}
+    (co)unit
+    \begin{center}
+        \begin{tikzcd}
+            k\otimes A\ar[r,"u\otimes 1"] &A\otimes A\ar[d,"\nabla"]& A\otimes k\ar[l,"1\otimes u"]\\
+            & \ar[ur,leftrightarrow,"\simeq",swap]\ar[ul,leftrightarrow,"\simeq"]A &
+        \end{tikzcd}\qquad
+        \begin{tikzcd}
+            k\otimes A &A\otimes A\ar[l,"\varepsilon\otimes 1"]\ar[r,"1\otimes\varepsilon"]& A\otimes k\\
+            & \ar[ur,leftrightarrow,"\simeq",swap]\ar[ul,leftrightarrow,"\simeq"]A\ar[u,"\Delta"] &
+        \end{tikzcd}
+    \end{center}
+    compatibility relations
+    \begin{center}
+        \begin{tikzcd}
+            A\otimes A\ar[d,"\Delta\otimes\Delta"]\ar[r,"\nabla"] & A\ar[r,"\Delta"] & A\otimes A\\
+            A\otimes A\otimes A\otimes A\ar[rr,"1\otimes\tau\otimes 1"] & & A\otimes A\otimes A\otimes A\ar[u,"\nabla\otimes\nabla"]
+        \end{tikzcd}
+    \end{center}
+    \begin{center}
+        \begin{tikzcd}
+            A\otimes A\ar[d,"\nabla"] & \ar[l,"u\otimes u"] k\otimes k\ar[d,leftrightarrow,"\simeq"]\\
+            A & k\ar[l,"u"]
+        \end{tikzcd}\qquad
+        \begin{tikzcd}
+            A\otimes A\ar[r,"\varepsilon\otimes\varepsilon"] & k\otimes k\ar[d,leftrightarrow,"\simeq"]\\
+            A\ar[r,"\varepsilon"]\ar[u,"\Delta"] & k
+        \end{tikzcd}\qquad
+        \begin{tikzcd}
+            k\ar[r,"u"]\ar[rr,bend right,swap,"id"] & A\ar[r,"\varepsilon"] & k
+        \end{tikzcd}
+    \end{center}
+    and finally that of the antipode
+    \begin{center}
+        \begin{tikzcd}
+            A\otimes A \ar[r,"S\otimes 1"] & A\otimes A\ar[d,"\nabla"]\\
+            A\ar[u,"\Delta"]\ar[d,"\Delta"]\ar[r,"u\circ\varepsilon"] & A\\
+            A\otimes A\ar[r,"1\otimes S"] & A\otimes A\ar[u,"\nabla"]
+        \end{tikzcd}
+    \end{center}
+    
+    In the special case when $\calC=\Vectk$, we call $A$ \textbf{a Hopf algebra (over $k$).}
+
+\section{Yetter-Drinfel'd categories}
+    The key motivation for Yetter-Drinfel'd module categories in our work is to recognize a Hopf algebra $A$ as a smash product with another Hopf algebra, $\Gamma$, thereby decomposing $A$ into simpler parts. We do this by identifying a Hopf subalgebra $\Gamma$ in $A$ and then recognizing (in some way) a complement to $\Gamma$ that can be recognized as an element of $\GYD$. Then the process of bosonization developed in \cite{majid-bosonization} gives us a way to pass back and forth between Hopf objects in $\GYD$ and Hopf algebras admitting a nice inclusion of $\Gamma$.
+    
+    We begin by defining $\GYD$ itself. Let $\Gamma$ be a Hopf algebra in the traditional sense. \textbf{Then an object $M\in \GYD$} is a module with (left) action $\cdot:\Gamma\otimes M\to M$ and a comodule with (left) coaction $\rho:M\to \Gamma\otimes M$ subject to the compatibility condition
+    \begin{equation}\label{eq:yd-condition}
+        g_{(1)}m_{(-1)}\otimes g_{(2)}\cdot m_{(0)}=(g_{(1)}\cdot m)_{(-1)}g_{(2)}\otimes (g_{(1)}\cdot m)_{(0)}
+    \end{equation}
+    and in the case that $\Gamma$ is a Hopf algebra (so that we have an antipode), we can rewrite this as
+    \begin{equation}\label{eq:hopf-yd-condition}
+        \rho(g\cdot m)=g_{(1)}m_{(-1)}S(g_{(3)})\otimes g_{(2)}\cdot m_{(0)}
+    \end{equation}
+    where the convention is that $(\Delta\otimes 1)\Delta(g)=g_{(1)}\otimes g_{(2)}\otimes g_{(3)}$ and $\rho(m)=m_{(-1)}\otimes m_{(0)}$ in Sweedler notation. Compare this to the usual compatibility condition for a Hopf module:
+    \[\rho(g\cdot m)=(\nabla_\Gamma\otimes \cdot)(1\otimes\tau\otimes 1)(\Delta\otimes\rho)(g\otimes m)=g_{(1)}m_{(-1)}\otimes g_{(2)}\cdot m_{(0)}.\]
+    Here we can think of the extra $S(g_{(3)})$ term as encoding the ``twist'' that will later be shown to arise from a smash product.
+
+\subsection{Monoidal structure}
+    In order to talk about a Hopf object in $\GYD$, we first need to establish that there is a meaningful $M\otimes N$ for $M,N\in\GYD$. In other words, we need to define a monoidal structure on this category. In fact, it will admit a braided monoidal structure!
+    
+    The monoidal structure that can be applied to $\GYD$ comes from the usual way of defining (co)actions on tensor products. Let $M,N\in\GYD$. Then we can define (co)actions on the vector space $M\otimes N$ in the following way: for $g\in \Gamma, m\in M,$ and $n\in N,$
+    \begin{equation}\label{eq:tensor-action-coaction}
+        g\cdot (m\otimes n)=g_{(1)}\cdot m\otimes g_{(2)}\cdot n\qquad \rho(m\otimes n)=m_{(-1)}n_{(-1)}\otimes m_{(0)}\otimes n_{(0)}
+    \end{equation}
+    
+    In the case that $\Gamma$ is the group algebra for an abelian group (which will suffice for our needs), the Yetter-Drinfel'd condition \eqref{eq:hopf-yd-condition} reduces to
+    \[\rho(g\cdot m)=gm_{(-1)}g^{-1}\otimes g\cdot m_{(0)}=m_{(-1)}\otimes g\cdot m_{(0)}=(1\otimes g)\rho(m).\]
+    For these $\Gamma$, we can easily confirm that $M\otimes N$ with the (co)action defined in \eqref{eq:tensor-action-coaction} satisfies this property:
+    \begin{align*}
+        \rho(g\cdot m\otimes n)&= \rho(g\cdot m\otimes g\cdot n)\\
+        &= (g\cdot m)_{(-1)}(g\cdot n)_{(-1)}\otimes (g\cdot m)_{(0)}\otimes (g\cdot n)_{(0)}\\
+        &= m_{(-1)}n_{(-1)}\otimes g\cdot m_{(0)}\otimes g\cdot n_{(0)}\\
+        &= (1\otimes g)\rho(m\otimes n)
+    \end{align*}
+    so $M\otimes N\in\GYD.$ The computation for a general Hopf algebra requires leveraging coassociativity throughout, making the proof more difficult to read. In the following I compress the subscript notation so that (e.g.) $g_{(1)(2)(1)}$ becomes $g_{121}.$
+    \begin{align*}
+        \rho(g\cdot m\otimes n)&=\rho(g_1\cdot m\otimes g_2\otimes n)\\
+        &=(g_1\cdot m)_{-1}(g_2\cdot n)_{-1}\otimes (g_1\cdot m)_0\otimes (g_2\cdot n)_0\\
+        &=g_{111}m_{-1}S(g_{12})g_{211}n_{-1}S(g_{22})\otimes g_{112}\cdot m_0\otimes g_{21}\cdot n_0\\
+        &= g_{111}m_{-1}S(g_{121})g_{122}n_{-1}S(g_{22})\otimes g_{112}\cdot m_0\otimes g_{21}\cdot n_0\\
+        &=g_{111}m_{-1}\varepsilon(g_{12})n_{-1}S(g_{22})\otimes g_{112}\cdot m_0\otimes g_{21}\cdot n_0\\
+        &=g_{11}m_{-1}n_{-1}S(g_{22})\otimes \varepsilon(g_{122})g_{121}\cdot m_0\otimes g_{21}\cdot n_0\\
+        &=g_{11}(m\otimes n)_{-1}S(g_{22})\otimes g_{12}\cdot m_0\otimes g_{21}\cdot n_0\\
+        &=g_{11}(m\otimes n)_{-1}S(g_{2})\otimes g_{121}\cdot m_0\otimes g_{122}\cdot n_0\\
+        &=g_{11}(m\otimes n)_{-1}S(g_{2})\otimes g_{12}\cdot (m_0\otimes n_0)\\
+        &=g_1(m\otimes n)_{-1}S(g_3)\otimes g_2\cdot(m\otimes n)_0
+    \end{align*}
+    This computation shows that $M\otimes N$ with the given (co)action is indeed back in $\GYD$.
+    
+    We still need to define the monoidal unit, which will be $k$. We can define (co)module structures thusly:
+    \[g\cdot 1_k=\varepsilon(g)\qquad \rho(1_k)=1_\Gamma\otimes 1_k,\]
+    where we can verify the YD condition \eqref{eq:yd-condition} for $m=1_k$ and $g\in \Gamma$
+    \begin{align*}
+        g_{(1)}m_{(-1)}\otimes g_{(2)}m_{(0)}&= g_{(1)}1_\Gamma\otimes g_{(2)}\cdot 1_k\\
+        &= g_{(1)}\otimes \varepsilon(g_{(2)})\\
+        &= g_{(1)}\varepsilon(g_{(2)})\otimes 1_k\\
+        &= \varepsilon(g_{(1)})g_{(2)}\otimes 1_k\\
+        &= (g_{(1)}\cdot 1_k)_{(-1)}g_{(2)}\otimes (g_{(1)}\cdot 1_k)_{(0)}
+    \end{align*}
+    and by using the isomorphism $\lambda:M\otimes k\to M$ via $m\otimes n\mapsto nm$, we can see
+    \[\lambda(g\cdot m\otimes n)=\lambda(g_{(1)}\cdot m\otimes g_{(2)}\cdot n)=\lambda(g_{(1)}\cdot m\otimes\varepsilon(g_{(2)})n)=g\cdot nm=g\cdot\lambda(m\otimes n)\]
+    and for the coaction
+    \begin{align*}
+        (1\otimes\lambda)(\rho(m\otimes n))&=(1\otimes\lambda)(n\rho(m\otimes 1_k))\\
+        &=(1\otimes\lambda)(n(m_{(-1)}1_\Gamma\otimes m_{(0)}\otimes 1_k))\\
+        &=\rho(n)\rho(m)=\rho(\lambda(m\otimes n))
+    \end{align*}
+    so it is indeed the tensor unit.
+
+\subsection{Braidings}\label{subsubsec:braiding}
+    Returning to the case of a general $\Gamma$, this monoidal structure on $\GYD$ admits a braiding defined by isomorphisms:
+    \[\sigma_{M,N}(m\otimes n)=(m_{(-1)}\cdot n)\otimes m_{(0)}\]
+    with inverses
+    \[(\sigma_{M,N})^{-1}(n\otimes m)=m_{(0)}\otimes S^{-1}(m_{(-1)})\cdot n.\]
+    \begin{rmk}
+        Notice that this definition requires the definition of both an action and coaction. To establish these are honest inverses, consider the composition
+        \begin{align*}
+            {\sigma_{M,N}}^{-1}\circ\sigma_{M,N}(m\otimes n) &={\sigma_{M,N}}^{-1}((m_{(-1)}\cdot n)\otimes m_{(0)})\\
+            &=m_{(0)(0)}\otimes S^{-1}(m_{(0)(-1)})\cdot(m_{(-1)}\cdot n)\\
+            &=m_{(0)}\otimes S^{-1}(m_{(-1)(1)}))\cdot(m_{(-1)(2)}\cdot n)\\
+            &=m_{(0)}\otimes (S^{-1}(m_{(-1)(1)})m_{(-1)(2)})\cdot n\\
+            &=m_{(0)}\otimes \varepsilon(m_{(-1)})n\\
+            &=m\otimes n.
+        \end{align*}
+        Here we required the use of both the action and coaction to define the braiding, but the above proof used only (co)associativity, (co)unit, and other properties inherent in bimodules over a Hopf algebra.
+    \end{rmk}
+    
+    The braiding given above indeed satisfies the braid relation:
+    \begin{align*}
+        \sigma_{A\otimes B,C}(a\otimes b\otimes c)&=(a\otimes b)_{(-1)}\cdot c\otimes (a\otimes b)_{(0)}\\
+        &=(a_{(-1)}b_{(-1)})\cdot c\otimes a_{(0)}\otimes b_{(0)}\\
+        &=(\sigma_{A,C}\otimes 1)(a\otimes b_{(-1)}\cdot c\otimes b_{(0)})\\
+        &=(\sigma_{A,C}\otimes 1)(1\otimes\sigma_{B,C})(a\otimes b\otimes c)
+    \end{align*}
+    so the braidings given above indeed define a braided monoidal structure on $\GYD$, as desired.
+
+\section{Bosonization}\label{sec:bosonization}
+    The process of Bosonization was introduced by Radford in \cite{radford-product} and rediscovered and renamed by Majid in \cite{majid-bosonization}, but has been studied widely thereafter, including the work in \cite{andruskiewitsch-schneider-lifting}. A nice discussion of bosonization and its context among other topics in Hopf algebras can be found in Radford's book \cite[chp. 11]{radford-book}.
+
+\subsection{Bosonizing}
+    To demonstrate the bosonization process, we begin by letting $R\in\GYD$ be a Hopf object. That means that $R$ is naturally imbued with a large amount of data: an action $\cdot:\Gamma\otimes R\to R$, a coaction $\rho:R\to \Gamma\otimes R$, a multiplication $\nabla_R:R\otimes R\to R$, a comultiplication $\Delta_R:R\to R\otimes R$, a unit $u_R:k\to R$, a counit $\varepsilon_R:R\to k,$ and an antipode $S_R:R\to R$. The bosonization of $R$ is the result of computing $A=R\#\Gamma$ (more accurately, the Radford biproduct $R\times \Gamma$ although we use the ``smash'' notation in what follows), which, leveraging the action and coaction on $R$, will result in a Hopf structure $(\nabla_A,\Delta_A,u_A,\varepsilon_A,S_A)$ on $A$.
+
+    As a vector space, $A=R\otimes \Gamma$ and the algebra structure on $A$ comes from the traditional Hopf smash product (c.f. \cite{montgomery}), which requires that $R$ be a module over $\Gamma$. We will use the notation $r\# g$ to denote a simple tensor in $R\# \Gamma$, sometimes omitting the smash symbol ($r\#g=rg$) when it is clear from context that $r\in R$ and $g\in \Gamma.$ Then in $R\#\Gamma$ the multiplication is given as
+    \[\nabla_A((r\# g)\otimes (s\# h))=r(g_{(1)}\cdot s)\# g_{(2)}h\]
+    and $A$ is imbued with the unit
+    \[u(1)=u_R(1)\# u_\Gamma(1).\]
+    
+    What distinguishes the Radford biproduct from the usual smash product, however, is that we can leverage our coaction to give us a coalgebra structure on $A$. Specifically, we define
+    \[\Delta_A(r\# g)=(r_{(1)}\# r_{(2)(-1)}g)\otimes(r_{(2)(0)}\# g)\]
+    where, notice, that the subscripts above come from the comultiplication and coaction on $R\in\GYD.$ The counit is
+    \[\varepsilon_A(r\otimes g)=\varepsilon_R(r)\varepsilon_\Gamma(g).\]
+    Using the antipodes on both $R$ and $\Gamma$, we can define
+    \[S_A(r\# g)=\nabla_A(1\#S_\Gamma(r_{(-1)}g)\otimes S_R(r_{(0)})\# 1).\]
+    
+    We reproduce without proof the following result:
+    \begin{thm}[\cite{radford-book}, pp. 371-3]
+        If $\Gamma$ is a Hopf algebra and $R$ is a Hopf object in $\GYD$, the biproduct $A=R\# \Gamma$, with the operations defined above, is a Hopf algebra (over $k$).
+    \end{thm}
+
+\subsection{``De''bosonizing}
+    Notice that in the case of $R\#\Gamma$ above, there are two maps that show up naturally:
+    \[\pi:R\#\Gamma\to \Gamma,\quad \pi(r\# g)=g\qquad\text{and}\qquad \iota:\Gamma\to R\# \Gamma,\quad \iota(g)=1\# g.\]
+    Further, we have $\pi\circ\iota=\mathrm{id}_{\Gamma}$ and one can confirm that these are both Hopf algebra morphisms. In fact, any time a Hopf algebra $A$ admits such maps, we can reverse this process to extract a Hopf object $R\in\GYD$ that bosonizes to $A$!
+    
+    Let $\Gamma$ be a Hopf algebra as per usual and let $A$ be another Hopf algebra admitting (Hopf) maps $\iota:\Gamma\to A$ and $\pi:A\to \Gamma$ satisfying $\pi\circ\iota=\mathrm{id_\Gamma}.$ Notice that we can define a right coaction on $A$ by $\Gamma$ via
+    \[\hat\rho(a)=a_{(1)}\otimes\pi(a_{(2)})\in A\otimes \Gamma.\]
+    Then we define $R$ to be the ($\hat\rho,1$)-coinvariants of this action:
+    \[R=\{a\in A:\hat\rho(a)=a\otimes 1\}.\]
+    This is a useful way to think of $R$ as a set since it matches very closely with what we would hope $R$ would look like inside $A$ (it the elements with a trivial coaction by $\Gamma$). It will be useful to be able to ``send'' elements in $A$ to a representative in $A$, however. We can define a projection $\Pi:A\to R$ as follows:
+    \[\Pi(a)=a_{(1)}\iota(S(\pi(a_{(2)})))\]
+    and this gives us a way to project onto the ``part'' of $a$ that is in $R$.
+    
+    Now, $R$ admits an action and coaction by $\Gamma$ defined by
+    \[g\cdot r = \iota(g_{(1)})r\iota(S_\Gamma(g_{(2)}))\qquad \rho(r)=\pi(r_{(1)})\otimes r_{(2)}\]
+    and we can compute that $R\in\GYD$ since
+    \begin{align*}
+        \rho(g\cdot r)&=\rho(\iota(g_{(1)})r\iota(S_\Gamma(g_{(2)})))\\
+        &=\pi(\iota(g_{(1)})_{(1)}r_{(1)}\iota(S(g_{(2)}))_{(1)})\otimes\iota(g_{(1)})_{(2)}r_{(2)}\iota(S(g_{(2)}))_{(2)}\\
+        &= g_{(1)(1)}r_{(-1)}S(g_{(2)(2)})\otimes \iota(g_{(1)(2)})r_{(0)}\iota(S(g_{(2)(1)}))\\
+        &=g_{(1)(1)}r_{(-1)}S(g_{(2)})\otimes g_{(1)(2)}\cdot r_{(0)}
+    \end{align*}
+    The above used that $S(g_1)=S(g)_2$, which is an incarnation of the fact that the antipode is an antihomomophism of coalgebras. 
+    
+    The algebra structure and unit on $R$ is inherited as a subalgebra of $A$, since if $r,s\in R$, \[\hat\rho(rs)=\hat\rho(r)\hat\rho(s)=rs\otimes 1.\]
+    Furthermore, we can define coalgebra structure on $R$ in the following way:
+    \[\Delta(r)=\Pi(r_{(1)})\otimes r_{(2)}\qquad \varepsilon(r)=\varepsilon_A\circ \Pi(r).\]
+
+\section{Examples}
+    In this section, we work through a couple of examples of (de)bosonization, illustrating how one can pass from a Hopf object in $\GYD$ to a Hopf algebra and back.
+\subsection{Taft algebra}
+    Let $\ell\in\bbN$ be a positive integer and $q\in\bbC$ be an $\ell^\text{th}$ root of unity. Then the \textbf{Taft algebra} $T(q)$ corresponding to these choices is
+    \[T(q)\eqdef \bbC\langle c,x\rangle/( c^\ell-1, x^\ell, xc-qcx).\]
+    Now $T(q)$ also admits a coalgebra structure defined by
+    \[\Delta(x)=c\otimes x + x\otimes 1\qquad \Delta(c)=c\otimes c\qquad \varepsilon(x)=0\qquad \varepsilon(c)=1\]
+    along with antipode
+    \[S(c)=c^{-1}=c^{\ell-1}\qquad S(x)=-c^{\ell-1}x.\]
+    
+    Let $G=\bbZ/\ell\bbZ$ and $\Gamma$ be the Hopf algebra $\bbC G\cong\bbC[g]/(g^\ell).$ There are (Hopf) maps
+    \[\iota:\Gamma\to T(q)\quad\text{via}\quad \iota(g^i)=c^i\qquad\text{and}\qquad \pi:T(q)\to \Gamma\quad\text{via}\quad \pi(x)=0,\quad\pi(c)=g\]
+    and one easily verifies that $\pi\circ\iota$ is the identity on $\Gamma.$ Therefore we can debosonize $T(q):$ here we let $\hat\rho(a)=a_{(1)}\otimes \pi(a_{(2)})$ and get
+    \[R=\{a\in T(q):\hat\rho(a)=a\otimes 1\}=\bbC[x]/(x^\ell)\subset T(q).\]
+    
+    Since
+    \[(\Delta\otimes 1)\circ\Delta(x)=c\otimes c\otimes x+c\otimes x\otimes 1+x\otimes 1\otimes 1,\]
+    we can compute the $\Gamma$-action and -coaction on $R$ to be
+    \[g\cdot x = \iota(g)x\iota(S(g))=cxc^{\ell-1}=q^{\ell-1}x\qquad\text{and}\qquad\rho(x)=\pi(c)\otimes x + \pi(x)\otimes 1 = g\otimes x\]
+    and one easily verifies
+    \begin{align*}
+        \rho(g\cdot x)&=q^{\ell-1}\rho(x)\\
+        &=q^{\ell-1}g\otimes x\\
+        &=ggg^{-1}\otimes q^{\ell-1}x\\
+        &=g_{(1)}x_{(-1)}S(g_{(3)})\otimes g_{(2)}\cdot x_{(0)}
+    \end{align*}
+    so indeed $R\in\GYD.$
+    
+    The projection map $\Pi:T(q)\to R$ is
+    \[\Pi(x)=x_{(1)}\iota(S(\pi(x_{(2)})))=c\iota(S(\pi(x)))+x\iota(S(\pi(1)))=x\]
+    and
+    \[\Pi(c)=c\iota(S(\pi(c)))=cc^{\ell-1}=1\]
+    so the coalgebra structure is given by
+    \[\Delta_R(x)=(\Pi\otimes 1)\circ\Delta_{T(q)}(x)=1\otimes x+x\otimes 1\quad\text{and}\quad\varepsilon_R(x)=\varepsilon_{T(q)}\circ\Pi(x)=0.\]
+    Notice that the bialgebra structure is defined identically to the $\ell$-truncated universal enveloping algebra of $\bbC$. Although this is a bialgebra object in $\GYD$ (instead of in $\Vectk$), we still get that there is a unique antipode
+    \[S_R(x)=-x\]
+    making $R$ into a Hopf object.
+
+\subsection{Quantum complete intersections}\label{subsec:construction-bqcis}
+    More relevant to our needs in this work are the quantum complete intersections. Here, we start with a positive integer $\ell$, a skew symmetric matrix $A=(a_{ij}),$ and an $\ell^\text{th}$ root of unity $q$ with $q_{ij}=q^{a_{ij}}.$ This gives us an algebra
+    \[R_0=k_q[x_1,\dots,x_n]/(x_ix_j-q_{ji}x_jx_i, x_i^\ell).\]
+    We can define the coalgebra structure on $R_0$ by making the $x_i$ all primitive:
+    \[\Delta_R(x_i)=x_i\otimes 1+1\otimes x_i,\qquad \varepsilon_R(x_i)=0\]
+    along with antipode $S(x_i)=-x_i.$
+    
+    There are many different choices for $\Gamma$, but first we pick $\Gamma=\bbC G,$ where $G$ the elementary abelian group
+    \[G=(\bbZ/\ell\bbZ)^n=\langle g_1,\dots,g_n|g_ig_j=g_jg_i, g_i^\ell=1\rangle.\]
+    Next we need to identify an action and coaction by $\Gamma$ on $R_0$. We let
+    \[g_i\cdot x_j=q_{ji}x_j\qquad\text{and}\qquad \rho(x_i)=g_i\otimes x_i\]
+    and see that $R_0$ with this structure is in $\GYD:$
+    \begin{align*}
+        \rho(g_i\cdot x_j)&=\rho(q_{ji}x_j)\\
+        &=q_{ji}g_j\otimes x_j\\
+        &=g_ig_jg_i^{-1}\otimes g_i\cdot x_j\\
+        &=(g_i)_{(1)}(x_j)_{(-1)}S((g_i)_{(3)})\otimes (g_i)_{(2)}\cdot (x_j)_{(0)}.
+    \end{align*}
+    
+    Notice that $\GYD$ admits a braiding as we saw in section~\ref{subsubsec:braiding} and in particular we get
+    \[\sigma_{R_0,R_0}(x_i\otimes x_j)=g_i\cdot x_j\otimes x_i=q_{ji}x_j\otimes x_i\]
+    which mirrors the $q$-commutativity relation $x_ix_j=q_{ji}x_jx_i.$
+    
+    Now we construct $\Lambda=R_0\#\Gamma.$ We have the usual smash product for the algebra structure:
+    \[(x_i\#g_j)(x_k\#g_l)=x_i(g_j\cdot x_k)\#g_jg_l=q_{kj}x_ix_k\#g_jg_l\]
+    and for the coalgebra structure we have
+    \[\Delta_\Lambda(x_i\# g_j)=(x_i\# g_j)\otimes(1\# g_j) + (1\# g_ig_j)\otimes(x_i\# g_j).\]
+    When we replace $g_j$ with $1$ and suppress the sharp notation, we get that 
+    \[\Delta(x_i)=x_i\otimes 1+g_i\otimes x_i\]
+    which matches with the character notation of \cite{negron-pevtsovaI}:
+    \[\Delta(x_i)=x_i\otimes 1+K_i\otimes x_i\]
+    where $K_i$ is the character $q^{(e_i,-)}:G^\vee\to\bbC^\times.$
+    
+    Finally we compute the antipode for $\Lambda$ to be
+    \[S_\Lambda(x_i\#g_j)=(1\# g_j^{-1}g_i^{-1})(-x_i\# 1)=-q_{ij}^{-1}q_{ii}^{-1}x_i\#g_j^{-1}g_i^{-1}=-q_{ji}x_i\#g_j^{-1}g_i^{-1}.\]
+
+
+
+
+\chapter{Tensor product property}
+    In this section, which will likely be folded into another chapter, we will investigate the concept of a Drinfel'd center/centralizer and how these module categories say something about the tensor product property for BQCIs.
+    
+\section{Drinfel'd centers and centralizers}
+    Let $\calC$ be any tensor category and let $\calD$ be any tensor subcategory of $\calC.$ In general, one may be interested in how close the category $\calC$ is to being braided. In an attempt to measure this, we define
+    \begin{defn}\label{def:centralizers}
+        Given $\calC$ and $\calD$ as above, we define the \textbf{Drinfel'd centralizer against $\calD$ in $\calC$}, denoted $\calZ^\calD(\calC)$ to be the category of pairs $(V,\gamma_V)$ where $V$ is an object in $\calC$ and $\gamma_V$ is a natural isomorphism between the functors $-\otimes V$ and $V\otimes -$ from $\calD$ to $\calC$ satisfying the usual braid relations. Here, $\gamma_V$ is called a \textbf{half-braiding against $V$.}
+    \end{defn}
+    \begin{rmk}
+        Notice that if $\calC$ already admits a braided monoidal structure, every element $V\in\calC$ will appear in a pair $(V,\gamma_V)\in \calZ(\calC)\eqdef\calZ^\calC(\calC)$. Thus, this is a (rough, since there may be more than one choice of braiding for any $V$) measure of how close $\calC$ is to admitting a braided structure. By restricting to proper subcategories $\calD$, one can study this property ``locally'' to get a more holistic picture. In particular, notice that
+        \[\calZ^\calC(\calC)\subseteq \calZ^\calD(\calC)\]
+        where we can make the identification by simply restricting $\gamma_V$ to $\calD$.
+    \end{rmk}
+    
+\section{Drinfel'd double}
+    The Drinfel'd double is similar to the enveloping algebra $A^e=A\otimes A^\textrm{op}$, a construction that reduces the study of $(A,A)$-bimodules to the study of (left) $A^e$-modules. To put this construction into a broader context, we include some notation and constructions from Hopf algebras.
+
+\subsection{Actions from coactions and duality}\label{sec:dual-actions}
+    Let $C$ be any finite dimensional coalgebra and $(M,\rho)$ a right comodule for $C$. Then we can define a left action by $C^\ast$ on $M$ in the following way:
+    \[f\cdot m= f(m_{-1})m_0\]
+    where we use $\rho(m)=m_0\otimes m_{-1}\in M\otimes C.$ Setting $M=C$ with coaction $\rho=\Delta,$ we get an action of $C^\ast$ on $C$: $f\rightharpoonup c=f(c_{2})c_1=\nabla\circ (1\otimes f)\circ\Delta (c)$ where we can also view this action via the natural pairing as a right multiplication in $C^\ast:$
+    \[\langle g,f\rightharpoonup c\rangle = \langle gf, c\rangle.\]
+    Similarly we get a right action by $C^\ast$ given by $c\leftharpoonup f=f(c_1)c_2$, this time corresponding to left multiplication in $C^\ast$:
+    \[\langle g,c\leftharpoonup f\rangle = \langle fg, c\rangle.\]
+    
+    By leveraging duality and finite dimensionality, we can also define left and right actions of $C$ on $C^\ast$ in a similar way:
+    \[c\rightharpoonup f = f_2(c)f_1\qquad\text{and}\qquad f\leftharpoonup c = f_1(c)f_2\]
+    with 
+    \[\langle c\rightharpoonup f, d\rangle = \langle f, dc\rangle\qquad\text{and}\qquad \langle f\leftharpoonup c,d\rangle = \langle f, cd\rangle.\]
+    Note that this construction works for any algebra, not just the duals of finite coalgebras.
+\subsection{(Co)adjoint actions}
+    Let $H$ be any Hopf algebra. Recall that we have a pair of actions, the \textbf{left and right adjoint actions} of $H$ on itself defined in the following way:
+    \[(\operatorname{ad}_\ell h)(k)=h_1kS(h_2)\qquad\text{and}\qquad (\operatorname{ad}_r h)(k)=S(h_1)kh_2\]
+    
+    We get a pair of left and right actions of $H$ on $H^\ast$ by using the constructions in section~\ref{sec:dual-actions}. Let $h\in H$ and $f\in H^\ast$. Then the \textbf{left coadjoint action of $H$ on $H^\ast$} is
+    \[h\doubleharpoonright f = h_1\rightharpoonup f \leftharpoonup S^{-1}(h_2)\quad\text{or}\quad (h\doubleharpoonright f)(x)=f(S^{-1}(h_2)xh_1)\]
+    and the right coadjoint action is
+    \[f\doubleharpoonleft h = S^{-1}(h_1)\rightharpoonup f \leftharpoonup h_2\quad\text{or}\quad (h\doubleharpoonleft f)(x)=f(h_2xS^{-1}(h_1)).\]
+    Using our natural pairing notation, the reason for the naming becomes evident; for instance,
+    \[\langle h\doubleharpoonright f, g\rangle = \langle f, \operatorname{ad}_\ell(h)(g)\rangle.\]
+    
+    We can also define the coadjoint actions of $H^\ast$ on $H$:
+    \[f\doubleharpoonright h = f_1\rightharpoonup h \leftharpoonup S^{-1}(f_2)=f_1(h_3)f_2(S^{-1}(h_{1}))h_{2}=f(h_3S^{-1}(h_1))h_2\]
+    and 
+    \[h\doubleharpoonleft f = f(S^{-1}(h_3)h_1)h_2.\]
+    
+    In what follows, it will sometimes be useful to turn $h\doubleharpoonright f$ into a form more amenable to computation. Therefore we adopt the $\lozenge$ notation to indicate where an input is placed in order to evaluate a quantity. That is,
+    \[f_1(x) f_3(y)f_2=f(x\lozenge y)\]
+    or alternatively $f(x\lozenge y)(z)=f(xzy).$
+    
+    
+\subsection{The construction of \texorpdfstring{$D(H)$}{D(H)}}
+    The content for this section comes from \cite{montgomery}, with much of this coming from the seminal texts \cite{drinfeld86} and \cite{majid-double90}.
+    Let $(H,\Delta,\varepsilon,\nabla,\eta,S)$ be any finite-dimensional Hopf algebra with dual $H^\ast.$ Then the \textbf{Drinfel'd double} of $H$ is denoted by $D(H)=(H^{\ast})^{\text{cop}}\bowtie H$, where $-^\text{cop}$ denotes the co-opposite coalgebra\footnote{The use of $(H^\ast)^\text{cop}$ instead of just $H^\ast$ makes sense when you realize that the coadjoint actions give $H$ the structure of a right $(H^\ast)^\text{cop}$ module coalgebra as well as giving $(H^\ast)^\text{cop}$ the structure of a left $H$-module coalgebra. Then the coproduct $\Delta_D$ is the usual one for a tensor product of coalgebras.}: $\Delta_{H^\text{cop}} = \tau\circ \Delta_H.$ As a vector space, $D(H)$ is just $H^\ast\otimes H$ with the following algebra structure:
+    \begin{align*}
+        (f\bowtie a)(g\bowtie b)&=f(a_1\doubleharpoonright g_2)\bowtie (a_2\doubleharpoonleft g_1)b\\
+        &= f g_2(S^{-1}(a_{2})\lozenge a_{1})\bowtie g_1(S^{-1}(a_{5})a_{3})a_{4}b
+    \end{align*}
+    and unit map $\eta_D(1)=\varepsilon_H\otimes 1_H$ and a coalgebra maps (here we use $D$ as shorthand for $D(H)$):
+    \begin{align*}
+        \Delta_D(f\bowtie a) &= (f_2\bowtie a_1)\otimes (f_1\bowtie h_2)\qquad \varepsilon_D=\operatorname{ev}_{1_H}\otimes \varepsilon_H
+    \end{align*}
+    
+\section{Equivalent categories}
+    The primary focus of this section is to establish the equivalence of certain categories that will put the discussion about Drinfel'd centers and centralizers into context. 
+    \begin{rmk}
+        Notice that in $\cite{schauenburg02},$ the author uses the category $^H_H\calY\calD$ of (left, left) Yetter-Drinfel'd modules over $H$, while some authors (e.g. \cite{montgomery}) speak of the (left, right) YD modules $_H\calY\calD^H.$ The discrepancy is resolved by using the fact that $H$ is a Hopf algebra (thus has an antipode). Thus if $M\in {_H\calY\calD^H}$ with coaction $\rho$, we can give $M$ the structure of a (left, left) YD module by keeping the same action and defining a left coaction $\tilde\rho:M\to H\otimes M$ via
+        \[\tilde\rho(m)= S(m_{-1})\otimes m_0.\]
+        
+        One can verify that this new action defines a coaction, which is a standard result of Hopf algebras. It is shown in \cite{radford-towber93} that this satisfies the correct property by using the fact that, for the (left, right) structure and for any $a\in H$ and $m\in M$,
+        \[a_1m_0\otimes a_2m_{-1}=(a_2\cdot m)_0\otimes (a_2\cdot m)_{-1}a_1\]
+        and so we have
+        \begin{align*}
+            a_1\tilde m_{-1}\otimes a_2 \tilde m_0&= a_1S(m_{-1})\otimes a_2\cdot m_0\\
+            &=a_1S(m_{-1})\otimes \varepsilon(a_3)a_2\cdot m_0\\
+            &=a_1S(m_{-1})S(a_3)a_4\otimes (a_3\cdot m)_0\\
+            &=a_1S(a_3\cdot m_{-1})a_4\otimes (a_3\cdot m)_0\\
+            &=a_1S((a_3\cdot m)_{-1}a_2)a_4\otimes (a_3\cdot m)_0\\
+            &=a_1S(a_2)S((a_3\cdot m)_{-1})a_4\otimes (a_3\cdot m)_0\\
+            &=\varepsilon(a_1)S((a_2\cdot m)_{-1})a_3\otimes (a_2\cdot m)_0\\
+            &=S((a_1\cdot m)_{-1})a_2\otimes (a_2\cdot m)_0= \widetilde{(a_1\cdot m)}_{-1}a_2\otimes \widetilde{(a_2\cdot m)}_0
+        \end{align*}
+        which is exactly the YD compatibility condition for (left, left) modules.
+    \end{rmk}
+    
+    \begin{thm}[\cite{schauenburg02}, thm. 6.3]
+        Let $H$ be a (quasi-)Hopf algebra. Then there is an equivalence of categories
+        \[{^H_H\calY}\calD\simeq {_{D(H)}\calM}\]
+        where for each $M\in {^H_H}\calY\calD$ we define the left action by $D(H)$ to be
+        \[(f\bowtie a)m = \langle f, m_{-1}\rangle am_0.\]
+    \end{thm}
+    
+    \begin{thm}[\cite{schauenburg02}, thm. 8.2 \& cor. 8.3]\label{thm:schauenburg-equiv}
+        Let $H$ be a (quasi-)bialgebra. Then there is an equivalence of categories
+        \[{^H_H\calY\calD}\simeq\calZ({_H\calM})\]
+        induced by the functor that takes $M\in{^H_H\calY\calD}$ to $(M,\sigma_{M})$ where, for any $N\in \calC$,  $n\in N$, and $m\in M$
+        \[\sigma_{M,N}(m\otimes n)=m_{-1}n\otimes m_0\]
+    \end{thm}
+    
+    We next collect a couple results on categorical equivalences that we expect are true, but we leave as conjectures for now.
+    
+    \begin{conj}
+        Let $\Gamma$ be a group algebra and $R\in\GYD$ and let $\Lambda=R\#\Gamma$ be the bosonization by $\Gamma.$ Then
+        \[\calZ^{_\Gamma\calM}({_\Lambda\calM})\simeq \GYD.\]
+    \end{conj}
+    
+    \begin{conj}
+        Let $\Gamma, R,$ and $\Lambda$ be as above. Then \[\calZ^{\Gamma\calM}({_\Lambda\calM})\simeq{_{\Gamma^\vee\bowtie R\#\Gamma}\calM}\]
+    \end{conj}
+    
+%    {\color{red} I still need a couple results here:
+%    \begin{enumerate}
+%        \item $\calZ^\Gamma({_\Lambda\calM})\simeq\GYD$
+%        \item $\calZ^\Gamma({_\Lambda\calM})\simeq{_{\Gamma^\vee\bowtie R\#\Gamma}\calM}$
+%    \end{enumerate}}
+    
+%    The following result proceeds by constructing a map in the opposite direction as thm.~\ref{thm:schauenburg-equiv}, leveraging some aspects of the author's proof.
+%    \begin{thm}
+%        Let $\Gamma$ be a group algebra and $R\in\GYD$ and let $\Lambda=R\#\Gamma$ be the bosonization by $\Gamma.$ Then 
+%        \[\calZ^{_\Gamma\calM}({_\Lambda\calM})\simeq \GYD.\]
+%    \end{thm}
+%    \begin{prf}
+%        We begin by noticing that we have a projection map $\pi:\Lambda\to \Gamma$ given by $\pi(r\# g)=\epsilon(r)g$ and using this map we give any $\Gamma$-module a $\Lambda$ structure by changing scalars: $M$ becomes the $\Lambda$ module $\Lambda\otimes_\Gamma M.$ This coinduction process is not the only way that a $\Lambda$ module can arise, of course (in particular, each such module is acted on trivially by $R$), so generally speaking this forms a proper subcategory of $_\Lambda\calM.$
+%        
+%        Let $(M,\sigma_M)$ be an element in $\calZ^{_\Gamma\calM}({_\Lambda\calM})$. In particular, $\tilde M$ is a $\Gamma$-module and $M=\Lambda\otimes_\Gamma \tilde M.$ To define an element in $\GYD$ using $M$, we need a vector space along with an action and coaction by $\Gamma$. The vector space will be $M$ and the action will be the left action by the action induced by the one on $\tilde M$. In order to define the coaction, recall that $\Gamma$ itself is a left module over itself using left multiplication. Then we define a morphism
+%        \[\rho(m)=\sigma_{M,\Gamma}(m\otimes 1_\Gamma)\]
+%        and can verify that this satisfies the properties of a coaction. For instance for coassociativity,
+%        \begin{align*}
+%            (1\otimes\rho)\circ\rho(m)&=(1\otimes\rho)(\sigma_{M,\Gamma}(m\otimes 1_\Gamma))\\
+%            &=(1\otimes \sigma_{M,\Gamma})\circ (\sigma_{M,\Gamma}\otimes 1)(m\otimes 1_\Gamma\otimes 1_\Gamma)\\
+%            &=\sigma_{M,\Gamma\otimes\Gamma}(m\otimes 1_\Gamma\otimes 1_\Gamma)\\
+%            &=\sigma_{M,\Gamma\otimes\Gamma}(m\otimes\Delta(1_\Gamma))\\
+%            &=(1\otimes\Delta)\circ\rho(m).
+%        \end{align*}
+%        
+%        That $(M,\cdot,\rho)$ lies in $\GYD$ is seen from the computation
+%        \begin{align*}
+%            \rho(g\cdot m)&=\sigma_{M,\Gamma}(g\cdot m\otimes 1_\Gamma)\\
+%            &=\sigma_{M,\Gamma}(g\cdot(m\otimes S(g)))\\
+%            &= g\cdot\sigma_{M,\Gamma}(m\otimes S(g))\\
+%            &= 
+%       \end{align*}
+%    \end{prf}
+
+\section{Tensor product property for BQCIs}
+
+    The relevant result from \cite{negron-pevtsovaI} is the following:
+    \begin{thm}[\cite{negron-pevtsovaI}, thm. 11.6]
+        Let $V\in \lmod \Lambda$ and $W\in Z^{\lmod \Gamma}(\lmod \Lambda)$ and $\calF:Z^{\lmod \Gamma}(\lmod \Lambda)\hookrightarrow\lmod\Lambda$ be the forgetful functor. Then we have
+        \[\supp(\calF(W)\otimes V)=\supp(\calF(W))\cap\supp(V)\]
+    \end{thm}
+    
+    
+    If we are to expect counterexamples to the tensor product property to arise, this result tells us we should be looking for modules in $\lmod\Lambda\setminus\calF(Z^{\lmod \Gamma}(\lmod \Lambda)),$ a set that may, in general, be empty.
+    
+%    {\color{red}Need more attention here. Bergh and Plavnik} Notice that, according to some work by S. Witherspoon that is forthcoming, we are going to be interested in modules that are \textit{periodic,} since she shows that it suffices to check the tensor product property on indecomposable periodic (admits a periodic projective resolution) modules.
+\subsection{Where to look for modules}
+    Let $M\in\calF(Z^{\lmod \Gamma}(\lmod \Lambda)).$ Thus, according to defn.~\ref{def:centralizers}, $M$ is a $\Lambda$-module admitting a natural transformation $\gamma_M:M\otimes-\Rightarrow -\otimes M.$ In other words, there is a morphism $\gamma_{M,N}:M\otimes N\to N\otimes M$ in $\lmod\Lambda$ for each $N\in\lmod\Gamma$ such that the choice of $\gamma_{M,N}$ is natural.
+    
+    Recall that for our particular $\Lambda$, $\Gamma$ is an elementary abelian $\ell$ group: $\Gamma=\bbC G=\bbC[\bbZ/\ell\bbZ^m]$ for some $m$. In particular, $\Gamma$ is semisimple, so we can reduce the problem of finding such $\gamma_{M,N}$ for $N$ simple. The simple representations of $G$ are all one-dimensional and thus are determined entirely by vectors $\alpha\in\bbZ/\ell\bbZ^m$ where the $i^{th}$ generator acts by multiplication by $e^{2\alpha_i\pi i/\ell}.$ 
+
+%    {\color{red}The claim here is the following: the matrix giving us the commutation relations is \textit{nondegenerate} iff $_\Lambda\calM=\calZ({_\Lambda\calM}).$}
+
+
+
+
+
+\chapter{Support theories for BQCIs}\label{chp:var-qbci}
+In this chapter we introduce several new definitions of support that extend the definitions made in the last section for the unbosonized algebra $R_0$. We require some heavier machinery in what follows to establish a relationship between hypersurface and rank support and the more abstract cohomological support. To do this, we will rely heavily on previous results to demonstrate the connection.
+
+\section{Rank support for BQCIs}
+    Thus far, we have only defined a notion of support for quantum complete intersections that are not bosonized (read: not a Hopf algebra over $k$!). Since, at the end of the day, we are interested in computing support for our BQCI Hopf algebras, it is useful to define an analog of $\suppr$ for $R=R_0\#\Gamma$. The punchline, however, is that we define them to be the same!
+    
+    \begin{defn}\label{def:bosonized-rank-supp}
+        Let $\Gamma=kG$ and $R=R_0\#\Gamma$ be a bosonized quantum complete intersection and $M\in{_R\calM}.$ Then the \textbf{rank support for $M$ over $R$} is
+        \[\supprR(M)\eqdef\supprRnaught(M).\]
+    \end{defn}
+    
+    %{\color{red}Compute orbits for the support we computed earlier.}
+%    This definition is easy to understand but seemingly comes from nowhere, but it can be shown to make sense. To begin with, we will later prove (c.f. lemma \ref{lem:suppRnaught-closed}) that $\supprRnaught(M)$ is indeed closed under the action of $G$, so it consists of $G$ orbits.
+    
+%    In order to see this, we now prove a computational lemma that will allow us to handle the action on the variety $\supprRnaught(M).$ It says that by choosing a different basis for $Q_\alpha^{2^{n-1}},$ we can arrive at matrix representations that correspond to the matrix representations found by constructing our resolution over $Q_{g\cdot\alpha}$ instead.
+    
+%    \begin{rmk}\label{rmk:dimension-factorization}
+%        In what follows we make a minor abuse of notation: we use the fact that if $\Phi_g^\alpha$ and $\Psi_g^\alpha$ are the diagonal, invertible matrices corresponding to the case when $n=k-1$ we can extend this to an action by $G'\eqdef G\times\langle e_k| e_k^\ell=0\rangle$ by defining the action of $e_k$ to be trivial. Since $A_{k-1}^{g\cdot\alpha}$ contains only indeterminates $x_1,\dots,x_{k-1},$ the usual action of $G'$ on $\bbP^{k-1}$ restricts to the normal action of $G$ on $\bbP^{k-2}$ for these matrices. This enables us to use the induction hypothesis to rewrite the matrices $A_{k-1}^{g\cdot\alpha}$ and $B_{k-1}^{g\cdot\alpha}$ when $n=k.$
+        
+%        Alternatively, we could have defined the matrices $A_k$ and $B_k$ irrespective of the parameter $n$ (the number of generators for $Q_0$). This would have necessitated additional notation in order to do properly and would have been only useful in the following result, so we opted for the more compact notation that requires this observation be made before proceeding with the following argument.
+%    \end{rmk}
+    
+%    \begin{lem}\label{lem:G-invariant-rank}
+%        For each $g\in G$ and $\alpha\in \bbP^{n-1}$ and using the action given in def.~\ref{def:bosonized-rank-supp}, there are diagonal, invertible matrices $\Phi_g^\alpha$ and $\Psi_g^\alpha$ of dimension $2^{n-1}\times 2^{n-1}$ such that
+%        \[A_n^{g\cdot\alpha}=\Phi_g^\alpha A_n^\alpha \Psi_g^\alpha\qquad\text{and}\qquad B_n^{g\cdot\alpha}=(\Psi_g^\alpha)^{-1} B_n^\alpha (\Phi_g^\alpha)^{-1}.\]
+ %   \end{lem}
+%   \begin{prf}
+%        We proceed here by induction. Let $n=1$ and $[a]\in\bbP^0$ be any representative of the unique point and recall that $A_1^{[a]}=a^{\ell-1}x_1^{\ell-1}$ and $B_1^{[a]}=ax_1.$ Then notice that $G=\bbZ/\ell\bbZ=\langle e_1\rangle$ and since $e_1\cdot x_1=x_1,$ the $G$ action is trivial. Therefore we can set
+%        \[\Phi_g^{[a]}=\Psi_g^{[a]}=(1)=\id_k,\]
+%        which clearly satisfies all the desired properties.
+%        
+%        Now assume that we have diagonal, invertible matrices $\Phi_g^\alpha$ satisfying this property for all $g\in(\bbZ/\ell\bbZ)^n$ and $\alpha\in\bbP^{n-1}$ when $n=k-1.$ Recall from the definitions of $C_{i-1}^i$ and $\widetilde{C_{i-1}^i}$ (c.f. section~\ref{sec:resolution-construction}) that both are diagonal matrices with (nonzero) constant multiples of $x_i$ along the diagonal. Similarly, $D_{i-1}^i$ and $\widetilde{D_{i-1}^i}$ are diagonal with constant multiples of $x_i^{\ell-1}$ along the diagonal. Therefore if $g\cdot x_i=\lambda x_i$,
+%        \[C_{i-1}^{i,g\cdot\alpha}=\lambda C_{i-1}^{i,\alpha}\qquad \widetilde{C_{i-1}^{i,g\cdot\alpha}}=\lambda \widetilde{C_{i-1}^{i,\alpha}}\qquad D_{i-1}^{i,g\cdot\alpha}=\lambda^{-1} D_{i-1}^{i,\alpha}\qquad \widetilde{D_{i-1}^{i,g\cdot\alpha}}=\lambda^{-1} \widetilde{D_{i-1}^{i,\alpha}}.\]
+%        Then for any $g\in(\bbZ/\ell\bbZ)^k,$ if $g\cdot x_k=\lambda x_k,$
+%        \[A_k^{g\cdot\alpha}=\begin{pmatrix}
+%            A_{k-1}^{g\cdot\alpha} & C_{k-1}^{k,g\cdot\alpha}\\
+%            D_{k-1}^{k,g\cdot\alpha} & B_{k-1}^{g\cdot\alpha}
+%        \end{pmatrix}=\begin{pmatrix}
+%            \Phi_{\tilde g}^{\tilde \alpha}A_{k-1}^\alpha \Psi_{\tilde g}^{\tilde \alpha} & \lambda C_{k-1}^{k,\alpha}\\
+%            \lambda^{-1}D_{k-1}^{k,\alpha} & (\Psi_{\tilde g}^{\tilde \alpha})^{-1}B_{k-1}^\alpha (\Phi_{\tilde g}^{\tilde \alpha})^{-1}
+%        \end{pmatrix}\]
+%        where we used above the notation $\Phi_{\tilde g}^{\tilde \alpha}$ where $\tilde g$ is the projection of $g$ to $G/\langle e_k\rangle$ and $\tilde\alpha$ is the projection $[\alpha_1:\dots:\alpha_{k-1}]\in\bbP^{k-2},$ following the discussion in rmk.~\ref{rmk:dimension-factorization} since $B_{k-1}^\alpha$ and $B_{k-1}^{\tilde\alpha}$ are the same matrix.
+%        
+%        But then by letting $\zeta=\lambda^{1/2},$ we can define the matrices
+%        \[\Phi_g^\alpha =\begin{pmatrix}
+%            \zeta\Phi_{\tilde g}^{\tilde\alpha} & 0\\
+%            0 & \zeta^{-1}(\Psi_{\tilde g}^{\tilde\alpha})^{-1}
+%        \end{pmatrix}\qquad\text{and}\qquad \Psi_g^\alpha=\begin{pmatrix}
+%            \zeta^{-1}\Psi_{\tilde g}^{\tilde \alpha} & 0\\
+%            0& \zeta (\Phi_{\tilde g}^{\tilde \alpha})^{-1}
+%        \end{pmatrix}\]
+%        and compute
+%        \begin{align*}
+%            \Phi_g^\alpha A_k^\alpha \Psi_g^\alpha&=\begin{pmatrix}
+%                \zeta\Phi_{\tilde g}^{\tilde\alpha} A_{k-1}^\alpha \zeta^{-1}\Psi_{\tilde g}^{\tilde\alpha} & \zeta\Phi_{\tilde g}^{\tilde\alpha}C_{k-1}^{k,\alpha}\zeta(\Phi_{\tilde g}^{\tilde\alpha})^{-1}\\
+%                \zeta^{-1}(\Psi_{\tilde g}^{\tilde\alpha})^{-1} D_{k-1}^{k,\alpha} \zeta^{-1}\Psi_{\tilde g}^{\tilde\alpha}&\zeta^{-1}(\Psi_{\tilde g}^{\tilde\alpha})^{-1} B_{k-1}^\alpha \zeta(\Phi_{\tilde g}^{\tilde\alpha})^{-1}
+%            \end{pmatrix}\\
+%            &=\begin{pmatrix}
+%                A_{k-1}^{g\cdot\alpha} & \lambda\Phi_{\tilde g}^{\tilde\alpha}C_{k-1}^{k,\alpha}(\Phi_{\tilde g}^{\tilde\alpha})^{-1}\\
+%                \lambda^{-1} (\Psi_{\tilde g}^{\tilde\alpha})^{-1} D_{k-1}^{k,\alpha}\Psi_{\tilde g}^{\tilde\alpha} & B_{k-1}^{g\cdot\alpha}
+%            \end{pmatrix}\\
+%            &=\begin{pmatrix}
+%                A_{k-1}^{g\cdot\alpha} & \lambda C_{k-1}^{k,\alpha}\\
+%                \lambda^{-1}D_{k-1}^{k,\alpha} & B_{k-1}^{g\cdot\alpha}
+%            \end{pmatrix}\\
+%            &= A_k^{g\cdot\alpha}
+%        \end{align*}
+%        where we used above that $C_{k-1}^{k,\alpha}$ commutes with $\Phi_{\tilde g}^{\tilde\alpha}$ as well as $D_{k-1}^{k,\alpha}$ with $\Psi_{\tilde g}^{\tilde \alpha}.$ In both cases this is because all four matrices are diagonal and $\Phi$ and $\Psi$ contain only scalars. A similar computation shows
+%        \begin{align*}
+%            (\Psi_g^\alpha)^{-1}B_k^\alpha(\Phi_g^\alpha)^{-1}&=\begin{pmatrix}
+%                \zeta(\Psi_{\tilde g}^{\tilde\alpha})^{-1} &0\\
+%                0 & \zeta^{-1}\Phi_{\tilde g}^{\tilde\alpha}
+%            \end{pmatrix}\begin{pmatrix}
+%                B_{k-1}^\alpha & \widetilde{C_{k-1}^{k,\alpha}}\\
+%                \widetilde{D_{k-1}^{k,\alpha}} & A_{k-1}^\alpha
+%            \end{pmatrix}\begin{pmatrix}
+%                \zeta^{-1}(\Phi_{\tilde g}^{\tilde\alpha})^{-1} & 0\\
+%                0 & \zeta\Psi_{\tilde g}^{\tilde\alpha}
+%            \end{pmatrix}\\
+%            &=\begin{pmatrix}
+%                B_{k-1}^{g\cdot\alpha} & \lambda\widetilde{C_{k-1}^{k,\alpha}}\\
+%                \lambda^{-1}\widetilde{D_{k-1}^{k,\alpha}} & A_{k-1}^{g\cdot\alpha}\\
+%            \end{pmatrix}\\
+%            &= B_k^{g\cdot\alpha}
+%        \end{align*}
+%        which completes the proof.
+%    \end{prf}
+    
+%    Notice that the form of the matrices $\Phi_g^\alpha,\Psi_g^\alpha$ in the preceding proof tell us even more about the resolutions that arise for $M_\alpha$ and $M_{g\cdot\alpha}:$ since the matrices $A_n^\alpha,B_n^\alpha$ represent the $Q_\alpha$-linear maps after fixing some bases for $Q_\alpha^{2^{n-1}},$ we can think of the $G$ action as a kind of basis change for the 2-periodic part of the resolution.
+    
+%    One must be slightly careful here, because when we act by $g$, we attain a resolution over $Q_{g\cdot\alpha},$ which is nominally a different ring than $Q_\alpha.$ The rings are isomorphic, however, as $Q_0$-modules via the morphism that sends $x_i\in Q_\alpha$ to $g\cdot x_i\in Q_{g\cdot\alpha}.$ 
+    
+%    Next we establish that the action by $G$ that we have defined above indeed restricts to an action on $\supprRnaught(M).$
+%    \begin{lem}\label{lem:suppRnaught-closed}
+%        Given $R_0,$ $G,$ and $M$ as above, $\supprRnaught(M)$ is closed under the action by $G$ defined by
+%        \[e_i\cdot [\alpha_1:\cdots:\alpha_n]=[q_{1i}\alpha_1:\cdots:q_{ni}\alpha_n].\]
+%    \end{lem}
+%    \begin{prf}
+%        Let $\alpha\in\supprRnaught(M)$ be arbitrary and we will show that this set is closed under action by the generators of $G$. We do so by considering the matrices that arise leading to our definition of $\suppr:$ let $A_n^\alpha$ and $B_n^\alpha$ be the matrix factorization arising from the construction of thm.~\ref{thm:factorization_general}. 
+        
+%        Since $C(M_\alpha)$ is formed by the direct sum of $A_n^\alpha\otimes M_\alpha$ and $B_n^\alpha\otimes M_\alpha$, its rank is computed directly as the sum of the ranks of these matrices. Thus it suffices to show that their individual ranks are invariant to the $G$ action. By lem.~\ref{lem:G-invariant-rank}, we have that 
+%        \[A_n^{g\cdot\alpha}=\Phi_g^\alpha A_n^\alpha \Psi_g^\alpha\]
+%        and since both $\Phi_g^\alpha$ and $\Psi_g^\alpha$ are invertible matrices, they represent full-rank $k$-linear maps. Therefore $A_n^{g\cdot\alpha}$ and $A_n^\alpha$ represent $k$-linear transformations same rank and the same is true for $B_n^{g\cdot\alpha}$ and $B_n^\alpha$, so the result follows.
+%    \end{prf}
+
+\section{Cohomological support varieties}
+    The theory of support varieties was developed by Carlson in \cite{carlson83} in the context of group algebras $kG$. There he let $S\eqdef H^\ast(G,k)=\Ext^\ast_{kG}(k,k)$ and considered certain ideals of this (graded commutative) ring to define the support variety of a module. In particular, if $M\in \lmod{kG},$ we define
+    \[\suppc(M)\eqdef \calZ(\operatorname{Ann}_S{\Ext_{kG}^\ast(M,M)}).\]
+    \begin{rmk}
+        To get a sense of how the action of $S$ works, recall that for any $k$-algebra $\Lambda$, we get an action of $\Ext_\Lambda^\ast(k,k)$ on $\Ext_\Lambda^\ast(M,M)$ in the following way: let
+        \begin{align*}
+            &X_\bullet = 0\to k\to E_1\to \cdots\to E_n\to k\to 0\in \Ext^n_\Lambda(k,k)\\
+            &\text{and}\quad Y_\bullet=0\to M\to D_1\to\cdots\to D_m\to M\to 0\in\Ext_\Lambda^m(M,M)
+        \end{align*}
+        Then we can define $X_\bullet\cdot Y_\bullet$ to be the Yoneda product of $X_\bullet\otimes_k M$ and $Y_\bullet$, giving us an element
+        \[0\to M\to E_1\otimes M\to E_n\otimes M\to D_1\to\cdots\to D_m\to M\to 0.\]
+        in $\Ext^{n+m}_\Lambda(M,M).$
+    \end{rmk}
+    
+    The ubiquity of cohomological support, as defined above, leaves something to be desired, however. While it is a tractable problem to compute in simple cases, many modern results (such as those in \cite{mpsw09} and \cite{aapw22}) focus on only proving that the cohomology ring is \textit{finitely generated} (often giving explicit generators). The problem of computing support for an arbitrary module, however, still remains out of reach to current methods.
+    
+    Returning to the discussion of our particular algebras, let $n,q,\ell,A,Q_0,R_0$ be as usual and let $Q=Q_0\#\Gamma$ and $R=R_0\#\Gamma$ be the bosonizations of these algebras by a Hopf algebra $\Gamma$ such that $Q_0,R_0\in\GYD.$ An example is $\Gamma=\bbC G$ where $G=(\bbZ/\ell\bbZ)^n.$ For the explicit construction of $R_0$, we refer the reader to section~\ref{subsec:construction-bqcis}; the construction for $Q$ is very closely related. Then if $M\in\lmod R$, we are interested in computing the support $\suppc(M).$
+    
+\subsection{Computing support using spectral sequences}
+    Once we have computed (manually) the cohomology of $Q_0$ and $R_0$, we can use the language of spectral sequences to extend our results. Recall that if $\calF$ and $\calG$ are left exact functors and if $\calF$ sends injectives to $\calG$-acyclics, we can (c.f. \cite[\S 5.8]{weibel}) compute the derived functors of $\calG\circ\calF$ using the spectral sequence
+    \[E_r^{p,q}(A)=(\calR^p\calG\circ \calR^q\calF)(A)\Rightarrow \calR^{p+q}(\calG\circ\calF)(A).\]
+    
+    
+    To use this in our computation, we will want to have the result that
+    \[\calR^i(\Hom_\Gamma(k,\Hom_{R_0}(V,W))=\Ext^i_R(V,W)\]
+    and to see this, it will suffice to have the following result from Lorentz \& Lorentz:
+    \begin{lem}[\cite{lorenzlorenz95}, p.34]\label{lem:natural-iso}
+        Let $\Gamma$ be a group algebra and $R_0\in\GYD$. Let $R=R_0\#\Gamma$ be the bosonization and $V,W\in{_R\calM}.$ Then there is a natural (in $V$ and $W$) isomorphism
+        \[\alpha_{V,W}:\Hom_\Gamma(k,\Hom_{R_0}(V,W))\to\Hom_R(V,W).\]
+    \end{lem}
+    \begin{prf}
+        We begin by recognizing the identity
+        \[\Hom_\Gamma(k,\Hom_{R_0}(V,W))=\Hom_{R_0}(V,W)^\Gamma,\]
+        where this follows since if $f\in \Hom_\Gamma(k,\Hom_{R_0}(V,W)),$
+        \[g\cdot f(a)=f(g\cdot a)=f(a)\]
+        so 
+        \[(f\cdot g)(a)=g^{-1}f(ga)=f(a)\]
+        so $f\in\Hom_{R_0}(V,W)^\Gamma.$
+        
+        Using this identity, we have reduced the problem to showing
+        \[\Hom_{R_0}(V,W)^\Gamma\simeq \Hom_R(V,W),\]
+        where this can be seen because if $\varphi\in\Hom_{R_0}(V,W)^\Gamma,$ we get that 
+        \[\varphi(v)=(\varphi\cdot g)(v)=g^{-1}\varphi(g\cdot v)\]
+        and so, multiplying by $g$, we get linearity over $\Gamma$: $g\varphi(v)=\varphi(gv).$ Since $\varphi$ was assumed to be $R_0$ linear, this gives us that $\varphi$ is $R$-linear. The argument can be reversed easily to show the opposing containment.
+        
+        The naturality can be seen by considering a morphism $f:V\to V'$ in $_R\calM$ and noticing that if $\varphi\in\Hom_{R_0}(V',W)^\Gamma,$
+        \begin{align*}
+            \alpha_{V,W}\circ\Hom_{R_0}(f,W)^\Gamma(\varphi)&=\alpha_{V,W}(\varphi\circ f)\\
+            &=\varphi\circ f\\
+            &=\Hom_R(f,W)(\varphi)\\
+            &=\Hom_R(f,W)\circ\alpha_{V',W}(\varphi)
+        \end{align*}
+        and the naturality in $W$ follows similarly.
+    \end{prf}
+    
+    Then following $\cite[p.36]{lorenzlorenz95}$ and setting $\calG=\Hom_\Gamma(k,-)$ and $\calF=\Hom_{R}(V,-)$, we notice immediately that since, in our case, $\Gamma$ is a semisimple group algebra, all modules are acylcic for $\calG$ and thus we get the first quadrant Grothendieck spectral sequence
+    \[E_2^{p,q}(W)=\Ext^p_\Gamma(k,\Ext_{R_0}^q(V,W))\Rightarrow \calR^{p+q}(\Hom_\Gamma(k,\Hom_{R_0}(V,W))=\Ext^{p+q}_R(V,W)\]
+    where the last equality is due to lemma~\ref{lem:natural-iso}.
+    
+    Since $\Gamma$ is semisimple, $k$ is projective and thus $E_2^{p,q}=0$ for $p\ne 0.$ Therefore all differentials concerned are the zero maps and the sequence collapses on the second page. Therefore we can compute the graded pieces for any $M\in{_R\calM}:$
+    \[\Ext_R^i(M,M)=\Hom_\Gamma(k, \Ext^i_{R_0}(M,M))=\Ext^i_{R_0}(M,M)^\Gamma.\]
+    
+    How do we make sense of the action by $\Gamma?$ Recall that $\Ext^i_{R_0}(M,M)=H^i(\Hom_{R_0}(\calP_\bullet,M))$, where $\calP_\bullet$ is a projective resolution for $M$ over $R_0.$ The chain complex
+    \[\tilde\calP_\bullet\eqdef\Hom_{R_0}(\calP_\bullet,M)=0\to\Hom(M,M)\to \Hom(P_0,M)\to\Hom(P_1,M)\to \cdots\]
+    admits an action $\rho:\Gamma\otimes\tilde P_\bullet\to\tilde P_\bullet$ where here we are viewing $\Gamma$ as a graded algebra concentrated in degree zero. Thus the action is defined entirely by the actions $\rho_i:\Gamma\otimes\Hom_{R_0}(P_i,M)\to \Hom_{R_0}(P_i,M)$ and these are the usual ones for $g\in\Gamma$ and $f\in\Hom(P_i,M):$
+    \[(g\cdot f)(x)=g\cdot f(g^{-1}\cdot m).\]
+    Therefore we reduce the problem to computing cohomology for our unbosonized algebra, followed by computing the $\Gamma$ invariants. 
+    %{\color{red} Need attention here. Julia mentions that we need to commute with the differential.}
+    
+\section{Bosonizing support}
+    Returning to our official definition of $R,$ we can compute the support of an $R$-module $M$ by using the definition:
+    \[\suppc(M)=\calZ\left(\operatorname{Ann}_{\Ext^\ast_R(k,k)}\Ext_R^\ast(M,M)\right)=\calZ\left(\operatorname{Ann}_{\Ext^\ast_{R_0}(k,k)^\Gamma}\Ext_{R_0}^\ast(M,M)^\Gamma\right)\]
+
+\subsection{Cohomology of our Hopf objects}\label{sec:cohomology-R}
+    Due to the relative simplicity of the rings in question, we have at our disposal some nice techniques. First, the ``unbosonized'' $Q_0$ and $R_0$ have been computed in earlier works. For instance, in \cite[thm. 4.1]{mpsw09}, it is shown that
+    \begin{align*}
+        H^\ast(R_0,k)&=k[\xi_i,\eta_i]/\langle\eta_i\xi_j-\xi_j\eta_i, \xi_i\xi_j-\xi_j\xi_i, \eta_i\eta_j+q_{ij}\eta_j\eta_i\rangle
+    \end{align*}
+    where $\deg(\xi_i)=2$ and $\deg(\eta_i)=1.$ Notice that our notation here is a bit misleading since our algebra originally subject to the relation $x_ix_j=q_{ji}x_jx_i,$ so the relevant constants on the second tensor factor are slightly different than those of $Q_0$. 
+    
+    The authors of that work take this one step further, by using their set-up to determine the action of $\Gamma$ on $H(R_0,k)$ that is induced from the one on $R_0:$
+    \[g_i\cdot\xi_j = \xi_j\qquad\text{and}\qquad g_i\cdot\eta_j=q_{ij}\eta_j.\]
+    Now consider that $\eta_j^2=0$ (set $i=j$ in the relations), so since $\Proj$ forgets about nilpotent elements, it suffices in our computations to compute it for $H(R_0,k)_{red}=k[\xi_1,\dots,\xi_n].$ But the action on this ring is trivial! Therefore after passing to our variety, we get
+    \[\Proj(H^\ast(R,k))\cong\Proj(H^\ast(R_0,k)^\Gamma)=\Proj(k[\xi_1,\dots,\xi_n])\cong \bbP(\Sym(\Sigma^{-2}(\frakm_Z/\frakm_Z^2)^\vee))\]
+    where we shifted degree to reflect the fact that our generators live in degree 2.
+\subsection{Creating a map of supports}
+    The characterization of $\Proj(H^\ast(R,k))$ above may seem like a slight jump (why use $\frakm_Z$, for instance?), but we did so to highlight how we can use established work to our own ends. In \cite[def. 3.6]{negron-pevtsovaI} (as well as in the preceding section) the authors construct an algebra morphism which, in our case, is
+    \[i_{Q}:\Sym(\Sigma^{-2}(\frakm/\frakm^2)^\vee)\to HH^\ast(R).\]
+    A critical part of the construction of this map is lemma 2.4.2 in \cite{bezrukavnikov-ginzburg07}. In particular, \cite[thm. 3.5]{negron-pevtsovaII} gives us that the restriction of $i_Q$ to the generators $(\frakm/\frakm^2)^\vee$ gives us a morphism into $HH^2(R).$
+    
+    After following $i_Q$ with the map \cite[eq. 10]{negron-pevtsovaII}
+    \[-\otimes_R^\textbf{L}k:HH^\ast(R)\to \Ext_R^\ast(k,k),\]
+    this gives us a map of algebras
+    \[\varphi:\Sym(\Sigma^{-2}(\frakm/\frakm^2)^\vee)\to H^\ast(R,k)\]
+    that sends the $y_i\in(\frakm/\frakm^2)^\vee$ to an element in $H^2(R,k).$ But we computed in the last section that $H^2(R,k)$ is precisely the $k$ linear combinations of $\xi_i!$ 
+    
+    But we can do even better than that! We have this result about $\varphi:$
+    \begin{thm}[\cite{negron-pevtsovaII}, thm 4.8]\label{thm:finite-morphism}
+        The map $\varphi$ above is a finite morphism of algebras. In particular, $\Ext_R^\ast(k,k)$ is a finitely generated algebra.
+    \end{thm}
+    This is the crucial tool in proving the following result that is a specialized version of lemma 7.5 from \cite{negron-pevtsovaII}
+    \begin{lem}
+        The map 
+        \[A_Z\eqdef\Sym(\Sigma^{-2}(\frakm_Z/\frakm_Z^2)^\vee)\xrightarrow{\varphi} H^\ast(R,k)\twoheadrightarrow H^\ast(R,k)_{red}\]
+        is an surjection.
+    \end{lem}
+    \begin{prf}
+        Recall from section \ref{sec:cohomology-R} that $H^\ast(R,k)\cong k[\xi_1,\dots,\xi_n]$ and that the degree 2 generators $(\frakm_Z/\frakm_Z^2)^\vee$ map into $H^2(R,k).$ By theorem \ref{thm:finite-morphism}, we get that the inclusion
+        \[\varphi(A_Z)\hookrightarrow H^\ast(R,k)\]
+        is finite, and since 
+        \[k\otimes_{A_Z}H^\ast(R,k)=\Sym((\xi_1,\dots,\xi_n)/\varphi((\frakm_Z/\frakm_Z^2)^\vee)),\]
+        (since $H^\ast(R,k)$ is generated by the $\xi_i$), we get that the fiber $\Spec(k\otimes_{A_Z}H^\ast(R,k))$ must be a finite set, so the quotient is trivial! Thus $\varphi$ surjects onto the $\xi_i$, so onto all of $H^\ast(R,k).$
+    \end{prf}
+    
+    The upshot, then, is that the map of varieties dual to $\varphi$ given by 
+    \[\kappa:\Proj(H^\ast(R,k)_{red})\to \Proj(A_Z)\cong \bbP(\frakm_Z/\frakm_Z^2)\]
+    is a \textbf{closed embedding.} We will see in the next section that this is integral to comparing the cohomological support (which is the variety on the left) with hypersurface support (which is defined naturally on the right).
+
+\section{Comparison of support theories}
+    Here we will collect a series of results that demonstrate how our definition of rank support interacts with other formulations of support. We begin by reproducing another result of Negron and Pevtsova that shows that hypersurface support coincides with cohomological support.
+    
+    \begin{thm}[\cite{negron-pevtsovaI}, thm. 7.1, cor. 7.2]\label{thm:np-supph-suppc}
+        Let $R$ be a bosonized quantum complete intersection and let $M\in{_R\calM}.$ Then the map
+        \[\varphi:\Sym(\Sigma^{-2}(\frakm/\frakm^2)^\vee)\to \Ext_R^\ast(k,k)\]
+        induces a map of varieties
+        \[\kappa:\Proj(\Ext^\ast_R(k,k)_\text{red})\to \Proj(\Sym^\ast(\frakm_Z/\frakm_Z^2)^\vee)\cong\bbP(\frakm_Z/\frakm_Z^2).\]
+        such that
+        \[\kappa(\suppc(M))=\supphR(M).\]
+        Further if $\kappa$ is a closed embedding, we get that, for any $M\in\lmod R,$
+        \[\suppc(M)=\supphR(M).\]
+    \end{thm}
+    The authors of \cite{negron-pevtsovaI} prove this result in generality than we need for our particular application, but our algebra $R$ is \textit{smoothly integrable} since it admits a Hopf map $Q\to R$ where $R$ is smooth over $Q$ ($Q$ is of finite type over $k$ and $Q\to R$ satisfies the lifting property in figure~\ref{fig:formally-smooth} for any algebra $A$ and ideal $I\lhd A$ with $I^2=0$), augmented, and Noetherian with finite cohomological dimension. 
+    
+    \begin{figure}
+        \centering
+        \begin{tikzcd}
+            Q\ar[d]\ar[r]& A\ar[d,two heads]\\
+            R\ar[r]\ar[dashed,ur] & A/I
+        \end{tikzcd}
+        \caption{A commutative diagram demonstrating the lifting property required for (formal) smoothness of our integration $Q\to R.$ Here $I$ is assumed to have square zero. When the rest of the maps exist such that they commute, smoothness gives us that there exists the dashed lift $R\to A.$}
+        \label{fig:formally-smooth}
+    \end{figure}
+    
+    Next we prove a series of equivalences that we will use in service of our final result.
+    
+    \begin{conj}\label{lem:G-action-bosonization}
+        Let $R_0$ be an (unbosonized) quantum complete intersection and $R=R_0\#\Gamma$ be its bosonization by the group algebra of the elementary abelian $\ell$ group $G=(\bbZ/\ell\bbZ)^n.$ Then $\bbP^{n-1}$ admits an action by $G$ such that, for any $M\in{_R\calM},$
+        \[\supphR(M)=\supphRnaught(M).\]
+    \end{conj}
+%    \begin{prf}
+        
+%    \end{prf}
+    
+    Finally, our main result establishes that our computationally-friendly version of support afforded by $\suppr$ is, in fact, often a useful one. In other words, it gives us a way to explicitly compute the cohomological support of any module over our algebra!
+    %In certain cases (that will be discussed in the next section), this gives us a way to directly compute the cohomological support of any module over our algebra!
+    
+    \begin{thm}\label{thm:support-inclusion}
+        Let $R_0,$ $R,$ $M,$ and $G$ be as above. Then if $\alpha:\supphR(M)\to \supprR(M)$ is the bijection arising from lemmas \ref{thm:hyp-rank-equiv} and \ref{lem:G-action-bosonization},
+        \[\alpha\circ\kappa(\suppc(M))=\supprR(M)\]
+    \end{thm}
+    \begin{prf}
+        In progress
+    \end{prf}
+
+\comment{\section{When we can compute cohomological support precisely}\label{sec:kappa-bij}
+    We have found that we have a map from the cohomological support to the rank (and hypersurface) support, but we acknowledged in the last section that the map $\kappa$ from \cite{negron-pevtsovaI} and theorem~\ref{thm:np-supph-suppc} need not be an embedding (bijection) in general and can have nontrivial kernel. When, then, (if ever) can we guarantee that the support we compute via $\supprR$ gives us the honest cohomological support?
+    
+    To answer this question, we must understand the map $\kappa.$ Recall that $\kappa$ is a map of varieties
+    \[\kappa:\Proj(H^\ast(R,k)_{red})\to \Proj(\Sym(\Sigma^{-2}(\frakm_Z/\frakm_Z^2)^\vee)),\]
+    which arises from a map of algebras
+    \[\varphi:A_Z\eqdef \Sym(\Sigma^{-2}(\frakm_Z/\frakm_Z^2)^\vee)\to H^\ast(R,k)_{red}.\]
+    Recall from our computations in section~\ref{sec:cohomology-R} that, after getting rid of nilpotents, our cohomology for $R$ is
+    \[H^\ast(R,k)_{red}=\Ext_R^\ast(k,k)_{red}=(\Ext_{R_0}^\ast(k,k)^\Gamma)_{red}\cong k[\xi_1,\dots,\xi_n]^\Gamma\]
+    where the $\Gamma$ action is the one induced by the fact that the $\xi_i$ correspond to linear functions on $Q_0$ (so they are given the dual action $g_i\cdot \xi_j=q_{ij}^{-1}\xi_j=q_{ji}\xi_j$).
+    Furthermore one knows that $A_Z$ is, forgetting the grading, isomorphic to the polynomial algebra on $n$ indeterminates where the action is induced by taking the dual of the one on $\frakm_Z/\frakm_Z^2$. Therefore it makes sense to identify $A_Z$ with $k[\xi_1,\dots,\xi_n]$ as a $\Gamma$ module. Under these identifications, the map $\varphi$ has a remarkably simple presentation when considered as a map of $\Gamma$ modules as the $\ell^{th}$ power map:
+    \[\varphi(\xi_i)=\xi_i^\ell.\]
+    {\color{red} Is this exactly right? dig in more?}
+    
+    Using this characterization of our algebras as $\Gamma$ modules, the question about when $\varphi$ is an isomorphism is reduced to the following question: when is the module of $\Gamma$ invariants in $k[\xi_i]$ generated by the $\ell^{th}$ powers? In other words, when is the module
+    \[\coker(\varphi)\cong k[\xi_1,\dots,\xi_n]^\Gamma/(\xi_1^\ell,\dots,\xi_n^\ell)\]
+    trivial? The partial answer is ``not always'' since if we let $n=2$ and let $A=(\begin{smallmatrix}
+        0 & 2\\ -2 & 0
+    \end{smallmatrix})$ and $\ell=4$ we get that $g_1\cdot \xi_2=-\xi_2$ and so $\xi_2^2$ is invariant to the $\Gamma$ action.
+    
+    To explore this question, we need to compute what the $\Gamma$ invariants of $k[\xi_1,\dots,\xi_n]$ are. For compactness, we write $\calP=k[\xi_i,\dots,\xi_n]$. Then observe that we would like, for any monomial $\xi^\gamma\eqdef \prod \xi_i^{\gamma_i}$ that for all generators $g_j\in G,$
+    \[g_j\cdot \xi^\gamma=q^{\sum_k \gamma_ia_{ij}}\xi^\gamma=\xi^\gamma.\]
+    In other words, we are interested in integer solutions (really solutions over $\bbZ/\ell\bbZ$) to the system of linear congruences
+    \begin{align*}
+        a_{11}\gamma_1 + a_{21}\gamma_2 + \cdots + a_{n1}\gamma_n &\equiv 0 \pmod{\ell}\\
+        a_{12}\gamma_1 + a_{22}\gamma_2 + \cdots + a_{n2}\gamma_n &\equiv 0 \pmod{\ell}\\
+        &\vdots\\
+        a_{1n}\gamma_1 + a_{2n}\gamma_2 + \cdots + a_{nn}\gamma_n &\equiv 0 \pmod{\ell}.
+    \end{align*}
+    In other words, we are interested in finding integral $\gamma_i$ and $z_1,\dots,z_n$ such that
+    \begin{align*}
+        a_{11}\gamma_1 + a_{21}\gamma_2 + \cdots + a_{n1}\gamma_n + \ell z_1 + 0 + \cdots + 0 &=0\\
+        a_{12}\gamma_1 + a_{22}\gamma_2 + \cdots + a_{n2}\gamma_n + 0 + \ell z_2 + \cdots + 0 &=0\\
+        &\vdots\\
+        a_{1n}\gamma_1 + a_{2n}\gamma_2 + \cdots + a_{nn}\gamma_n + 0 + 0 + \cdots + \ell z_n &=0
+    \end{align*}
+    or equivalently, integer solutions to the homogeneous matrix equation
+    \[(A^T|\ell I_n)\begin{pmatrix}
+        \gamma_1\\ \vdots \\ \gamma_n \\ z_1 \\ \vdots \\ z_n
+    \end{pmatrix}=\mathbf 0.\]
+
+    Being a homogeneous system, we always have the trivial solution $\gamma_i=z_i=0$, which corresponds to $1\in \calP^\Gamma.$ But we are actually interested in solutions in $\bbZ/\ell\bbZ,$ so the trivial solution also corresponds to all monomials of the form
+    \[(\xi_1^\ell)^{s_1}\cdots (\xi_n^\ell)^{s_n},\]
+    for arbitrary $s_i,$ which form a $k$ basis for $k[\xi_1^\ell,\dots,\xi_n^\ell].$ This is simply a recovery of the fact that this module always lives within $\calP^\Gamma.$
+\subsection{Identifying nontrivial solutions}
+    We have now cooked up a scenario where the solutions we are interested will arise as solutions to a system of linear equations (over $\bbQ$ since our matrix entries are all rational), but in fact if we have a rational solution $(\frac{p_1}{q_1},\dots,\frac{p_n}{q_n},\frac{s_1}{t_1},\dots,\frac{s_n}{t_n}),$ and if we set $\alpha=\operatorname{lcm}(q_1,\dots,q_1,t_1,\dots,t_n)$ we get that $\alpha \frac{p_i}{q_i}\in\bbZ$ for all $i$ so from this rational solution we can construct a tuple
+    \[\left(\alpha \frac{p_1}{q_1},\dots,\alpha \frac{p_n}{q_n}\right)\in\bbZ^n\]
+    whose image in $\gamma\in (\bbZ/\ell\bbZ)^n$ gives us a family of monomials
+    \[\xi_1^{s_1\ell + \gamma_1}\cdots\xi_n^{s_n\ell + \gamma_n}\]
+    for all $s_i\in\bbN$ that are invariant under the $G$ action.
+    
+    Therefore we know that all of our solutions can be found by solving a system of linear equations over $\bbQ$ and that every solution that arises in this way corresponds to a solution over $\bbZ/\ell\bbZ.$ Furthermore, we know that the trivial solution over $\bbQ$ corresponds to the algebra generated by the $\ell^{th}$ powers. What we are interested is an answer to the question ``When are there nontrivial solutions?''
+    
+    If we were interested only in solutions over $\bbQ$, the answer is a standard linear algebra fact: there are nontrivial solutions to a homogeneous equation $Ax=\mathbf 0$ exactly when $A$ has nontrivial kernel. A problem that can arise, however, is that a nontrivial solution over $\bbQ$ can correspond to a trivial solution over $\bbZ/\ell\bbZ!$ For instance, say that $\ell$ is arbitrary and $n=2$ and the transpose of our commutativity matrix is $A^T=(\begin{smallmatrix}
+        0&1\\-1&0
+    \end{smallmatrix}).$ Then 
+    \[\begin{pmatrix}
+        0 & 1 & \ell & 0\\ -1 & 0 & 0 & \ell
+    \end{pmatrix}\begin{pmatrix}
+        1 \\ 1 \\ -\frac{1}{\ell} \\ \frac{1}{\ell}
+    \end{pmatrix}=\mathbf 0\]
+    so this corresponds to a nontrivial solution over $\bbQ$. Multiplying by $\operatorname{lcm}(1,1,\ell,\ell)=\ell$ and taking the image in $\bbZ/\ell\bbZ,$ however, corresponds to the trivial monomial $1\in\calP^\Gamma.$ But in fact, we can compute by hand that the solutions to this system over the rationals are precisely
+    \[\begin{pmatrix}
+        \ell z_4 \\ -\ell z_3 \\ z_3\\ z_4
+    \end{pmatrix}=z_4\begin{pmatrix}
+        \ell \\ 0 \\ 0 \\ 1
+    \end{pmatrix} + z_3\begin{pmatrix}
+        0 \\ -\ell \\1 \\ 0
+    \end{pmatrix}, z_3,z_4\in\bbQ.\]
+    If we clear the denominators for any choice of $z_i$, it becomes clear that the image of these points in $(\bbZ/\ell\bbZ)^2$ are all trivial, so \textit{every} nontrivial solution over the rationals corresponds to the trivial one over $\bbZ/\ell\bbZ.$
+    
+\subsection{A more formal treatment}
+    We begin our rigorous analysis with an observation: the monomials $\xi^\gamma=\prod_i \xi_i^{\gamma_i}$ form a basis for $k[\xi_1,\dots,\xi_n],$ so the $G$ action is governed by how it acts on them. Therefore it suffices to identify the monomials that are fixed under the the $G$ action. It is easy to check that the $\xi_i^\ell$ are fixed by $G$, so we restrict our attention to the powers modulo $\ell$. So we will let $\calM$ denote the set of monomials $\xi^\gamma\in k[\xi_1,\dots,\xi_n]^G/(\xi_1^\ell,\dots,\xi_n^\ell).$ From this, the following is immediate.
+    \begin{lem}
+        $\calM$ is trivial (it contains only the trivial monomial $1$) if and only if the $\ell^{th}$ power map $\varphi:k[\xi_1,\dots,\xi_n]\to k[\xi_1,\dots,\xi_n]^G$ is an isormorphism.
+    \end{lem}
+    
+    Now $\calM$ is a subquotient of a commutative subalgebra (this was because its multiplication is given by the cocommutative comultiplication on $R_0$). Further the multiplicative inverse of $\xi^\gamma$ is $\xi_1^{\ell-\gamma_1}\cdots\xi_n^{\ell-\gamma_n}.$ Therefore we can make sense of $\calM$ as a $\bbZ G$ module. Using this, we can relate our $\calM$ with our matrix $A$.
+    
+    \begin{rmk}\label{rmk:mod-ell}
+        In what follows we think of $A$ an endomorphism of $(\bbZ/\ell\bbZ)^n$ in $\lmod\bbZ$, which requires some cautious explanation. $\bbZ$-linear maps $\bbZ^n\to \bbZ^n$ are determined (after fixing bases) by matrices over $\bbZ$, but there is a subtle difference in this case since we are talking about finite groups. Luckily, given an endomorphism $\varphi$ of $\bbZ^n$, we can define an endomorphism
+        \[\varphi\otimes\id_{\bbZ/\ell\bbZ}:\bbZ^n\otimes_\bbZ\bbZ/\ell\bbZ\to \bbZ^n\otimes_\bbZ\bbZ/\ell\bbZ.\]
+        This is simply the change of scalars for $\varphi$ along $\bbZ\to \bbZ/\ell\bbZ.$
+        
+        In this way, any integer matrix $A$ \textit{determines} a map of $\bbZ/\ell\bbZ$ modules. Notice that we have exact sequence
+        \[0\to\ker(A)\to \bbZ^n\to \bbZ^n\to 0\]
+        and by the right exactness of $-\otimes_Z \bbZ/\ell\bbZ$, this yields the exact sequence
+        \[\ker(A)\otimes \bbZ/\ell\bbZ\to \bbZ^n\otimes \bbZ/\ell\bbZ\to \bbZ^n\otimes \bbZ/\ell\bbZ\to 0\]
+        so the kernel of $\varphi\otimes\id_{\bbZ/\ell\bbZ}$ is the image of $\ker(A)\otimes\bbZ/\ell\bbZ$ in $\bbZ^n\otimes\bbZ/\ell\bbZ\cong(\bbZ/\ell\bbZ)^n.$ Importantly, notice that the morphism induced by the inclusion $\ker(A)\hookrightarrow\bbZ^n$ may fail to be monic in general.
+        
+        When does this happen? Since we are tensoring the inclusion map with the identity, we get that if $a\otimes n\in\ker(A)\otimes\bbZ/\ell\bbZ,$
+        \[\iota\otimes\id_{\bbZ/\ell\bbZ}(a\otimes n)=\iota(a)\otimes n\in \bbZ^n\otimes\bbZ/\ell\bbZ\]
+        which is zero exactly when $a\otimes n$ was already zero. Therefore checking the vanishing of the image of $\ker(A)\otimes\bbZ/\ell\bbZ$ is the same as checking vanishing of its image in $\bbZ^n\otimes\bbZ/\ell\bbZ.$
+        
+        All this means that when we want to compute whether the kernel of $\varphi\otimes\id_{\bbZ/\ell\bbZ}$ vanishes, it will suffice to compute the structure of $\ker(A)$ and then change scalars to $\bbZ/\ell\bbZ$ and check if this module itself is zero.
+    \end{rmk}
+    
+    \begin{lem}\label{lem:kernel-AT}
+        If $A$ is the commutativity matrix for $Q_0$, considered as a map $\bbZ^n\to \bbZ^n,$ 
+        \[\calM \cong \ker(A^T)\otimes_Z\bbZ/\ell\bbZ\]
+        as $\bbZ$ modules (abelian groups).
+    \end{lem}
+    \begin{prf}
+        We begin by defining the map $\varphi:\calM\to\ker(A^T)\otimes\bbZ/\ell\bbZ$ via
+        \[\varphi(\xi^\gamma)=\gamma\otimes 1\in \bbZ^n\otimes\bbZ/\ell\bbZ,\]
+        or, via the isomorphism $\bbZ^n\otimes\bbZ/\ell\bbZ\to (\bbZ/\ell\bbZ)^n,$
+        \[\varphi(\xi^\gamma)=\bar\gamma=(\bar\gamma_1,\dots,\bar\gamma_n)\]
+        where $\bar\gamma_i$ denotes the residue of $\gamma_i$ modulo $\ell.$
+        
+        That $\varphi$ is a homomorphism is clear since we have $\xi^\gamma\cdot\xi^\eta=\xi^{\gamma+\eta}.$
+        This map is well-defined since if we take $\xi^\gamma$ and let $\xi^\eta$ be another representative for the same monomial in the Laurent series ring, $k[\xi_i,\xi_i^{-1}]$ we have that $\eta_i=\gamma_i+s_i\ell$ for all $i$ and some choice of $s_i.$ But then
+        \[\varphi(\xi^\gamma)=\bar\gamma=\bar\eta=\varphi(\xi^\eta).\]
+        
+        The kernel is trivial because if $\varphi(\xi^\gamma)=\bar\gamma=\bar 0,$ this means that $\ell\mid\gamma_i$ and since $\xi_i^\ell=1,$ we get $\xi^\gamma=1.$ The surjectivity of $\varphi$ follows from the discussion above in section \ref{sec:kappa-bij}: $\bar\gamma$ being a solution to $A^T\gamma=\mathbf 0$ over $(\bbZ/\ell\bbZ)^n$ is exactly equivalent to $\xi^\gamma$ being $G$-invariant. 
+    \end{prf}
+    
+    A standard result from linear algebra adapted for our use is the following:
+    \begin{lem}\label{lem:invariants-sufficient}
+        Let $A$ be an $n\times n$ matrix over $\bbZ.$ Then
+        \[\ker(A^T)\cong\coker(A).\]
+    \end{lem}
+    \begin{prf}
+        The proof of this is purely categorical: since $A$ represents a map in the category $\calC$ of $\bbZ$-modules, $A^T$ represents the dual map corresponding to $A$ in $\calC^\text{op}.$ Since the kernel is a dual construction to the cokernel, the result follows. 
+    \end{prf}
+    An easy corollary for our case is
+    \begin{cor}\label{cor:ker-T-is-coker}
+        If $A$ is an $n\times n$ skew-symmetric matrix over $\bbZ$,
+        \[\ker(A^T)=\ker(-A)=\ker(A)=\coker(A).\]
+    \end{cor}
+    
+    Finally, we are ready to write down our result. Our conjecture was first tested in Sage using the code found in section \ref{code:sage-conjecture} for $n=4$ and varying $\ell$.
+    \begin{thm}\label{thm:determinant-invertible}
+        Let $A$ be the commutativity matrix defining $Q_0$ and $M$ an $R$ module. Then the map 
+        \[\beta=\alpha\circ\kappa:\suppc(M)\to \supprR(M)\]
+        discussed in thm.~\ref{thm:support-inclusion} is an embedding (thus an isomorphism) if and only if $\det(A)\in\bbZ$ is invertible modulo $\ell.$
+    \end{thm}
+    \begin{prf}
+        Following the discussion in section \ref{sec:kappa-bij}, we know that $\beta$ is an embedding if and only if the $\ell^{th}$ power map is surjective onto $k[\xi_1,\dots,\xi_n]^G.$ By lemma \ref{lem:invariants-sufficient}, we know that this is equivalent to checking whether $\calM$ is trivial.
+        
+        The fundamental theorem for finitely generated abelian groups tells us that, as a $\bbZ$-module,
+        \[\calM\cong \bbZ^r\oplus \bbZ/a_1\bbZ\oplus\cdots\oplus \bbZ/a_m\bbZ\]
+        where $a_1\mid a_2\mid \cdots \mid a_m$ is the collection of nonzero invariant factors for $\calM.$ Applying lemma \ref{lem:kernel-AT} and corollary \ref{cor:ker-T-is-coker}, we know that $\calM\cong\ker(A^T)\cong\coker(A),$ which means that we can compute the invariant factors for $\calM$ by putting $A$ into Smith normal form.
+        
+        Recall that any matrix $A$ over $\bbZ$ admits a Smith normal form, which consists of invertible matrices $U$ and $V$ over $\bbZ$ as well as a diagonal matrix $B$ such that
+        \[A=UBV\]
+        where the diagonal entries of $B$ are precisely the (possibly all zero) invariant factors of $\coker(A)\cong\calM.$ Since $U$ and $V$ are invertible over $\bbZ$, so are their determinants, whence $\det(U)$ and $\det(V)$ are both $\pm 1.$ Using this, we get that 
+        \[\det(A)=\det(U)\det(B)\det(V)=\pm\det(B)=\pm\prod_i a_i.\]
+        Therefore $\det(A)$ is invertible modulo $\ell$ if and only iff $(a_i,\ell)=1$ for all $i$ (in particular, there must be $n$ nonzero invariant factors).
+        
+        But then after tensoring with $\bbZ/\ell\bbZ$ (c.f. remark \ref{rmk:mod-ell}), we get that
+        \[\calM\cong \left(\bigoplus_i \bbZ/a_i\bbZ\right)\otimes\bbZ/\ell\bbZ\cong\bigoplus\bbZ/a_i\bbZ\otimes\bbZ/\ell\bbZ.\]
+        This sum is zero if and only if all the summands are, which means that $\calM=0$ if and only if $a_i$ and $\ell$ are coprime for all $i$. Therefore we conclude that $\det(A)$ is invertible modulo $\ell$ if and only if $\calM$ is trivial. The result follows.
+    \end{prf}
+
+    \subsection{Examples and further results}
+    We can begin by immediately ruling out a large class of examples where the $\beta$ of theorem \ref{thm:determinant-invertible} is not an embedding. 
+    \begin{cor}
+        Let $n$ be any odd integer greater than 1 and $A$ be any skew symmetric matrix giving us our commutativity relations and let $\ell$ and $q$ be arbitrary. Then $\suppc(M)$ and $\supprR(M)$ are not homeomorphic for every $R$-module $M$.
+    \end{cor}
+    \begin{prf}
+        This follows immediately from theorem \ref{thm:determinant-invertible} after recognizing that since $A$ is skew-symmetric
+        \[\det(A)=\det(A^T)=\det(-A)=(-1)^n\det(A)\]
+        so since $n$ is odd, $\det(A)=0.$
+    \end{prf}
+    
+    Among examples where $n$ is even, however, there are plenty of examples when we get a homeomorphism.
+    \begin{cor}
+        Let $\ell$ be any prime. Then $\suppc(M)$ is homeomorphic to $\supprR(M)$ if and only if $\det(A)\ne0.$
+    \end{cor}
+    In particular, the examples we computed in section \ref{sec:computing-support} correspond to the true cohomological support of these modules, after taking $G$-orbits. Generalizing slightly, if $A=(\begin{smallmatrix}
+        0 & a\\-a &0
+    \end{smallmatrix}),$ we have $\det(A)=a^2$ and therefore the homeomorphism holds as long as $(a,\ell)=1.$
+    
+    In the $4\times 4$ case, we get that
+    \[\det\begin{pmatrix}
+        0 & a & b & c\\
+        -a & 0 & d & e\\
+        -b & -d & 0 & f\\
+        -c & -e & -f & 0
+    \end{pmatrix}=(cd+af-eb)^2\]
+    so the condition of having a homeomorphism is even simpler: we simply need $cd+af-eb$ to be invertible modulo $\ell.$ Some quick Sage code (see section \ref{code:sage-number-invertible}) reveals the results in figure~\ref{fig:invertible-table}, which demonstrate that an integer $4\times 4$ skew-symmetric matrix will, with high probability, have invertible determinant mod $\ell,$ especially as $\ell$ gets large. 
+    \begin{figure}
+        \centering
+        \begin{tabular}{c|c}
+            $\ell$ & \% invertible \\\hline
+            2 & 92.2\\
+            3 & 98.1\\
+            4 & 98.6\\
+            5 & 99.6\\
+            10 & 99.6\\
+            20 & 99.8\\
+            30 & 99.8
+        \end{tabular}
+        \caption{Percentage of integer $4\times 4$ skew-symmetric matrices that have invertible determinant mod $\ell$ for varying values of $\ell$.}
+        \label{fig:invertible-table}
+    \end{figure}
+    Over the range $\ell=2,\dots,30,$ the probability that such a matrix drawn at random was invertible was 99.89\%. This implies that the rank support is useful in many cases (at least when $n=4$). When using $n=6$ and considering all $\ell=2,...,9$, the overall percentage is 99.999999842\%.
+}
+\printendnotes
+
+%
+% ==========   Bibliography
+%
+\nocite{*}   % include everything in the uwthesis.bib file
+\bibliographystyle{alpha}
+\bibliography{sources}
+%
+% ==========   Appendices
+%
+\appendix
+\raggedbottom\sloppy
+ 
+% ========== Appendix A
+ 
+\chapter{Code for generating examples}
+I have collected some code snippets I used for forming conjectures and guiding my discovery. I figured this may be helpful to other researchers down the road who would like to discover similar results but would rather not spend a whole day reading a user manual to do it.
+
+\section{SINGULAR example}\label{code:singular-resolution}
+To help with computations, I made use of the wonderful noncommutative \texttt{PLURAL} subsystem of the the \texttt{SINGULAR} software from \cite{singular}. I include code below in the interest of opening up others' avenues for future computations. Use of the \href{https://www.singular.uni-kl.de/index.php/singular-manual.html}{online documentation} is strongly recommended as you become familiar with the software.
+
+In what follows I will use the command prompt (although this could all be written as a script) and will utilize the notation
+\begin{verbatim}
+// This is a comment
+\end{verbatim}
+to denote lines that are just for clarity, but should not be input to the prompt.
+To compute the resolution over $Q_\alpha$ for this section, I used the following code. 
+\begin{verbatim}
+> LIB "nctools.lib";
+> ring R = (0,Q),(x,y,z),Dp;
+> minpoly = rootofUnity(5);
+// Initialize matrices so that x_ix_j=c_ji*x_jx_i + d_ji
+> matrix C[3][3]; matrix D[3][3];
+> C[1,2] = Q; C[1,3] = Q; C[2,3] = Q;
+> def Q0 = nc_algebra(C,D);
+> setring Q0;
+// Compute the quotient algebra using our choice of f_\alpha
+> ideal I = x5+y5+z5;
+> qring Qa = twostd(I);
+// Compute the resolution for Qa/(x,y,z)=k
+> ideal I = x, y, z;
+> resolution F = mres(twostd(I), 5);
+// Print the third matrix in the resolution
+> print(matrix(F[3]));
+\end{verbatim}
+
+\section{Sage example}\label{code:sage-conjecture}
+This is a simple loop I used to verify that having invertible determinant mod $\ell$ was equivalent to having nontrivial solutions mod $\ell$. This helped me confirm that theorem \ref{thm:determinant-invertible} was worth pursuing. I created matrices over $\ell$, since at the end of the day we are interested in having solutions mod $\ell$.
+
+This code checks for arbitrary $\ell$ with $n=4$, but could be extended without much work. Further, one could speed up this computation by just sampling a fixed number of integer matrices $B$ and using for our skew-symmetric matrix $A=B-B^T$ modulo $\ell$ (though of course the results are less reliable this way).
+
+\begin{verbatim}
+def check4by4(l):
+    R = Integers(l)
+    for (a,b,c,d,e,f) in unordered_tuples(list(R), 6):
+        # only have to check skew symmetric matrices for our purposes
+        M = Matrix([[0,a,b,c],[-a,0,d,e],[-b,-d,0,f],[-c,-e,-f,0]])
+        # check invertibility of the determinant
+        if order(M.determinant()) == l:
+            for comb in unordered_tuples(list(R),4):
+                if matrix(R,comb).T != 0 and M*matrix(R,comb).T == 0:
+                    print(f'Found a counterexample with determinant \
+                        {M.determinant()}!')
+                    print('Matrix was:')
+                    print(M)
+                    print('And the vector in the kernel was:')
+                    print(matrix(R,comb).T)
+
+# This will take a while to complete
+for i in range(2,16):
+    print(i, flush=True)
+    check4by4(i)
+\end{verbatim}
+
+\section{Sage code for counting invertible matrices}\label{code:sage-number-invertible}
+After reducing the invertibility of the determinant to the invertibility of $cd+af-eb,$ this code checks all possible skew symmetric matrices for invertibility and spits out the percentage that are.
+
+\begin{verbatim}
+# running totals
+total, total_bad = 0,0
+
+for ell in range(2,31):
+    count = 0
+    R = Integers(ell)
+    for (a,b,c,d,e,f) in unordered_tuples(list(R),6):
+        if order(c*d+a*f-e*b) != ell:
+            count += 1
+    total += ell**6
+    total_bad += count
+    print(ell, count, ell**6, float((ell**6-count)/(ell**6)))
+
+print(f'{total_bad} degenerate choices out of a total of {total} \
+    choices, giving a good ratio of {float(total_bad/total)}.')
+\end{verbatim}
+
+\vita{This is info about me.
+}
+
+
+\end{document}
