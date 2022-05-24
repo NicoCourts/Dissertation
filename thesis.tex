@@ -263,9 +263,18 @@
         $A_2^\alpha$ and $B_2^\alpha$ (see chapter \ref{chp:matrix-factorizations}) define the 2-periodic part of a free resolution of $k$ when $n=2.$ 
     \end{lem}
     \endgroup
+    and we verify as well that
+    \begingroup
+    \def\thethm{2.20}
+    \addtocounter{thm}{-1}
+    \begin{lem}
+        $A_3^\alpha$ and $B_3^\alpha$ define the 2-periodic part of a free resolution of $k$ when $n=3.$
+    \end{lem}
+    \endgroup
+    
     and we conjecture that these work more broadly
     \begingroup
-    \def\thethm{2.19}
+    \def\thethm{2.18}
     \addtocounter{thm}{-1}
     \begin{conj}
         The matrix factorizations given in theorem \ref{thm:factorization_general} are the ones corresponding to the trivial module $k\in\lmod{Q_{0,\alpha}}.$ That is, they comprise the 2-periodic portion of a free resolution of $k$.
@@ -825,19 +834,19 @@
     \[C_2^3=\begin{pmatrix}
         \sqrt{q_{32}}C_1^3 & 0 \\ 0&-\sqrt{q_{23}}\widetilde{C_1^3}
     \end{pmatrix}=\begin{pmatrix}
-        -\sqrt{q_{32}q_{13}}cz & 0\\0& -\sqrt{q_{23}q_{31}}cz
+        -\sqrt{q_{32}q_{13}}cx_3 & 0\\0& -\sqrt{q_{23}q_{31}}cx_3
     \end{pmatrix}\]
     and
     \[\widetilde{C_2^3}=\begin{pmatrix}
-        \sqrt{q_{23}}\widetilde{C_1^3} & 0 \\ 0&\sqrt{q_{23}}C_1^3
+        \sqrt{q_{32}}\widetilde{C_1^3} & 0 \\ 0&-\sqrt{q_{23}}C_1^3
     \end{pmatrix}=\begin{pmatrix}
-        \sqrt{q_{23}q_{31}}cz & 0\\0&\sqrt{q_{23}q_{13}}cz
+        \sqrt{q_{32}q_{31}}cx_3 & 0\\0&\sqrt{q_{23}q_{13}}cx_3
     \end{pmatrix}\]
     as well as 
     \[D_2^3=\begin{pmatrix}
-        \sqrt{q_{32}q_{13}}c^6z^6 & 0\\0& \sqrt{q_{32}q_{31}}c^6z^6
+        \sqrt{q_{23}q_{13}}c^6x_3^6 & 0\\0& \sqrt{q_{32}q_{31}}c^6x_3^6
     \end{pmatrix}\quad\text{and}\quad\widetilde{D_2^3}=\begin{pmatrix}
-        -\sqrt{q_{23}q_{31}}c^6z^6&0\\0&-\sqrt{q_{32}q_{13}}c^6z^6
+        -\sqrt{q_{23}q_{31}}c^6x_3^6&0\\0&-\sqrt{q_{32}q_{13}}c^6x_3^6
     \end{pmatrix}\]
     so since 
     \[A_2=\begin{pmatrix}
@@ -852,19 +861,19 @@
     \[A_3^\alpha=\begin{pmatrix}
         A_{2} & C_{2}^3\\D_{2}^3& B_{2}
     \end{pmatrix}=\begin{pmatrix}
-        a^6x_1^6 & -\sqrt{q_{12}}bx_2 & -\sqrt{q_{32}q_{13}}cz & 0\\ 
-        \sqrt{q_{12}}b^6x_2^6 & ax_1 & 0 & -\sqrt{q_{23}q_{31}}cz\\
-        \sqrt{q_{32}q_{13}}c^6z^6 & 0 & ax_1 & \sqrt{q_{21}}bx_2\\ 
-        0 & \sqrt{q_{32}q_{31}}c^6z^6 &-\sqrt{q_{21}}b^6x_2^6 & a^6x_1^6
+        a^6x_1^6 & -\sqrt{q_{12}}bx_2 & -\sqrt{q_{32}q_{13}}cx_3 & 0\\ 
+        \sqrt{q_{12}}b^6x_2^6 & ax_1 & 0 & -\sqrt{q_{23}q_{31}}cx_3\\
+        \sqrt{q_{23}q_{13}}c^6x_3^6 & 0 & ax_1 & \sqrt{q_{21}}bx_2\\ 
+        0 & \sqrt{q_{32}q_{31}}x_3^6c^6 &-\sqrt{q_{21}}b^6x_2^6 & a^6x_1^6
     \end{pmatrix}\]
     and
     \[B_3^\alpha=\begin{pmatrix}
         B_{2}&\widetilde{C_{2}^3}\\ \widetilde{D_{2}^3} & A_{2}
     \end{pmatrix}=\begin{pmatrix}
-        ax_1 & \sqrt{q_{21}}bx_2 & \sqrt{q_{23}q_{31}}cz & 0\\ 
-        -\sqrt{q_{21}}b^6x_2^6 & a^6x_1^6 & 0 & \sqrt{q_{23}q_{13}}cz\\
-        -\sqrt{q_{23}q_{31}}c^6z^6 & 0 & a^6x_1^6 & -\sqrt{q_{12}}bx_2\\ 
-        0 & -\sqrt{q_{32}q_{13}}c^6z^6 & \sqrt{q_{12}}b^6x_2^6 & ax_1
+        ax_1 & \sqrt{q_{21}}bx_2 & \sqrt{q_{32}q_{31}}cx_3 & 0\\ 
+        -\sqrt{q_{21}}b^6x_2^6 & a^6x_1^6 & 0 & \sqrt{q_{23}q_{13}}cx_3\\
+        -\sqrt{q_{23}q_{31}}c^6x_3^6 & 0 & a^6x_1^6 & -\sqrt{q_{12}}bx_2\\ 
+        0 & -\sqrt{q_{32}q_{13}}c^6x_3^6 & \sqrt{q_{12}}b^6x_2^6 & ax_1
     \end{pmatrix}\]
     
 \subsection{Our matrix factorizations work!}
@@ -874,7 +883,7 @@
         The matrix factorizations given in theorem \ref{thm:factorization_general} are the ones corresponding to the trivial module $k\in\lmod{Q_{0,\alpha}}.$ That is, they comprise the 2-periodic portion of a free resolution of $k$.
     \end{conj}
     
-    We give a partial result.
+    We give a pair of partial results
     \begin{lem}\label{lem:2-dim-k-factorization}
         $A_2^\alpha$ and $B_2^\alpha$ define the 2-periodic part of a free resolution of $k$ when $n=2.$
     \end{lem}
@@ -925,6 +934,42 @@
             r \\ s
         \end{pmatrix}\]
         so $\ker C=\operatorname{im} A_2^\alpha$ so the chain given is exact and thus a free resolution of $k$ over $Q_{0,\alpha}.$
+    \end{prf}
+    \begin{lem}\label{lem:3-dim-k-factorization}
+        $A_3^\alpha$ and $B_3^\alpha$ define the 2-periodic part of a free resolution of $k$ when $n=3.$
+    \end{lem}
+    \begin{prf}
+        We prove the result with $\alpha=(1,1,1)$ for notational simplicity, recognizing that this goes through by replacing the variables appropriately. This time our resolution is of the shape
+        \[\cdots\to Q_{0,\alpha}^4\xrightarrow{A_3^\alpha}Q_{0,\alpha}^4\xrightarrow{B_3^\alpha} Q_{0,\alpha}^4\xrightarrow{C}Q_{0,\alpha}^3\xrightarrow{D} Q_{0,\alpha}\xrightarrow{\varepsilon}k\to 0\]
+        where
+         \[A_3^\alpha=\begin{pmatrix}
+        x_1^{\ell-1} & -\sqrt{q_{12}}x_2 & -\sqrt{q_{32}q_{13}}x_3 & 0\\ 
+        \sqrt{q_{12}}x_2^{\ell-1} & x_1 & 0 & -\sqrt{q_{23}q_{31}}x_3\\
+        \sqrt{q_{23}q_{13}}x_3^{\ell-1} & 0 & x_1 & \sqrt{q_{21}}x_2\\ 
+        0 & \sqrt{q_{32}q_{31}}x_3^{\ell-1} &-\sqrt{q_{21}}x_2^{\ell-1} & x_1^{\ell-1}
+    \end{pmatrix}\]
+    and
+    \[B_3^\alpha=\begin{pmatrix}
+        x_1 & \sqrt{q_{21}}x_2 & \sqrt{q_{32}q_{31}}x_3 & 0\\ 
+        -\sqrt{q_{21}}x_2^{\ell-1} & x_1^{\ell-1} & 0 & \sqrt{q_{23}q_{13}}x_3\\
+        -\sqrt{q_{23}q_{31}}x_3^{\ell-1} & 0 & x_1^{\ell-1} & -\sqrt{q_{12}}x_2\\ 
+        0 & -\sqrt{q_{32}q_{13}}x_3^{\ell-1} & \sqrt{q_{12}}x_2^{\ell-1} & x_1
+    \end{pmatrix}\]
+    and, we claim,
+    \[C=\begin{pmatrix}
+        \sqrt{q_{21}q_{23}q_{31}}x_1^{\ell-1} & -\sqrt{q_{23}q_{31}}x_2 & -\sqrt{q_{21}}x_3 & 0\\
+        \sqrt{q_{32}q_{13}}x_2^{\ell-1} & \sqrt{q_{21}q_{32}q_{13}}x_1 & 0 & -\sqrt{q_{21}}x_3\\
+        \sqrt{q_{12}}x_3^{\ell-1} & 0 &\sqrt{q_{12}q_{32}q_{31}}x_1 & \sqrt{q_{32}q_{31}}x_2
+    \end{pmatrix}\]
+    and
+    \[D=\begin{pmatrix}
+        \sqrt{q_{12}q_{32}q_{13}}x_1 & \sqrt{q_{23}q_{31}}x_2 & \sqrt{q_{21}}x_3
+    \end{pmatrix}.\]
+    We leave it as an exercise to confirm that indeed
+    \[\varepsilon D=DC=CB_3^\alpha=0,\]
+    so that the sequence above is indeed a chain complex.
+    
+    To show that $\ker\varepsilon=\operatorname{im}D,$ we just notice that $\ker\varepsilon=(x_1,x_2,x_3)$ and all three of these generators lie in the image of $D$. Checking exactness at the other two modules is also left as an exercise.
     \end{prf}
 
 \section{Twisted complexes}
