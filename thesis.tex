@@ -152,7 +152,7 @@
 
 \setcounter{page}{-1}
 \abstract{%
-    Support theories are frequently used by representation theorists when trying to understand module categories with complicated structure. We associate to an algebra $\Lambda$ a variety where the topological structure is determined by the support of modules over $\Lambda.$ Support comes in many flavors, from the easily described (but computationally difficult) to more abstract notions of support that are more amenable to computation. In this work, we are interested in understanding support theories on a class of algebras called bosonized quantum complete intersections (BQCIs), which are noncommutive $k$-algebras with some useful parallels to commutative algebra. Drawing upon prior notions of matrix factorizations and hypersurface support, we develop a notion of rank support ($\suppr$) that reduces the computation of homological support to essentially a linear algebra problem. Along the way, we develop computational tools necessary to explicitly compute support for these algebras and provide some insight into the theoretical results that power our observations.
+    Support theories are frequently used by representation theorists when trying to understand module categories with complicated structure. We associate to an algebra $\Lambda$ a variety where the topological structure is determined by the support of modules over $\Lambda.$ Support comes in many flavors, from the easily described (but computationally difficult) to more abstract notions of support that are more amenable to computation. In this work, we are interested in understanding support theories on a class of algebras called bosonized quantum complete intersections (BQCIs), which are noncommutative $k$-algebras with some useful parallels to commutative algebra. Drawing upon prior notions of matrix factorizations and hypersurface support, we develop a notion of rank support ($\suppr$) that reduces the computation of homological support to essentially a linear algebra problem. Along the way, we develop computational tools necessary to explicitly compute support for these algebras and provide some insight into the theoretical results that power our observations.
 }
  
 %
@@ -561,7 +561,7 @@
     \end{prop}
     
     \begin{rmk}
-    As a reminder: $f_\alpha$ is central in our case, so $\sigma=\id$ in what follows. I will retain the $(-)^{tw}$ notation to match previous papers, but this will amount to a degree shift $M^{tw}=M(p).$
+    As a reminder: $f_\alpha$ is central in our case, so $\sigma=\id$ in what follows. I will retain the $(-)^{tw}$ notation to match previous papers, but this will amount to a degree shift $M^{tw}=M(\ell).$
     \end{rmk}
     
     For this proposition the construction closely follows the one from the commutative case (c.f. \cite{yoshino90}). Let
@@ -1915,7 +1915,7 @@ In this chapter we introduce several new definitions of support that extend the 
     \begin{lem}
         The map 
         \[A_Z\eqdef\Sym(\Sigma^{-2}(\frakm_Z/\frakm_Z^2)^\vee)\xrightarrow{\varphi} H^\ast(R,k)\twoheadrightarrow H^\ast(R,k)_{red}\]
-        is an surjection.
+        is a surjection.
     \end{lem}
     \begin{prf}
         Recall from section \ref{sec:cohomology-R} that $H^\ast(R,k)\cong k[\xi_1,\dots,\xi_n]$ and that the degree 2 generators $(\frakm_Z/\frakm_Z^2)^\vee$ map into $H^2(R,k).$ By theorem \ref{thm:finite-morphism}, we get that the inclusion
@@ -2237,7 +2237,7 @@ In this chapter we introduce several new definitions of support that extend the 
 % ========== Appendix A
  
 \chapter{Code for generating examples}
-I have collected some code snippets I used for forming conjectures and guiding my discovery. I figured this may be helpful to other researchers down the road who would like to discover similar results but would rather not spend a whole day reading a user manual to do it.
+I have collected some code I used for guiding my discovery. I figured this may be helpful to other researchers down the road who would like to discover similar results but would rather not spend a whole afternoon reading a user manual to do it.
 
 \section{SINGULAR example}\label{code:singular-resolution}
 To help with computations, I made use of the wonderful noncommutative \texttt{PLURAL} subsystem of the the \texttt{SINGULAR} software from \cite{singular}. I include code below in the interest of opening up others' avenues for future computations. Use of the \href{https://www.singular.uni-kl.de/index.php/singular-manual.html}{online documentation} is strongly recommended as you become familiar with the software.
